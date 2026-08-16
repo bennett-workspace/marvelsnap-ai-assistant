@@ -164,6 +164,11 @@ label.fl{font-size:12px;color:var(--ink3);font-family:var(--mono);letter-spacing
 .cg.miss{border-color:rgba(255,90,90,.5)}
 .cg .rl{position:absolute;bottom:6px;left:6px;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
   background:rgba(7,4,26,.85);border:1px solid var(--line2);border-radius:5px;padding:2px 5px;color:var(--cy)}
+.cg .bal{position:absolute;top:6px;right:6px;font-family:var(--mono);font-size:9px;letter-spacing:.04em;
+  background:rgba(7,4,26,.85);border-radius:5px;padding:2px 5px}
+.cg .bal.buf{color:var(--grn);border:1px solid rgba(90,255,140,.5)}
+.cg .bal.nrf{color:var(--red);border:1px solid rgba(255,90,90,.5)}
+.cg .bal.chg{color:var(--ink3);border:1px solid var(--line2)}
 
 /* ---------- misc ---------- */
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
@@ -757,6 +762,17 @@ function art(c,cls){
     'onerror="this.style.display=\'none\';this.parentNode.insertAdjacentHTML(\'beforeend\',\'<span class=&quot;fb&quot;>\'+this.dataset.n+\'</span>\')" '+
     'data-n="'+esc(c.n)+'">';
 }
+var BALANCE_BADGE_DAYS=21;
+function balanceBadge(c){
+  var h=c.hist&&c.hist[0];
+  if(!h) return '';
+  var days=(Date.now()-new Date(h[0]).getTime())/86400000;
+  if(!(days>=0)||days>BALANCE_BADGE_DAYS) return '';
+  var pm=String(h[3]||'').match(/[+-]$/), cm=String(h[2]||'').match(/[+-]$/);
+  if(pm) return pm[0]==='+'?'<span class="bal buf">▲ บัฟ</span>':'<span class="bal nrf">▼ เนิร์ฟ</span>';
+  if(cm) return cm[0]==='-'?'<span class="bal buf">▲ บัฟ</span>':'<span class="bal nrf">▼ เนิร์ฟ</span>';
+  return '<span class="bal chg">↻ ปรับ</span>';
+}
 function cardTile(c,opts){
   opts=opts||{};
   var own=col.has(c.id);
@@ -765,6 +781,7 @@ function cardTile(c,opts){
     '<div class="art">'+art(c)+
       (opts.role?'<span class="rl">'+esc(opts.role)+'</span>'
         :(c.new?'<span class="rl" style="color:var(--gold);border-color:var(--gold)">NEW</span>':''))+
+      balanceBadge(c)+
     '</div>'+
     '<div class="nm"><span class="t">'+esc(c.n)+'</span>'+
       '<span class="st"><b class="cp">'+c.c+'</b><b class="pp">'+c.p+'</b>'+
