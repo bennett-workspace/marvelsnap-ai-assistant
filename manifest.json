@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.003",
+  "latestVersion": "2026.08.16.004",
   "schemaVersion": 1,
   "patches": [
     {
@@ -28,6 +28,15 @@
       "releasedAt": "2026-08-13T00:05:00Z",
       "source": "marvelsnapzone.com OTA 2026-08-13",
       "summary": "เพิ่มรายการ \"ประวัติการปรับสมดุล\" ของ OTA 13 ส.ค. 2026 ให้กับ 7 การ์ดที่เพิ่ง buff/nerf ไป (v002 แก้ค่าพลังแล้วแต่ยังไม่บันทึกลง history)"
+    },
+    {
+      "version": "2026.08.16.004",
+      "fromVersion": "2026.08.16.003",
+      "url": "patches/2026.08.16.004.json",
+      "sha256": "2b71bbb46b3719b130695b8ac2b0119371cc962e62d4fc899dfdef6e8318896b",
+      "releasedAt": "2026-08-16T02:30:00Z",
+      "source": "internal-fix",
+      "summary": "แก้บั๊ก: v002 เขียนข้อความ changelog ทับ field PATCH.metaDate โดยไม่ตั้งใจ (ที่ถูกต้องคือ PATCH.ota) — คืนค่า metaDate เป็นวันที่ meta tier list จริง (9 ส.ค. 2026) และตั้ง ota เป็น \"OTA Balance Update — 13 ส.ค. 2026\""
     }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "version": "2026.08.16.004",
+  "fromVersion": "2026.08.16.003",
+  "schemaVersion": 1,
+  "releasedAt": "2026-08-16T02:30:00Z",
+  "source": "internal-fix",
+  "summary": "แก้บั๊ก: v002 เขียนข้อความ changelog ทับ field PATCH.metaDate (วันที่ข้อมูล meta tier list) โดยไม่ตั้งใจ แทนที่จะเขียนลง PATCH.ota (field ที่ถูกต้องสำหรับ OTA changelog) — patch นี้คืนค่า metaDate กลับเป็นวันที่ของ meta tier list จริง (9 ส.ค. 2026) และตั้งค่า ota เป็น \"OTA Balance Update — 13 ส.ค. 2026\" ให้ถูกต้อง",
+  "operations": [
+    {
+      "op": "replace",
+      "path": "/PATCH/metaDate",
+      "value": "9 ส.ค. 2026 (Fractured Frontier สัปดาห์ที่ 1)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/ota",
+      "value": "OTA Balance Update — 13 ส.ค. 2026"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.004"
+    }
+  ]
+}
