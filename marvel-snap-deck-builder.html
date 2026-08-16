@@ -299,25 +299,34 @@ function rebuildIndices(){
 
 /* ================== Patch Update System ==================
    ดาวน์โหลดเฉพาะ "ข้อมูลที่เปลี่ยน" (JSON Patch / RFC 6902 แบบย่อ: add/replace/remove)
-   จาก GitHub repo สาธารณะ ผ่าน jsdelivr CDN (รองรับ CORS โดยไม่ต้องมี backend)
-   เก็บผลลัพธ์ใน IndexedDB — ไฟล์ .html ต้นฉบับไม่ถูกแก้ไขเลย */
+   จาก GitHub repo สาธารณะ ผ่าน raw.githubusercontent.com (รองรับ CORS โดยไม่ต้องมี backend)
+   เก็บผลลัพธ์ใน IndexedDB — ไฟล์ .html ต้นฉบับไม่ถูกแก้ไขเลย
+   หมายเหตุ: เคยใช้ jsdelivr CDN แต่พบว่า branch-level cache ค้างได้นานผิดปกติ
+   (เกิน 30 นาทีแม้ purge แล้ว) จึงย้ายมาใช้ raw.githubusercontent.com ซึ่งไม่มี cache
+   ระหว่างทาง ข้อมูลใหม่มีผลทันทีหลัง push */
 var PATCH_REPO='bennett-workspace/marvelsnap-ai-assistant';
 var PATCH_BRANCH='main';
 var PATCH_BASE=(function(){
-  var v='v='+Date.now(); // กัน CDN cache ค้างตอนเช็ค manifest
+  var v='v='+Date.now(); // กัน browser cache ค้างตอนเช็ค manifest
   return {
-    manifest:'https://cdn.jsdelivr.net/gh/'+PATCH_REPO+'@'+PATCH_BRANCH+'/manifest.json?'+v,
-    file:function(path){ return 'https://cdn.jsdelivr.net/gh/'+PATCH_REPO+'@'+PATCH_BRANCH+'/'+path; }
+    manifest:'https://raw.githubusercontent.com/'+PATCH_REPO+'/'+PATCH_BRANCH+'/manifest.json?'+v,
+    file:function(path){ return 'https://raw.githubusercontent.com/'+PATCH_REPO+'/'+PATCH_BRANCH+'/'+path; }
   };
 })();
-var PDB_NAME='snapdb_patch', PDB_VER=1;
+var PDB_NAME='snapdb_patch', PDB_VER=2;
+var PATCH_HISTORY_CAP=10; // เก็บ snapshot ย้อนหลังสูงสุดกี่เวอร์ชัน (กัน IndexedDB บวมไม่รู้จบ)
+var CLIENT_SCHEMA_VERSION=1; // โครงสร้างข้อมูลที่โค้ดตัวนี้เข้าใจ — patch ที่ขอ schema สูงกว่านี้จะถูกปฏิเสธ
 function idbOpen(){
   return new Promise(function(resolve,reject){
     if(!('indexedDB' in window)){ reject(new Error('เบราว์เซอร์นี้ไม่รองรับ IndexedDB')); return; }
     var req=indexedDB.open(PDB_NAME,PDB_VER);
-    req.onupgradeneeded=function(){
+    req.onupgradeneeded=function(e){
       var db=req.result;
-      if(!db.objectStoreNames.contains('snapshot')) db.createObjectStore('snapshot');
+      // v1 -> v2: เปลี่ยนจากเก็บแค่ current/previous เป็นเก็บทุกเวอร์ชัน (multi-level rollback)
+      // ของเดิมใน v1 (ถ้ามี) จะหายไปตอนอัปเกรด แล้วแอปจะ fallback ไปใช้ข้อมูล baseline ในไฟล์แทนโดยอัตโนมัติ — ไม่ error
+      if(db.objectStoreNames.contains('snapshot')) db.deleteObjectStore('snapshot');
+      if(!db.objectStoreNames.contains('snapshots')) db.createObjectStore('snapshots',{keyPath:'version'});
+      if(!db.objectStoreNames.contains('meta')) db.createObjectStore('meta',{keyPath:'key'});
       if(!db.objectStoreNames.contains('log')) db.createObjectStore('log',{keyPath:'id',autoIncrement:true});
     };
     req.onsuccess=function(){ resolve(req.result); };
@@ -333,26 +342,53 @@ function idbGet(store,key){
     });
   });
 }
-function idbPut(store,val,key){
+function idbPut(store,val){
   return idbOpen().then(function(db){
     return new Promise(function(resolve,reject){
       var tx=db.transaction(store,'readwrite');
-      var req=key!==undefined?tx.objectStore(store).put(val,key):tx.objectStore(store).put(val);
+      var req=tx.objectStore(store).put(val);
       req.onsuccess=function(){ resolve(req.result); };
       req.onerror=function(){ reject(req.error); };
     });
   });
 }
-function idbGetAllLog(){
+function idbDelete(store,key){
   return idbOpen().then(function(db){
     return new Promise(function(resolve,reject){
-      var tx=db.transaction('log','readonly'), req=tx.objectStore('log').getAll();
+      var tx=db.transaction(store,'readwrite'), req=tx.objectStore(store).delete(key);
+      req.onsuccess=function(){ resolve(); };
+      req.onerror=function(){ reject(req.error); };
+    });
+  });
+}
+function idbGetAll(store){
+  return idbOpen().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction(store,'readonly'), req=tx.objectStore(store).getAll();
       req.onsuccess=function(){ resolve(req.result||[]); };
       req.onerror=function(){ reject(req.error); };
     });
   });
 }
+function idbGetAllLog(){ return idbGetAll('log'); }
 function currentDataVersion(){ return (D.PATCH&&D.PATCH.dataVersion)||'0'; }
+/* แปลง ISO timestamp (เก็บเป็น UTC เสมอ) ให้แสดงเป็นเวลาท้องถิ่นของเบราว์เซอร์ผู้ใช้ ไม่ใช่ UTC ดิบๆ */
+function fmtLocalDateTime(iso){
+  if(!iso) return '';
+  var d=new Date(iso);
+  if(isNaN(d.getTime())) return String(iso).slice(0,16).replace('T',' ');
+  function pad(n){return String(n).padStart(2,'0');}
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+/* ลบ snapshot เก่าสุดถ้าเก็บเกิน PATCH_HISTORY_CAP เวอร์ชัน (ไม่ลบเวอร์ชันที่ current ชี้อยู่) */
+async function pruneSnapshotHistory(currentVersion){
+  var all=await idbGetAll('snapshots');
+  if(all.length<=PATCH_HISTORY_CAP) return;
+  var sorted=all.filter(function(s){return s.version!==currentVersion;})
+    .sort(function(a,b){return a.version<b.version?-1:1;});
+  var excess=all.length-PATCH_HISTORY_CAP;
+  for(var i=0;i<excess&&i<sorted.length;i++){ await idbDelete('snapshots',sorted[i].version); }
+}
 
 /* ---- JSON Pointer (RFC 6901) resolve + JSON Patch (RFC 6902 subset) apply ---- */
 function pointerParts(p){
@@ -430,7 +466,9 @@ async function logPatchEvent(entry){
 /* เรียกตอน boot: โหลด snapshot ที่ patch ไว้แล้วจาก IndexedDB (ถ้ามี) มาใช้แทนข้อมูลที่ฝังในไฟล์ */
 async function loadStoredSnapshotIfAny(){
   try{
-    var snap=await idbGet('snapshot','current');
+    var ptr=await idbGet('meta','current');
+    if(!ptr||!ptr.version) return; // ไม่เคย apply patch เลย -> ใช้ baseline ในไฟล์ตามปกติ
+    var snap=await idbGet('snapshots',ptr.version);
     if(snap&&snap.data&&snap.data.CARDS){
       D=snap.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
       rebuildIndices();
@@ -443,10 +481,12 @@ async function checkForPatch(){
   var manifest=res.json;
   if(!manifest||!Array.isArray(manifest.patches)) throw new Error('รูปแบบ manifest.json ไม่ถูกต้อง');
   var local=currentDataVersion();
-  var newer=manifest.patches.filter(function(p){ return p.version>local; })
+  var newerAll=manifest.patches.filter(function(p){ return p.version>local; })
     .sort(function(a,b){ return a.version<b.version?-1:1; });
+  var incompatible=newerAll.filter(function(p){ return (p.schemaVersion||1)>CLIENT_SCHEMA_VERSION; });
+  var pending=newerAll.filter(function(p){ return (p.schemaVersion||1)<=CLIENT_SCHEMA_VERSION; });
   return {manifest:manifest, local:local, latest:manifest.latestVersion,
-    pending:newer, hasUpdate: !!newer.length};
+    pending:pending, incompatible:incompatible, hasUpdate: !!pending.length};
 }
 
 async function downloadAndVerifyPatch(entry){
@@ -461,12 +501,19 @@ async function downloadAndVerifyPatch(entry){
   return res.json;
 }
 
-/* ติดตั้ง patch ทีละเวอร์ชันตามลำดับ (รองรับกรณีข้ามหลายเวอร์ชันทีเดียว) */
+/* ติดตั้ง patch ทีละเวอร์ชันตามลำดับ (รองรับกรณีข้ามหลายเวอร์ชันทีเดียว) — เก็บ snapshot ทุกเวอร์ชันที่ผ่าน (จำกัดจำนวนไว้) เพื่อ rollback ย้อนได้หลายขั้น */
 async function applyPendingPatches(pending){
   for(var i=0;i<pending.length;i++){
     var entry=pending[i];
     var patch=await downloadAndVerifyPatch(entry);
     var fromVersion=currentDataVersion();
+    var patchSchema=patch.schemaVersion||1;
+    if(patchSchema>CLIENT_SCHEMA_VERSION){
+      await logPatchEvent({from:fromVersion,to:patch.version,status:'failed',
+        reason:'ต้องการ schema เวอร์ชัน '+patchSchema+' แต่แอปนี้รองรับแค่ '+CLIENT_SCHEMA_VERSION+' — กรุณาอัปเดตตัวแอปก่อน',
+        source:entry.source||''});
+      throw new Error('Patch '+patch.version+' ต้องการแอปเวอร์ชันใหม่กว่านี้ (schema '+patchSchema+' > '+CLIENT_SCHEMA_VERSION+') หยุดที่ตรงนี้ไม่ติดตั้งต่อ');
+    }
     var working=JSON.parse(JSON.stringify(D)); // clone ก่อนแก้ ป้องกันข้อมูลสดพังถ้า apply ล้มเหลวกลางทาง
     applyJSONPatchOps(working,patch.operations);
     if(!working.PATCH) working.PATCH={};
@@ -476,10 +523,9 @@ async function applyPendingPatches(pending){
       await logPatchEvent({from:fromVersion,to:patch.version,status:'failed',reason:verr,source:entry.source||''});
       throw new Error('Patch '+patch.version+' apply แล้วข้อมูลไม่ผ่านการตรวจสอบ: '+verr);
     }
-    // เก็บ snapshot ปัจจุบันไว้เป็น "previous" เผื่อต้อง rollback (เก็บแค่ 1 ระดับล่าสุด)
-    var prevSnap=await idbGet('snapshot','current');
-    if(prevSnap) await idbPut('snapshot',prevSnap,'previous');
-    await idbPut('snapshot',{version:patch.version,data:working},'current');
+    await idbPut('snapshots',{version:patch.version,data:working,appliedAt:new Date().toISOString()});
+    await idbPut('meta',{key:'current',version:patch.version});
+    await pruneSnapshotHistory(patch.version);
     D=working; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
     rebuildIndices();
     await logPatchEvent({from:fromVersion,to:patch.version,status:'success',
@@ -487,24 +533,42 @@ async function applyPendingPatches(pending){
   }
 }
 
-async function rollbackLastPatch(){
-  var prev=await idbGet('snapshot','previous');
-  if(!prev) throw new Error('ไม่มีเวอร์ชันก่อนหน้าให้ย้อนกลับ (เก็บได้แค่ 1 ระดับล่าสุด)');
-  var cur=await idbGet('snapshot','current');
+/* รายชื่อเวอร์ชันย้อนหลังที่ rollback ไปได้ (ใหม่สุดก่อน) + ตัวเลือก "กลับไป baseline ในไฟล์" เสมอถ้าเคย patch มาแล้ว */
+var BASELINE_MARKER='__baseline__';
+async function listHistoryVersions(){
+  var ptr=await idbGet('meta','current');
+  var currentVersion=ptr?ptr.version:null;
+  var all=await idbGetAll('snapshots');
+  var items=all.filter(function(s){return s.version!==currentVersion;})
+    .map(function(s){return {version:s.version,appliedAt:s.appliedAt};})
+    .sort(function(a,b){return a.version<b.version?1:-1;});
+  if(currentVersion) items.push({version:BASELINE_MARKER,appliedAt:null,
+    label:'ข้อมูลตั้งต้นในไฟล์ (ก่อน patch ใดๆ ทั้งหมด)'});
+  return items;
+}
+async function rollbackToVersion(targetVersion){
   var fromVersion=currentDataVersion();
-  await idbPut('snapshot',prev,'current');
-  if(cur) await idbPut('snapshot',cur,'previous');
-  D=prev.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
+  if(targetVersion===BASELINE_MARKER){
+    D=window.SNAPDATA; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
+    rebuildIndices();
+    await idbDelete('meta','current');
+    await logPatchEvent({from:fromVersion,to:currentDataVersion(),status:'rollback',summary:'ย้อนกลับไปข้อมูลตั้งต้นในไฟล์'});
+    return;
+  }
+  var snap=await idbGet('snapshots',targetVersion);
+  if(!snap) throw new Error('ไม่พบ snapshot เวอร์ชัน '+targetVersion+' ในเครื่อง (อาจถูกลบเพราะเก็บได้สูงสุด '+PATCH_HISTORY_CAP+' เวอร์ชันย้อนหลัง)');
+  D=snap.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
   rebuildIndices();
-  await logPatchEvent({from:fromVersion,to:currentDataVersion(),status:'rollback',summary:'ย้อนกลับไปเวอร์ชันก่อนหน้า'});
+  await idbPut('meta',{key:'current',version:targetVersion});
+  await logPatchEvent({from:fromVersion,to:currentDataVersion(),status:'rollback',summary:'ย้อนกลับไปเวอร์ชัน '+targetVersion});
 }
 
 /* ---- UI state + orchestration สำหรับปุ่ม "⚡ อัปเดต Patch" ---- */
-var patchState={busy:false,msg:'',msgOk:true,log:[],hasPrevious:false};
+var patchState={busy:false,msg:'',msgOk:true,log:[],history:[]};
 async function refreshPatchState(){
   try{
     patchState.log=await idbGetAllLog();
-    patchState.hasPrevious=!!(await idbGet('snapshot','previous'));
+    patchState.history=await listHistoryVersions();
   }catch(e){}
 }
 function rerenderIfSettings(){ if(route==='settings') render(); }
@@ -514,31 +578,36 @@ async function doPatchUpdate(){
   try{
     var check=await checkForPatch();
     if(!check.hasUpdate){
-      patchState.msg='ข้อมูลของคุณเป็นเวอร์ชันล่าสุดอยู่แล้ว ('+check.local+')'; patchState.msgOk=true;
+      patchState.msg=check.incompatible.length
+        ? 'มี patch ใหม่ '+check.incompatible.length+' รายการ แต่ต้องอัปเดตตัวแอปเวอร์ชันใหม่กว่านี้ก่อนถึงจะติดตั้งได้ (schema ไม่ตรงกัน)'
+        : 'ข้อมูลของคุณเป็นเวอร์ชันล่าสุดอยู่แล้ว ('+check.local+')';
+      patchState.msgOk=!check.incompatible.length;
     } else {
       patchState.msg='พบ patch ใหม่ '+check.pending.length+' รายการ กำลังดาวน์โหลดและตรวจสอบ…'; rerenderIfSettings();
       await applyPendingPatches(check.pending);
-      patchState.msg='อัปเดตสำเร็จ! เวอร์ชันปัจจุบัน: '+currentDataVersion(); patchState.msgOk=true;
+      patchState.msg='อัปเดตสำเร็จ! เวอร์ชันปัจจุบัน: '+currentDataVersion()+
+        (check.incompatible.length?' (ยังมี patch อีก '+check.incompatible.length+' รายการที่รอแอปเวอร์ชันใหม่กว่านี้)':'');
+      patchState.msgOk=true;
       toast('อัปเดตข้อมูลเป็นเวอร์ชัน '+currentDataVersion()+' แล้ว');
     }
   }catch(e){
     patchState.msg='อัปเดตไม่สำเร็จ: '+e.message; patchState.msgOk=false;
   }
   await refreshPatchState();
-  patchState.busy=false; rerenderIfSettings();
+  patchState.busy=false; render();
 }
-async function doPatchRollback(){
-  if(patchState.busy) return;
+async function doPatchRollback(targetVersion){
+  if(patchState.busy||!targetVersion) return;
   patchState.busy=true; patchState.msg='กำลังย้อนกลับ…'; patchState.msgOk=true; rerenderIfSettings();
   try{
-    await rollbackLastPatch();
+    await rollbackToVersion(targetVersion);
     patchState.msg='ย้อนกลับสำเร็จ เวอร์ชันปัจจุบัน: '+currentDataVersion(); patchState.msgOk=true;
     toast('ย้อนกลับข้อมูลแล้ว');
   }catch(e){
     patchState.msg='ย้อนกลับไม่สำเร็จ: '+e.message; patchState.msgOk=false;
   }
   await refreshPatchState();
-  patchState.busy=false; rerenderIfSettings();
+  patchState.busy=false; render();
 }
 function patchSectionHTML(){
   return '<div class="card" style="margin-top:14px"><h3 class="mt" style="margin-top:0">ระบบอัปเดต Patch</h3>'+
@@ -546,14 +615,20 @@ function patchSectionHTML(){
      'ที่มา: <a href="https://github.com/'+PATCH_REPO+'" target="_blank" rel="noopener">GitHub repo</a></p>'+
    '<div class="btnrow" style="margin-top:10px">'+
      '<button class="btn sm pri" data-checkpatch="1"'+(patchState.busy?' disabled':'')+'>⚡ อัปเดต Patch</button>'+
-     (patchState.hasPrevious?'<button class="btn sm dgr" data-rollbackpatch="1"'+(patchState.busy?' disabled':'')+'>↩ ย้อนกลับเวอร์ชันก่อนหน้า</button>':'')+
    '</div>'+
    (patchState.msg?'<p class="tiny" style="margin-top:8px;color:'+(patchState.msgOk?'var(--grn)':'var(--red)')+'">'+esc(patchState.msg)+'</p>':'')+
+   (patchState.history.length?'<div style="margin-top:12px"><p class="tiny mono" style="color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">ย้อนกลับไปเวอร์ชันอื่น</p>'+
+     patchState.history.map(function(h){
+       return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line)">'+
+         '<span class="tiny mono" style="flex:1">'+esc(h.label||h.version)+
+           (h.appliedAt?' <span style="color:var(--ink3)">('+esc(fmtLocalDateTime(h.appliedAt))+')</span>':'')+'</span>'+
+         '<button class="btn sm dgr" data-rollbackpatch="'+esc(h.version)+'"'+(patchState.busy?' disabled':'')+'>↩ ย้อนกลับมาที่นี่</button>'+
+         '</div>';}).join('')+'</div>':'')+
    (patchState.log.length?'<details style="margin-top:10px" class="vrbox"><summary class="btn sm">ประวัติการอัปเดต ('+patchState.log.length+')</summary>'+
      '<div style="margin-top:8px">'+patchState.log.slice().reverse().map(function(l){
        var color=l.status==='success'?'var(--grn)':l.status==='rollback'?'var(--gold)':'var(--red)';
        return '<div style="padding:6px 0;border-bottom:1px solid var(--line)">'+
-         '<span class="tiny mono" style="color:var(--ink3)">'+esc(String(l.at||'').slice(0,16).replace('T',' '))+'</span> '+
+         '<span class="tiny mono" style="color:var(--ink3)">'+esc(fmtLocalDateTime(l.at))+'</span> '+
          '<b style="color:'+color+'">'+esc(l.status)+'</b> <span class="tiny mono">'+esc(l.from||'')+' → '+esc(l.to||'')+'</span>'+
          (l.summary?'<br><span class="tiny muted">'+esc(l.summary)+'</span>':'')+
          (l.reason?'<br><span class="tiny" style="color:var(--red)">'+esc(l.reason)+'</span>':'')+
@@ -1141,7 +1216,9 @@ V.dashboard=function(){
     top.map(function(r){return recCard(r,true);}).join('')+'</div>'
    :'<div class="card" style="margin-top:18px"><h3 class="mt">ยังไม่มีเด็คที่จัดครบ 12 ใบ</h3>'+
     '<p class="small muted">คุณยังไม่มีการ์ดพอสำหรับสายไหนแบบครบ ๆ เลย ไปที่ <b>เด็คแนะนำ</b> เพื่อดูว่าใกล้จะได้สายไหนบ้าง และควรหาการ์ดอะไรเพิ่ม</p></div>')+
-  '<h2 class="st">เมตาสัปดาห์นี้</h2><div class="grid g3">'+
+  '<h2 class="st">เมตาสัปดาห์นี้</h2>'+
+  '<p class="tiny muted" style="margin-top:-6px">ข้อมูล Tier list นี้เป็นสแนปช็อต ณ '+esc(P.metaDate)+' อาจเก่ากว่า patch ค่าพลังการ์ดล่าสุด ('+esc(P.ota)+')</p>'+
+  '<div class="grid g3">'+
     META.slice(0,3).map(metaMini).join('')+'</div>'+
   '<div class="card" style="margin-top:20px"><h3 class="mt">แหล่งข้อมูล</h3>'+
    '<p class="small muted">Patch '+esc(P.version)+' · '+esc(P.ota)+' · ซีซั่น '+esc(P.season)+'</p>'+
@@ -1556,7 +1633,8 @@ V.matchups=function(){
 V.meta=function(){
   return '<h1 class="vt">เมตาปัจจุบัน</h1>'+
   '<p class="vsub">ข้อมูลจริงจาก Marvel Snap Zone Ranked Meta Tier List วันที่ '+esc(P.metaDate)+
-  ' — Cube Average และ Win Rate เป็นตัวเลขที่รายงานไว้จริง ไม่ได้สร้างขึ้นเอง</p>'+
+  ' — Cube Average และ Win Rate เป็นตัวเลขที่รายงานไว้จริง ไม่ได้สร้างขึ้นเอง '+
+  '(หมายเหตุ: อาจเก่ากว่าการปรับค่าพลังการ์ดล่าสุดจาก '+esc(P.ota)+' — ดูค่าพลังปัจจุบันจริงได้ที่หน้าฐานข้อมูลการ์ด)</p>'+
   notice()+'<div class="card" style="margin-top:14px"><p class="small mono">Patch '+esc(P.version)+'<br>'+esc(P.ota)+'<br>ซีซั่น '+esc(P.season)+'</p></div>'+(P.upcoming&&P.upcoming.length?'<h2 class="st">การ์ดที่จะมาในซีซั่นนี้ (ยังไม่ปล่อย)</h2>'+'<p class="vsub">ยังไม่มีค่าใช้จ่าย/พลังที่ยืนยันได้ จึงยังไม่ใส่ในฐานข้อมูล — ข้อความความสามารถจากประกาศทางการ</p>'+'<div class="grid g2">'+P.upcoming.map(function(u){return '<div class="card"><b>'+esc(u[0])+'</b>'+'<p class="tiny mono" style="margin:4px 0 8px">'+esc(u[1])+'</p>'+'<p class="small muted">'+esc(u[2])+'</p></div>';}).join('')+'</div>':'')+
   '<h2 class="st">ตารางเมตา</h2><div class="card scroll"><table><thead><tr>'+
    '<th>Tier</th><th>เด็ค</th><th>Cube Avg</th><th>Win Rate</th><th>เกม</th></tr></thead><tbody>'+
@@ -2042,7 +2120,7 @@ document.addEventListener('click',function(e){
   var d=t.dataset;
 
   if(d.checkpatch!==undefined){ doPatchUpdate(); return; }
-  if(d.rollbackpatch!==undefined){ doPatchRollback(); return; }
+  if(d.rollbackpatch!==undefined){ doPatchRollback(d.rollbackpatch); return; }
   if(d.close!==undefined || e.target.id==='ov'){closeModal();return;}
   if(d.lbimg!==undefined){openLightbox(d.lbimg,d.lbcap||'',d.lbcard);return;}
   if(d.lbclose!==undefined || e.target.id==='lb'){closeLightbox();return;}
