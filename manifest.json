@@ -1,0 +1,15 @@
+{
+  "latestVersion": "2026.08.16.001",
+  "schemaVersion": 1,
+  "patches": [
+    {
+      "version": "2026.08.16.001",
+      "fromVersion": "2026.08.16.000",
+      "url": "patches/2026.08.16.001.json",
+      "sha256": "cbde767b64f8be7b0a61e9c165a1af96b56885b460589d317aff5eda72c84d1d",
+      "releasedAt": "2026-08-16T08:00:00Z",
+      "source": "manual-test",
+      "summary": "Patch ทดสอบระบบครั้งแรก — ยืนยันว่า check/download/verify/apply ทำงานถูกต้องแบบ end-to-end"
+    }
+  ]
+}
