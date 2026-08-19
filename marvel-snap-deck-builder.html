@@ -2411,14 +2411,9 @@ paintNav(); paintOwn();
   silentPatchCheck();
 })();
 /* เช็คว่ามี patch ใหม่ไหมแบบเงียบๆ ตอนเปิดแอป (ไม่ auto-apply ให้เอง) — เตือนด้วยจุดสีทองที่เมนู "ตั้งค่า" + toast ครั้งเดียว
-   จำกัดไม่ให้เช็คถี่เกินไปด้วย cooldown ใน localStorage กันยิง manifest.json ทุกครั้งที่เปิด/รีเฟรชหน้า */
+   เช็คทุกครั้งที่เปิด/รีเฟรชหน้า (ไม่มี cooldown) เพราะ manifest.json เล็กมาก (~1-2KB) และแอปนี้ใช้กันแค่ไม่กี่คน
+   ไม่คุ้มที่จะเสี่ยงพลาดแจ้งเตือนจริงเพราะ cooldown บัง */
 function silentPatchCheck(){
-  var COOLDOWN=15*60*1000;
-  try{
-    var last=+localStorage.getItem('snap_lastpatchcheck')||0;
-    if(Date.now()-last<COOLDOWN) return;
-    localStorage.setItem('snap_lastpatchcheck', String(Date.now()));
-  }catch(e){}
   checkForPatch().then(function(chk){
     if(chk.hasUpdate){
       patchAvailable=chk.pending.length;
