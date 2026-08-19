@@ -48,6 +48,8 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .nav button[aria-current="page"]{background:linear-gradient(90deg,rgba(60,230,255,.16),transparent);
   color:#fff;border-left-color:var(--cy)}
 .nav button[aria-current="page"] i{filter:none}
+.navdot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-left:auto;flex:0 0 auto;
+  box-shadow:0 0 6px var(--gold)}
 .sbfoot{padding:12px 16px;border-top:1px solid var(--line);font-size:11px;color:var(--ink3);font-family:var(--mono)}
 .sbfoot b{color:var(--cy);font-weight:700}
 
@@ -587,19 +589,21 @@ async function doPatchUpdate(){
         ? 'มี patch ใหม่ '+check.incompatible.length+' รายการ แต่ต้องอัปเดตตัวแอปเวอร์ชันใหม่กว่านี้ก่อนถึงจะติดตั้งได้ (schema ไม่ตรงกัน)'
         : 'ข้อมูลของคุณเป็นเวอร์ชันล่าสุดอยู่แล้ว ('+check.local+')';
       patchState.msgOk=!check.incompatible.length;
+      patchAvailable=check.incompatible.length;
     } else {
       patchState.msg='พบ patch ใหม่ '+check.pending.length+' รายการ กำลังดาวน์โหลดและตรวจสอบ…'; rerenderIfSettings();
       await applyPendingPatches(check.pending);
       patchState.msg='อัปเดตสำเร็จ! เวอร์ชันปัจจุบัน: '+currentDataVersion()+
         (check.incompatible.length?' (ยังมี patch อีก '+check.incompatible.length+' รายการที่รอแอปเวอร์ชันใหม่กว่านี้)':'');
       patchState.msgOk=true;
+      patchAvailable=check.incompatible.length; /* patch ที่เข้ากันไม่ได้ยังค้างอยู่ ก็ยังโชว์จุดเตือนไว้ */
       toast('อัปเดตข้อมูลเป็นเวอร์ชัน '+currentDataVersion()+' แล้ว');
     }
   }catch(e){
     patchState.msg='อัปเดตไม่สำเร็จ: '+e.message; patchState.msgOk=false;
   }
   await refreshPatchState();
-  patchState.busy=false; render();
+  patchState.busy=false; paintNav(); render();
 }
 async function doPatchRollback(targetVersion){
   if(patchState.busy||!targetVersion) return;
@@ -1196,9 +1200,11 @@ var NAV=[
  ['series','🗂','Series'],['variants','🖼','Variants'],['artists','🎨','Variant Artists'],['settings','⚙','ตั้งค่า']
 ];
 var route='dashboard';
+var patchAvailable=0; /* จำนวน patch ใหม่ที่รอติดตั้ง เช็คตอน boot แบบเงียบๆ ไม่ auto-apply */
 function paintNav(){
   $('#nav').innerHTML=NAV.map(function(n){
-    return '<button data-go="'+n[0]+'"'+(route===n[0]?' aria-current="page"':'')+'><i>'+n[1]+'</i>'+n[2]+'</button>';
+    var dot=(n[0]==='settings'&&patchAvailable>0)?'<span class="navdot" title="มี patch ใหม่ '+patchAvailable+' รายการ"></span>':'';
+    return '<button data-go="'+n[0]+'"'+(route===n[0]?' aria-current="page"':'')+'><i>'+n[1]+'</i>'+n[2]+dot+'</button>';
   }).join('');
 }
 function go(r){ route=r; paintNav(); render(); $('#sb').classList.remove('on');
@@ -2402,7 +2408,25 @@ paintNav(); paintOwn();
   $('#fpatch').textContent=P.version.split(' ')[0];
   $('#fdate').textContent=P.metaDate;
   render();
+  silentPatchCheck();
 })();
+/* เช็คว่ามี patch ใหม่ไหมแบบเงียบๆ ตอนเปิดแอป (ไม่ auto-apply ให้เอง) — เตือนด้วยจุดสีทองที่เมนู "ตั้งค่า" + toast ครั้งเดียว
+   จำกัดไม่ให้เช็คถี่เกินไปด้วย cooldown ใน localStorage กันยิง manifest.json ทุกครั้งที่เปิด/รีเฟรชหน้า */
+function silentPatchCheck(){
+  var COOLDOWN=15*60*1000;
+  try{
+    var last=+localStorage.getItem('snap_lastpatchcheck')||0;
+    if(Date.now()-last<COOLDOWN) return;
+    localStorage.setItem('snap_lastpatchcheck', String(Date.now()));
+  }catch(e){}
+  checkForPatch().then(function(chk){
+    if(chk.hasUpdate){
+      patchAvailable=chk.pending.length;
+      paintNav();
+      toast('พบ patch ใหม่ '+patchAvailable+' รายการ — ไปที่ "ตั้งค่า" เพื่ออัปเดต');
+    }
+  }).catch(function(){}); /* เช็คไม่สำเร็จ (เช่นออฟไลน์) ไม่ต้องรบกวนผู้ใช้ */
+}
 })();
 
 </script>
