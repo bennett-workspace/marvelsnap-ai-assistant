@@ -1,0 +1,507 @@
+{
+  "version": "2026.08.16.006",
+  "fromVersion": "2026.08.16.005",
+  "schemaVersion": 1,
+  "releasedAt": "2026-08-17T12:00:00Z",
+  "source": "marvelsnapzone.com weekly meta 2026-08-17 + card release",
+  "summary": "อัปเดตเมตาประจำสัปดาห์ (17 ส.ค. 2026, Fractured Frontier สัปดาห์ที่ 2) — แทนที่เด็คเก่าทั้ง 9 เด็คด้วย 13 เด็คใหม่จริงจาก Marvel Snap Zone พร้อมเพิ่มการ์ด Death Fractured Frontier ที่เปิดให้เล่นแล้ว (5/8, On Reveal: ชุบชีวิตตัวละครที่ถูกทำลายทั้งหมด)",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "DeathFracturedFrontier",
+        "n": "Death Fractured Frontier",
+        "c": 5,
+        "p": 8,
+        "a": "On Reveal: Resurrect all your destroyed characters to random locations.",
+        "aTh": "เมื่อเปิด: ชุบชีวิตตัวละครที่ถูกทำลายทั้งหมดของคุณ ให้กลับมาที่เลนแบบสุ่ม",
+        "s": "Series 5",
+        "art": "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/death-fractured-frontier.webp",
+        "t": [
+          "destroy",
+          "onreveal"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-08-18",
+            1,
+            "5",
+            "8",
+            "On Reveal: Resurrect all your destroyed characters to random locations."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "remove",
+      "path": "/PATCH/upcoming/0"
+    },
+    {
+      "op": "replace",
+      "path": "/META",
+      "value": [
+        {
+          "id": "ff2-small-good-cards",
+          "name": "Small Good Cards",
+          "tier": "Tier 1",
+          "cube": 0.7,
+          "wr": 65.5,
+          "games": null,
+          "arch": "onreveal",
+          "note": "เด็คนี้อาศัยการ์ดราคาถูกที่เล่นได้ทันทีที่จั่วขึ้นมา ผสาน Venus กับ Thanos Fractured Frontier เป็นแกนหลัก ไม่มีการ์ดกวนเลยสักใบ ต้องพัฒนาแต้มทุกเทิร์นให้เต็มที่ แต่ผลงานพิสูจน์แล้วว่าได้ผลดีมาก",
+          "cards": [
+            "America Chavez",
+            "Nico Minoru",
+            "Spider-Man Brand New Day",
+            "Black Cat",
+            "Hydra Bob",
+            "Surge",
+            "Jeff the Baby Dolphin!?",
+            "Iron Patriot",
+            "Marvel Boy",
+            "Venus",
+            "Jane Foster Fractured Frontier",
+            "Thanos Fractured Frontier"
+          ]
+        },
+        {
+          "id": "ff2-onreveal-hammer",
+          "name": "On Reveal Hammer",
+          "tier": "Tier 1",
+          "cube": 0.7,
+          "wr": 62.5,
+          "games": null,
+          "arch": null,
+          "note": "แพ็กเกจ Mjolnir/Thor ที่ไม่เคยติดเมตามาก่อน แต่พอใส่ Thanos Fractured Frontier เข้าไปกลับพลิกกลายเป็นเด็คแข่งขันได้จริง แสดงให้เห็นว่าธานอสตัวนี้แรงแค่ไหน",
+          "cards": [
+            "Wasp",
+            "Iceman",
+            "King Eitri",
+            "Surge",
+            "Lockjaw",
+            "Psylocke Fractured Frontier",
+            "Thor",
+            "Beta Ray Bill",
+            "En Sabah Nur",
+            "Thanos Fractured Frontier",
+            "Jane Foster Mighty Thor",
+            "Gorr the God Butcher"
+          ]
+        },
+        {
+          "id": "ff2-aurora",
+          "name": "Aurora",
+          "tier": "Tier 1",
+          "cube": 0.65,
+          "wr": 62,
+          "games": null,
+          "arch": "quickdraw",
+          "note": "Aurora เคยตกยุคไปหลายซีซั่น แต่ Thanos Fractured Frontier ทำให้เด็คที่เน้นเล่นการ์ดทันทีที่จั่วกลับมาแข็งแกร่งอีกครั้ง ยังใช้ Wong เป็น Ongoing เพื่อยิง Infinity Shot ซ้ำได้ด้วย",
+          "cards": [
+            "Spider-Ham",
+            "Iceman",
+            "Hydra Bob",
+            "Surge",
+            "Awesome Andy",
+            "Hawkeye Kate Bishop",
+            "Sam Wilson Captain America",
+            "Venus",
+            "Jane Foster Fractured Frontier",
+            "Wong",
+            "Thanos Fractured Frontier",
+            "Aurora"
+          ]
+        },
+        {
+          "id": "ff2-high-evolutionary",
+          "name": "High Evolutionary",
+          "tier": "Tier 1",
+          "cube": 0.65,
+          "wr": 62,
+          "games": null,
+          "arch": "highevo",
+          "note": "ไฮอีโวเวอร์ชันนี้ไม่ใช่สาย Series 3 อ่อนโยนเหมือนก่อนแล้ว ใส่ Thanos Fractured Frontier เข้าไปเสริมแต้มปลายเกม ทำให้กลับมาติดอันดับ Tier 1 อีกครั้ง",
+          "cards": [
+            "Sunspot",
+            "Nebula",
+            "Misty Knight",
+            "Scorpion",
+            "Shocker",
+            "Cosmo",
+            "Jane Foster Fractured Frontier",
+            "Cyclops",
+            "High Evolutionary",
+            "Thanos Fractured Frontier",
+            "Abomination",
+            "Hulk"
+          ]
+        },
+        {
+          "id": "ff2-curved-wiccan",
+          "name": "Curved Wiccan",
+          "tier": "Tier 1",
+          "cube": 0.55,
+          "wr": 61,
+          "games": null,
+          "arch": "quickdraw",
+          "note": "เด็คที่รอคอยตั้งแต่ต้นซีซั่นเพราะเข้ากับ Thanos Fractured Frontier พอดี การมาของการ์ดค่า 5 ตัวใหม่ (ธานอส) เปลี่ยนเกมของสาย Wiccan ไปเลย ตอนนี้กลายเป็นหนึ่งในตัวเลือกที่แรงที่สุด",
+          "cards": [
+            "Quicksilver",
+            "Domino",
+            "Cosmo",
+            "Drax, Avatar Of Life",
+            "Venus",
+            "Jane Foster Fractured Frontier",
+            "Crystal",
+            "Isca the Unbeaten",
+            "Karen Page",
+            "Wiccan",
+            "Thanos Fractured Frontier",
+            "Galactus First Steps"
+          ]
+        },
+        {
+          "id": "ff2-created-cards",
+          "name": "Created Cards",
+          "tier": "Tier 1",
+          "cube": 0.65,
+          "wr": 60,
+          "games": null,
+          "arch": "created",
+          "note": "ยืมโครงจาก Iron Hand และ High Power มาผสมกัน แล้วใส่ Thanos Fractured Frontier ปิดท้าย ผลงานเกือบเทียบเท่าเด็คอันดับ 1 ของซีซั่นก่อน",
+          "cards": [
+            "Quinjet",
+            "Spider-Ham",
+            "King Eitri",
+            "Techno-Organic Virus",
+            "Iron Patriot",
+            "Shadowlands Daredevil",
+            "Valentina",
+            "Shadow King",
+            "Gambit Horseman of Death",
+            "Mother Askani",
+            "Blink",
+            "Thanos Fractured Frontier"
+          ]
+        },
+        {
+          "id": "ff2-move",
+          "name": "Move",
+          "tier": "Tier 2",
+          "cube": 0.5,
+          "wr": 59,
+          "games": null,
+          "arch": "move",
+          "note": "สาย Move ยังคงเป็นซินเนอร์จีที่ทรงพลังที่สุดในเกมถ้าเล่นเข้าจังหวะ แต่ปัญหาคือเกมตอนนี้ให้รางวัลกับ Thanos Fractured Frontier มากกว่าการสร้างคอมโบเฉพาะทางแบบนี้",
+          "cards": [
+            "Batroc the Leaper",
+            "Spider-Man Brand New Day",
+            "Nightcrawler",
+            "Kraven",
+            "Sam Wilson Captain America",
+            "Silk",
+            "Cosmo",
+            "Hydra Stomper",
+            "Mary Jane",
+            "Venus",
+            "Jane Foster Fractured Frontier",
+            "Thanos Fractured Frontier"
+          ]
+        },
+        {
+          "id": "ff2-zombies",
+          "name": "Zombies",
+          "tier": "Tier 2",
+          "cube": 0.65,
+          "wr": 58.5,
+          "games": null,
+          "arch": null,
+          "note": "Thanos Fractured Frontier ยืดหยุ่นพอจะใส่ในแทบทุกสายรวมถึง Zombies ด้วย แรงขนาดที่บางเด็คถึงกับปรับโครงใหม่เพื่อเพิ่มโอกาสโหลด Infinity Shot ให้ครบ",
+          "cards": [
+            "Majestic Wingbeat",
+            "The Hunger",
+            "Nico Minoru",
+            "Merlin",
+            "Pixie",
+            "Venus",
+            "Jane Foster Fractured Frontier",
+            "Psylocke Fractured Frontier",
+            "Zombie Scarlet Witch",
+            "Zombie Giant-Man",
+            "Thanos Fractured Frontier",
+            "Emperor Hulkling"
+          ]
+        },
+        {
+          "id": "ff2-kazootriot",
+          "name": "Kazootriot",
+          "tier": "Tier 2",
+          "cube": 0.7,
+          "wr": 58,
+          "games": null,
+          "arch": "ongoing",
+          "note": "ใช้ Goose ปิดเลน และ Cosmo กันธานอสของฝ่ายตรงข้าม เป็นทางที่ทำให้เด็คนี้ไต่มาติดตารางแข่งขันได้ เล่นเป็นก็ใช้ Mystique อัด Cosmo ปิดได้ทุกเลนเลย แต่ต้องแลกกับการไม่ได้ใช้ Ultron",
+          "cards": [
+            "Ant Man",
+            "Squirrel Girl",
+            "Misty Knight",
+            "Dazzler",
+            "Goose",
+            "Mystique",
+            "Patriot",
+            "Cosmo",
+            "Ka-Zar",
+            "Blue Marvel",
+            "Onslaught",
+            "Ultron"
+          ]
+        },
+        {
+          "id": "ff2-high-power",
+          "name": "High Power",
+          "tier": "Tier 2",
+          "cube": 0.45,
+          "wr": 57,
+          "games": null,
+          "arch": "highpower",
+          "note": "เด็คที่แรงที่สุดในรอบสามซีซั่นที่ผ่านมาโดยไม่ต้องพึ่งการเนิร์ฟเลย เกมแค่ต้องการการ์ดที่แรงพอจะท้าชนสายพลังสูงในเกมแต้มดิบตรงๆ ก็พอ",
+          "cards": [
+            "King Eitri",
+            "Martyr",
+            "Techno-Organic Virus",
+            "Hawkeye Kate Bishop",
+            "Scarlet Witch",
+            "Shadowlands Daredevil",
+            "Lizard",
+            "Shadow King",
+            "Crystal",
+            "Starbrand",
+            "Thanos Fractured Frontier",
+            "Wilson Fisk"
+          ]
+        },
+        {
+          "id": "ff2-discard-dracula",
+          "name": "Discard Dracula",
+          "tier": "Tier 3",
+          "cube": 0.3,
+          "wr": 57,
+          "games": null,
+          "arch": "discard",
+          "note": "สายทิ้งการ์ดเวอร์ชันเน้น Dracula เก็บพลังจากการ์ดที่ทิ้งไปตอนจบเกม ใส่ Weapon H และ M.O.D.O.K. เสริมความแรง แม้ cube average จะไม่สูงแต่ win rate ยังยืนได้",
+          "cards": [
+            "Scorn",
+            "Blade",
+            "Morbius",
+            "Gambit",
+            "Corvus Glaive",
+            "Lady Sif",
+            "Dracula",
+            "Proxima Midnight",
+            "M.O.D.O.K.",
+            "Khonshu",
+            "Apocalypse",
+            "Weapon H"
+          ]
+        },
+        {
+          "id": "ff2-ongoing-affliction",
+          "name": "Ongoing Affliction",
+          "tier": "Tier 3",
+          "cube": 0.5,
+          "wr": 55.5,
+          "games": null,
+          "arch": "ongoing",
+          "note": "สาย Ongoing ผสมสาปลดพลัง เน้นกด -1 Power สะสมด้วย Hazmat/Prodigy/The Ancient One แล้วปิดท้ายด้วย Sera กับ Blink",
+          "cards": [
+            "Lady Bullseye",
+            "Scorpion",
+            "Mystique",
+            "Magik",
+            "Hazmat",
+            "Prodigy",
+            "Psylocke Fractured Frontier",
+            "The Ancient One",
+            "Luna Snow",
+            "Sera",
+            "Blink",
+            "Scorpion Brand New Day"
+          ]
+        },
+        {
+          "id": "ff2-double-thanos",
+          "name": "Double Thanos",
+          "tier": "Tier 3",
+          "cube": 0.3,
+          "wr": 55,
+          "games": null,
+          "arch": "quickdraw",
+          "note": "เด็คนี้อาศัยการที่ Infinity Stone เล่นได้ทันทีที่จั่วขึ้นมา โหลด Infinity Shot ได้ครบทุกนัดโดยไม่ต้องพึ่ง Aurora หรือ Arishem แม้จะร่วงจาก Tier 1 ของสัปดาห์ก่อนมาอยู่ Tier 3 แต่ยังใช้งานได้อยู่",
+          "cards": [
+            "King Eitri",
+            "Domino",
+            "Cosmo",
+            "Mobius M. Mobius",
+            "Psylocke Fractured Frontier",
+            "Viv Vision",
+            "Isca the Unbeaten",
+            "En Sabah Nur",
+            "The Thing First Steps",
+            "Thanos Fractured Frontier",
+            "Mockingbird",
+            "Thanos"
+          ]
+        },
+        {
+          "id": "beg-destroy",
+          "name": "Destroy (Pool 3)",
+          "tier": "มือใหม่",
+          "cube": null,
+          "wr": null,
+          "games": null,
+          "arch": "destroy",
+          "note": "สายทำลายเวอร์ชันเริ่มต้น ใช้ได้ตั้งแต่คอลเลกชันยังไม่สูง — เปิดเกมด้วย Nova/Carnage/Bucky Barnes เก็บมูลค่าจากการทำลายเอง แล้วปิดเกมด้วย Arnim Zola/Knull/Death ที่แข็งแกร่งขึ้นเรื่อยๆ ตามจำนวนการ์ดที่ถูกทำลายในเกม",
+          "cards": [
+            "Nova",
+            "Carnage",
+            "Bucky Barnes",
+            "Wolverine",
+            "Deathlok",
+            "Venom",
+            "Sabretooth",
+            "Negasonic Teenage Warhead",
+            "Nimrod",
+            "Arnim Zola",
+            "Knull",
+            "Death"
+          ]
+        },
+        {
+          "id": "beg-discard",
+          "name": "Discard (Pool 3)",
+          "tier": "มือใหม่",
+          "cube": null,
+          "wr": null,
+          "games": null,
+          "arch": "discard",
+          "note": "สายทิ้งการ์ดเวอร์ชันเริ่มต้น — Blade/Lady Sif/Sword Master ทิ้งการ์ดจากมือตัวเองเพื่อเปิดทาง Morbius สะสมพลัง แล้วปิดท้ายด้วย Apocalypse ที่แข็งขึ้นตอนถูกทิ้ง และ Hela ที่ชุบชีวิตการ์ดที่ทิ้งไปกลับมาเล่นซ้ำ",
+          "cards": [
+            "Blade",
+            "Swarm",
+            "Morbius",
+            "Sword Master",
+            "Lady Sif",
+            "Gambit",
+            "Dracula",
+            "Ghost Rider",
+            "Black Bolt",
+            "M.O.D.O.K.",
+            "Apocalypse",
+            "Hela"
+          ]
+        },
+        {
+          "id": "beg-move",
+          "name": "Move (Pool 3)",
+          "tier": "มือใหม่",
+          "cube": null,
+          "wr": null,
+          "games": null,
+          "arch": "move",
+          "note": "สายย้ายเวอร์ชันเริ่มต้น เล่นการ์ดพลังต่ำราคาถูกตั้งแต่เทิร์นแรกแล้วค่อยย้ายไปรวมกันทีหลัง จุดเด่นคือเส้นโค้งพลังงานต่ำ เล่นการ์ดทันทีที่จั่วได้เกือบทุกใบ เหมาะกับผู้เล่นใหม่ที่ยังไม่มีการ์ดหายาก",
+          "cards": [
+            "Iron Fist",
+            "Ghost-Spider",
+            "Vulture",
+            "Doctor Strange",
+            "Kraven",
+            "Cloak",
+            "Silk",
+            "Human Torch",
+            "Miles Morales Spider-Man",
+            "Captain Marvel",
+            "Aero",
+            "Heimdall"
+          ]
+        },
+        {
+          "id": "beg-ongoing",
+          "name": "Ongoing Stat Stick (Pool 3)",
+          "tier": "มือใหม่",
+          "cube": null,
+          "wr": null,
+          "games": null,
+          "arch": "ongoing",
+          "note": "สาย Ongoing สะสมพลังเวอร์ชันเริ่มต้น เล่นง่าย ไม่ต้องพึ่งคอมโบซับซ้อน แค่วางการ์ดที่มีเงื่อนไข Ongoing ให้ตรงจังหวะ (Namor เลนว่าง, Klaw เลนขวา, Ronan ตามมือคู่ต่อสู้) ก็ได้พลังดิบเยอะพอจะชนะแต้มตรงๆ",
+          "cards": [
+            "Nebula",
+            "Luke Cage",
+            "Okoye",
+            "Angela",
+            "Captain America",
+            "Punisher",
+            "Namor",
+            "Warpath",
+            "Klaw",
+            "Ronan the Accuser",
+            "Red Skull",
+            "Orka"
+          ]
+        },
+        {
+          "id": "beg-bigstat",
+          "name": "Big Stat Starter Deck (Pool 1-3)",
+          "tier": "มือใหม่",
+          "cube": null,
+          "wr": null,
+          "games": null,
+          "arch": null,
+          "note": "เด็คแรกที่สุดสำหรับผู้เล่นใหม่ ใช้การ์ด Starter Card เป็นหลัก (Misty Knight, Shocker, Cyclops, The Thing, Abomination, Iron Man, Hulk) ไม่ต้องพึ่งคอมโบ แค่วางตัวใหญ่ให้ตรงเลนแล้วกดแต้มดิบชนะ เหมาะเป็นเด็คแรกก่อนไปปลดล็อกอย่างอื่น",
+          "cards": [
+            "Misty Knight",
+            "Shocker",
+            "Star-Lord",
+            "Medusa",
+            "Punisher",
+            "Cyclops",
+            "The Thing",
+            "Attuma",
+            "Crossbones",
+            "Abomination",
+            "Iron Man",
+            "Hulk"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/metaDate",
+      "value": "17 ส.ค. 2026 (Fractured Frontier สัปดาห์ที่ 2)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/sources/0",
+      "value": [
+        "Marvel Snap Zone — Ranked Meta Tier List (17 ส.ค. 2026, Fractured Frontier Week 2)",
+        "https://marvelsnapzone.com/marvel-snap-ranked-meta-tier-list-august-17-2026/"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/notice",
+      "value": "ตารางเมตานี้อัปเดตวันที่ 17 ส.ค. 2026 — Thanos Fractured Frontier ยังคงครองเมตาต่อเนื่อง อยู่ใน 10 จาก 13 เด็คที่ติดตาราง มี 13 สายที่ win rate เกิน 55% และครึ่งหนึ่งเกิน 60% เลยทีเดียว ผู้เขียนตารางระบุว่าเกมตอนนี้ให้รางวัลกับการใส่ธานอสตัวนี้มากกว่าการสร้างคอมโบเฉพาะทางแบบเดิม"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.006"
+    }
+  ]
+}

@@ -765,7 +765,7 @@ function art(c,cls){
 var BALANCE_BADGE_DAYS=21;
 function balanceBadge(c){
   var h=c.hist&&c.hist[0];
-  if(!h) return '';
+  if(!h||h[1]) return ''; /* h[1]=1 means debut/release entry, not a balance change */
   var days=(Date.now()-new Date(h[0]).getTime())/86400000;
   if(!(days>=0)||days>BALANCE_BADGE_DAYS) return '';
   var pm=String(h[3]||'').match(/[+-]$/), cm=String(h[2]||'').match(/[+-]$/);
