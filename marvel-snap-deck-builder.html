@@ -1515,16 +1515,21 @@ function archView(a){
 
 /* ---------- advisor: จับคู่คำถามกับฐานข้อมูลที่มี (ไม่ใช่ AI จริง — keyword matching ล้วนๆ ฝั่ง client) ---------- */
 var COUNTER_RE=/ต้าน|เคาน์เตอร์|กันไว้|counter|beat|เอาชนะ|รับมือ|แก้เกม/i;
+/* ตัดช่องว่าง/เครื่องหมายวรรคตอนออกก่อนเทียบ กันเคส "kill monger" ไม่ match "Killmonger" */
+function normQ(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9ก-๙]/g,''); }
 function findArchByQuery(q){
-  var ql=q.toLowerCase();
+  var ql=q.toLowerCase(), qn=normQ(q);
   return ARCH.filter(function(a){
-    return ql.indexOf(a.name.toLowerCase())>=0 || q.indexOf(a.nameTh)>=0 || ql.indexOf(a.id)>=0;
+    return ql.indexOf(a.name.toLowerCase())>=0 || q.indexOf(a.nameTh)>=0 || ql.indexOf(a.id)>=0 ||
+      qn.indexOf(normQ(a.name))>=0 || qn.indexOf(normQ(a.nameTh))>=0;
   });
 }
 function findCardsByQuery(q){
-  var ql=q.toLowerCase();
-  return CARDS.filter(function(c){ return c.n.length>=3 && ql.indexOf(c.n.toLowerCase())>=0; })
-    .sort(function(x,y){ return y.n.length-x.n.length; });
+  var ql=q.toLowerCase(), qn=normQ(q);
+  return CARDS.filter(function(c){
+    if(c.n.length<3) return false;
+    return ql.indexOf(c.n.toLowerCase())>=0 || qn.indexOf(normQ(c.n))>=0;
+  }).sort(function(x,y){ return y.n.length-x.n.length; });
 }
 function answerAdvisor(q){
   q=(q||'').trim();
