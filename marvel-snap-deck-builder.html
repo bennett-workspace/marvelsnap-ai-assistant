@@ -1515,21 +1515,64 @@ function archView(a){
 
 /* ---------- advisor: จับคู่คำถามกับฐานข้อมูลที่มี (ไม่ใช่ AI จริง — keyword matching ล้วนๆ ฝั่ง client) ---------- */
 var COUNTER_RE=/ต้าน|เคาน์เตอร์|กันไว้|counter|beat|เอาชนะ|รับมือ|แก้เกม/i;
+var BEGINNER_RE=/มือใหม่|เริ่มต้น|beginner|newbie|ง่ายๆ|เล่นง่าย|เพิ่งเริ่ม/i;
+var STRONGEST_RE=/แรงที่สุด|แรงสุด|เมตา\b|meta\b|strongest|top ?tier|tier ?1|อันดับ ?1|ดีที่สุด/i;
 /* ตัดช่องว่าง/เครื่องหมายวรรคตอนออกก่อนเทียบ กันเคส "kill monger" ไม่ match "Killmonger" */
 function normQ(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9ก-๙]/g,''); }
+function levenshtein(a,b){
+  var m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  var prev=[]; for(var j=0;j<=n;j++) prev[j]=j;
+  for(var i=1;i<=m;i++){
+    var cur=[i];
+    for(var j=1;j<=n;j++) cur[j]=a[i-1]===b[j-1]?prev[j-1]:1+Math.min(prev[j-1],prev[j],cur[j-1]);
+    prev=cur;
+  }
+  return prev[n];
+}
+/* หา needle (ชื่อการ์ด/สาย normalize แล้ว) แบบยอมพิมพ์ผิดได้บ้าง ในสตริง haystack (คำถาม normalize แล้ว) */
+function fuzzyContains(haystack,needle){
+  if(!needle) return false;
+  if(haystack.indexOf(needle)>=0) return true;
+  if(needle.length<5) return false; /* ชื่อสั้นเกินไป เดี๋ยวเผลอ match มั่ว ไม่ทำ fuzzy */
+  var maxDist=needle.length<=7?1:(needle.length<=14?2:3);
+  var best=Infinity;
+  for(var w=Math.max(2,needle.length-2); w<=needle.length+2 && best>0; w++){
+    for(var i=0;i+w<=haystack.length && best>0; i++){
+      var d=levenshtein(haystack.substr(i,w),needle);
+      if(d<best) best=d;
+    }
+  }
+  return best<=maxDist;
+}
 function findArchByQuery(q){
   var ql=q.toLowerCase(), qn=normQ(q);
+  /* หา exact ก่อน แต่ต้องลอง fuzzy ด้วยเสมอ — ไม่งั้นชื่อสั้นที่ match exact (เช่น "Move") จะบัง
+     ไม่ให้ลองจับชื่อยาวกว่าที่พิมพ์ผิดนิดหน่อย (เช่น "Highevolutionary" พิมพ์ตกตัวอักษร) */
   return ARCH.filter(function(a){
+    var an=normQ(a.name), ath=normQ(a.nameTh);
     return ql.indexOf(a.name.toLowerCase())>=0 || q.indexOf(a.nameTh)>=0 || ql.indexOf(a.id)>=0 ||
-      qn.indexOf(normQ(a.name))>=0 || qn.indexOf(normQ(a.nameTh))>=0;
+      qn.indexOf(an)>=0 || qn.indexOf(ath)>=0 || fuzzyContains(qn,an) || fuzzyContains(qn,ath);
   });
 }
 function findCardsByQuery(q){
   var ql=q.toLowerCase(), qn=normQ(q);
   return CARDS.filter(function(c){
     if(c.n.length<3) return false;
-    return ql.indexOf(c.n.toLowerCase())>=0 || qn.indexOf(normQ(c.n))>=0;
-  }).sort(function(x,y){ return y.n.length-x.n.length; });
+    var cn=normQ(c.n);
+    return ql.indexOf(c.n.toLowerCase())>=0 || qn.indexOf(cn)>=0 || (c.n.length>=4 && fuzzyContains(qn,cn));
+  }).sort(function(x,y){return y.n.length-x.n.length;});
+}
+/* ค้นแบบกว้างสุดท้าย: หาคำในคำถาม (ยาว >=3 ตัวอักษร) ที่ปรากฏในข้อความคู่มือ archetype/โน้ตเด็ค */
+function findByFullText(q){
+  var words=q.split(/[\s,.\/]+/).map(function(w){return w.trim();}).filter(function(w){return w.length>=3;});
+  if(!words.length) return {archs:[],decks:[]};
+  function hit(text){ text=(text||'').toLowerCase(); return words.some(function(w){return text.indexOf(w.toLowerCase())>=0;}); }
+  var archs=ARCH.filter(function(a){
+    return hit(a.desc)||hit(a.strong)||hit(a.weak)||hit(a.win)||(a.combo||[]).some(hit);
+  }).slice(0,6);
+  var decks=META.filter(function(d){ return hit(d.note); }).slice(0,6);
+  return {archs:archs,decks:decks};
 }
 function answerAdvisor(q){
   q=(q||'').trim();
@@ -1537,6 +1580,8 @@ function answerAdvisor(q){
   var archHits=findArchByQuery(q);
   var cardHits=findCardsByQuery(q).slice(0,8);
   var wantsCounter=COUNTER_RE.test(q);
+  var wantsBeginner=BEGINNER_RE.test(q);
+  var wantsStrongest=STRONGEST_RE.test(q);
   var targetIds={};
   archHits.forEach(function(a){ targetIds[a.id]=1; });
   cardHits.forEach(function(c){ (c.arch||[]).forEach(function(p){ targetIds[p[0]]=1; }); });
@@ -1560,10 +1605,37 @@ function answerAdvisor(q){
     return cardHits.some(function(c){return d.cards.indexOf(c.n)>=0;});
   }).slice(0,6);
 
-  return {q:q,wantsCounter:wantsCounter,archHits:archHits,cardHits:cardHits,counterList:counterList,deckHits:deckHits};
+  var beginnerArch=[], beginnerDecks=[];
+  if(wantsBeginner){
+    beginnerArch=ARCH.filter(function(a){return a.beginner;}).sort(function(x,y){return x.diff-y.diff;});
+    beginnerDecks=META.filter(function(d){return d.tier==='มือใหม่';}).slice(0,8);
+  }
+  var strongestDecks=[];
+  if(wantsStrongest){
+    strongestDecks=META.filter(function(d){return d.wr!=null;}).slice().sort(function(x,y){return y.wr-x.wr;}).slice(0,8);
+  }
+
+  var fullText={archs:[],decks:[]};
+  var nothingSpecific=!archHits.length && !cardHits.length && !wantsBeginner && !wantsStrongest;
+  if(nothingSpecific) fullText=findByFullText(q);
+
+  return {q:q,wantsCounter:wantsCounter,wantsBeginner:wantsBeginner,wantsStrongest:wantsStrongest,
+    archHits:archHits,cardHits:cardHits,counterList:counterList,deckHits:deckHits,
+    beginnerArch:beginnerArch,beginnerDecks:beginnerDecks,strongestDecks:strongestDecks,fullText:fullText};
+}
+function archMiniCard(a){
+  return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-arch="'+a.id+'">'+
+    '<h4 class="mt" style="margin:0">'+esc(a.nameTh)+'</h4><p class="tiny mono">'+esc(a.tier)+
+    (a.beginner?' · เหมาะมือใหม่':'')+'</p>'+
+    '<p class="small muted" style="margin-top:6px">'+esc(a.desc)+'</p></button>';
+}
+function deckMiniCard(d){
+  return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-go="decklib">'+
+    '<h4 class="mt" style="margin:0">'+esc(d.name)+'</h4>'+
+    '<p class="tiny mono">'+esc(statLine(d))+'</p></button>';
 }
 function advisorResultHTML(r){
-  if(!r) return '<p class="small muted">พิมพ์คำถามด้านบน เช่น "อยากได้เด็คต้าน Thanos Fractured Frontier" หรือ "มีการ์ด Venus จะเล่นสายไหนดี" — ระบบจะจับคำสำคัญค้นหาให้ ไม่ใช่ AI ที่เข้าใจภาษาจริงๆ</p>';
+  if(!r) return '<p class="small muted">พิมพ์คำถามด้านบน เช่น "อยากได้เด็คต้าน Thanos Fractured Frontier", "มีการ์ด Venus จะเล่นสายไหนดี", "แนะนำเด็คมือใหม่หน่อย" หรือ "เด็คแรงที่สุดตอนนี้คือไรอะ" — ระบบจะจับคำสำคัญค้นหาให้ ไม่ใช่ AI ที่เข้าใจภาษาจริงๆ</p>';
   var h='';
   if(r.wantsCounter){
     var against=r.archHits.length?r.archHits.map(function(a){return a.nameTh;}).join(', ')
@@ -1578,31 +1650,40 @@ function advisorResultHTML(r){
       }).join('')+'</div>'
       : '<p class="small muted">ไม่พบข้อมูลแมตช์อัพที่ชัดเจนสำหรับคำถามนี้ ลองระบุชื่อสาย (archetype) หรือชื่อการ์ดให้ชัดขึ้น</p>';
   } else {
+    if(r.wantsBeginner){
+      h+='<h3 class="mt">สายที่เหมาะกับมือใหม่</h3>'+
+        (r.beginnerArch.length?'<div class="grid g2">'+r.beginnerArch.map(archMiniCard).join('')+'</div>'
+          :'<p class="small muted">ไม่พบสายที่แท็กไว้ว่าเหมาะมือใหม่</p>');
+      if(r.beginnerDecks.length) h+='<h3 class="mt" style="margin-top:16px">เด็คมือใหม่ (Pool 1-3) ในคลัง</h3><div class="grid g2">'+r.beginnerDecks.map(deckMiniCard).join('')+'</div>';
+    }
+    if(r.wantsStrongest){
+      h+='<h3 class="mt" style="margin-top:'+(h?'16px':'0')+'">เด็คที่ Win Rate สูงสุดตอนนี้</h3>'+
+        (r.strongestDecks.length?'<div class="grid g2">'+r.strongestDecks.map(deckMiniCard).join('')+'</div>'
+          :'<p class="small muted">ยังไม่มีข้อมูล win rate ในคลังตอนนี้</p>');
+    }
     if(r.archHits.length){
-      h+='<h3 class="mt">สายที่เกี่ยวข้อง</h3><div class="grid g2">'+r.archHits.map(function(a){
-        return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-arch="'+a.id+'">'+
-          '<h4 class="mt" style="margin:0">'+esc(a.nameTh)+'</h4><p class="tiny mono">'+esc(a.tier)+'</p>'+
-          '<p class="small muted" style="margin-top:6px">'+esc(a.desc)+'</p></button>';
-      }).join('')+'</div>';
+      h+='<h3 class="mt" style="margin-top:'+(h?'16px':'0')+'">สายที่เกี่ยวข้อง</h3><div class="grid g2">'+r.archHits.map(archMiniCard).join('')+'</div>';
     }
     if(r.cardHits.length){
       h+='<h3 class="mt" style="margin-top:16px">การ์ดที่พบ</h3><div class="cgrid">'+r.cardHits.map(function(c){return cardTile(c,{});}).join('')+'</div>';
     }
+    if(r.fullText.archs.length){
+      h+='<h3 class="mt" style="margin-top:'+(h?'16px':'0')+'">อาจเกี่ยวข้อง (จากคู่มือสาย)</h3><div class="grid g2">'+r.fullText.archs.map(archMiniCard).join('')+'</div>';
+    }
+    if(r.fullText.decks.length){
+      h+='<h3 class="mt" style="margin-top:16px">เด็คที่โน้ตพูดถึงคำนี้</h3><div class="grid g2">'+r.fullText.decks.map(deckMiniCard).join('')+'</div>';
+    }
   }
   if(r.deckHits.length){
-    h+='<h3 class="mt" style="margin-top:16px">เด็คในคลังที่เกี่ยวข้อง</h3><div class="grid g2">'+r.deckHits.map(function(d){
-      return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-go="decklib">'+
-        '<h4 class="mt" style="margin:0">'+esc(d.name)+'</h4>'+
-        '<p class="tiny mono">'+esc(statLine(d))+'</p></button>';
-    }).join('')+'</div>';
+    h+='<h3 class="mt" style="margin-top:16px">เด็คในคลังที่เกี่ยวข้อง</h3><div class="grid g2">'+r.deckHits.map(deckMiniCard).join('')+'</div>';
   }
-  if(!h) h='<p class="small muted">ไม่พบข้อมูลที่เกี่ยวข้องกับคำถามนี้ ลองพิมพ์ชื่อการ์ดหรือชื่อสาย (archetype) ให้ชัดเจนขึ้น</p>';
+  if(!h) h='<p class="small muted">ไม่พบข้อมูลที่เกี่ยวข้องกับคำถามนี้ ลองพิมพ์ชื่อการ์ด ชื่อสาย (archetype) หรือคำว่า "มือใหม่" / "แรงที่สุด" ดู</p>';
   return h;
 }
 V.advisor=function(){
   return '<h1 class="vt">ผู้ช่วยแนะนำ</h1>'+
   '<p class="vsub">พิมพ์คำถามเกี่ยวกับเด็ค/การ์ด/สาย — ระบบจับคำสำคัญค้นหาจากฐานข้อมูลที่มีในแอปให้ (ไม่ใช่ AI ที่เข้าใจภาษาจริงๆ แค่จับคู่คำตรงไปตรงมา)</p>'+
-  '<div class="filters"><input type="search" id="advq" placeholder="เช่น อยากได้เด็คต้าน Thanos Fractured Frontier, มีการ์ด Venus จะเล่นสายไหนดี…" style="min-width:280px;flex:1"></div>'+
+  '<div class="filters"><input type="search" id="advq" placeholder="เช่น อยากได้เด็คต้าน Thanos Fractured Frontier, แนะนำเด็คมือใหม่หน่อย, เด็คแรงสุดตอนนี้…" style="min-width:280px;flex:1"></div>'+
   '<div id="advisorResult" style="margin-top:14px">'+advisorResultHTML(null)+'</div>';
 };
 
