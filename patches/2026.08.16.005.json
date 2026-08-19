@@ -1,0 +1,155 @@
+{
+  "version": "2026.08.16.005",
+  "fromVersion": "2026.08.16.004",
+  "schemaVersion": 1,
+  "releasedAt": "2026-08-16T03:00:00Z",
+  "source": "internal-content",
+  "summary": "เพิ่มเด็คสำหรับผู้เล่นใหม่ 5 เด็ค (Destroy, Discard, Move, Ongoing Stat Stick, Big Stat Starter) ใช้เฉพาะการ์ด Pool 1-3 เข้าคลังเด็ค — ไม่มี cube/win rate เพราะเป็นเด็คที่คัดแนะนำเอง ไม่ใช่สถิติจริงจากเมตา",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "beg-destroy",
+        "name": "Destroy (Pool 3)",
+        "tier": "มือใหม่",
+        "cube": null,
+        "wr": null,
+        "games": null,
+        "arch": "destroy",
+        "note": "สายทำลายเวอร์ชันเริ่มต้น ใช้ได้ตั้งแต่คอลเลกชันยังไม่สูง — เปิดเกมด้วย Nova/Carnage/Bucky Barnes เก็บมูลค่าจากการทำลายเอง แล้วปิดเกมด้วย Arnim Zola/Knull/Death ที่แข็งแกร่งขึ้นเรื่อยๆ ตามจำนวนการ์ดที่ถูกทำลายในเกม",
+        "cards": [
+          "Nova",
+          "Carnage",
+          "Bucky Barnes",
+          "Wolverine",
+          "Deathlok",
+          "Venom",
+          "Sabretooth",
+          "Negasonic Teenage Warhead",
+          "Nimrod",
+          "Arnim Zola",
+          "Knull",
+          "Death"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "beg-discard",
+        "name": "Discard (Pool 3)",
+        "tier": "มือใหม่",
+        "cube": null,
+        "wr": null,
+        "games": null,
+        "arch": "discard",
+        "note": "สายทิ้งการ์ดเวอร์ชันเริ่มต้น — Blade/Lady Sif/Sword Master ทิ้งการ์ดจากมือตัวเองเพื่อเปิดทาง Morbius สะสมพลัง แล้วปิดท้ายด้วย Apocalypse ที่แข็งขึ้นตอนถูกทิ้ง และ Hela ที่ชุบชีวิตการ์ดที่ทิ้งไปกลับมาเล่นซ้ำ",
+        "cards": [
+          "Blade",
+          "Swarm",
+          "Morbius",
+          "Sword Master",
+          "Lady Sif",
+          "Gambit",
+          "Dracula",
+          "Ghost Rider",
+          "Black Bolt",
+          "M.O.D.O.K.",
+          "Apocalypse",
+          "Hela"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "beg-move",
+        "name": "Move (Pool 3)",
+        "tier": "มือใหม่",
+        "cube": null,
+        "wr": null,
+        "games": null,
+        "arch": "move",
+        "note": "สายย้ายเวอร์ชันเริ่มต้น เล่นการ์ดพลังต่ำราคาถูกตั้งแต่เทิร์นแรกแล้วค่อยย้ายไปรวมกันทีหลัง จุดเด่นคือเส้นโค้งพลังงานต่ำ เล่นการ์ดทันทีที่จั่วได้เกือบทุกใบ เหมาะกับผู้เล่นใหม่ที่ยังไม่มีการ์ดหายาก",
+        "cards": [
+          "Iron Fist",
+          "Ghost-Spider",
+          "Vulture",
+          "Doctor Strange",
+          "Kraven",
+          "Cloak",
+          "Silk",
+          "Human Torch",
+          "Miles Morales Spider-Man",
+          "Captain Marvel",
+          "Aero",
+          "Heimdall"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "beg-ongoing",
+        "name": "Ongoing Stat Stick (Pool 3)",
+        "tier": "มือใหม่",
+        "cube": null,
+        "wr": null,
+        "games": null,
+        "arch": "ongoing",
+        "note": "สาย Ongoing สะสมพลังเวอร์ชันเริ่มต้น เล่นง่าย ไม่ต้องพึ่งคอมโบซับซ้อน แค่วางการ์ดที่มีเงื่อนไข Ongoing ให้ตรงจังหวะ (Namor เลนว่าง, Klaw เลนขวา, Ronan ตามมือคู่ต่อสู้) ก็ได้พลังดิบเยอะพอจะชนะแต้มตรงๆ",
+        "cards": [
+          "Nebula",
+          "Luke Cage",
+          "Okoye",
+          "Angela",
+          "Captain America",
+          "Punisher",
+          "Namor",
+          "Warpath",
+          "Klaw",
+          "Ronan the Accuser",
+          "Red Skull",
+          "Orka"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "beg-bigstat",
+        "name": "Big Stat Starter Deck (Pool 1-3)",
+        "tier": "มือใหม่",
+        "cube": null,
+        "wr": null,
+        "games": null,
+        "arch": null,
+        "note": "เด็คแรกที่สุดสำหรับผู้เล่นใหม่ ใช้การ์ด Starter Card เป็นหลัก (Misty Knight, Shocker, Cyclops, The Thing, Abomination, Iron Man, Hulk) ไม่ต้องพึ่งคอมโบ แค่วางตัวใหญ่ให้ตรงเลนแล้วกดแต้มดิบชนะ เหมาะเป็นเด็คแรกก่อนไปปลดล็อกอย่างอื่น",
+        "cards": [
+          "Misty Knight",
+          "Shocker",
+          "Star-Lord",
+          "Medusa",
+          "Punisher",
+          "Cyclops",
+          "The Thing",
+          "Attuma",
+          "Crossbones",
+          "Abomination",
+          "Iron Man",
+          "Hulk"
+        ]
+      }
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.005"
+    }
+  ]
+}

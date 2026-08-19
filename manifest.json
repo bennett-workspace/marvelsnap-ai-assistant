@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.004",
+  "latestVersion": "2026.08.16.005",
   "schemaVersion": 1,
   "patches": [
     {
@@ -37,6 +37,15 @@
       "releasedAt": "2026-08-16T02:30:00Z",
       "source": "internal-fix",
       "summary": "แก้บั๊ก: v002 เขียนข้อความ changelog ทับ field PATCH.metaDate โดยไม่ตั้งใจ (ที่ถูกต้องคือ PATCH.ota) — คืนค่า metaDate เป็นวันที่ meta tier list จริง (9 ส.ค. 2026) และตั้ง ota เป็น \"OTA Balance Update — 13 ส.ค. 2026\""
+    },
+    {
+      "version": "2026.08.16.005",
+      "fromVersion": "2026.08.16.004",
+      "url": "patches/2026.08.16.005.json",
+      "sha256": "dd7411df15fe51630801b7a06dd971fd8fe85cb10a3fab09b08668919fe1e809",
+      "releasedAt": "2026-08-16T03:00:00Z",
+      "source": "internal-content",
+      "summary": "เพิ่มเด็คสำหรับผู้เล่นใหม่ 5 เด็ค (Destroy, Discard, Move, Ongoing Stat Stick, Big Stat Starter) ใช้เฉพาะการ์ด Pool 1-3 เข้าคลังเด็ค — ไม่มี cube/win rate เพราะเป็นเด็คที่คัดแนะนำเอง ไม่ใช่สถิติจริงจากเมตา"
     }
   ]
 }

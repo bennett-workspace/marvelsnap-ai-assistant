@@ -1192,7 +1192,7 @@ function toggleDeck(id){
 var NAV=[
  ['dashboard','🏠','แดชบอร์ด'],['collection','🃏','การ์ดของฉัน'],['builder','🧩','สร้างเด็ค'],
  ['recommend','⭐','เด็คแนะนำ'],['analyze','📊','วิเคราะห์เด็ค'],['locations','🌌','Locations'],
- ['matchups','🎯','แมตช์อัพ'],['meta','🔥','เมตาปัจจุบัน'],['database','📚','ฐานข้อมูลการ์ด'],
+ ['matchups','🎯','แมตช์อัพ'],['meta','🔥','เมตาปัจจุบัน'],['decklib','🗃','คลังเด็ค'],['database','📚','ฐานข้อมูลการ์ด'],
  ['series','🗂','Series'],['variants','🖼','Variants'],['artists','🎨','Variant Artists'],['settings','⚙','ตั้งค่า']
 ];
 var route='dashboard';
@@ -1246,7 +1246,7 @@ V.dashboard=function(){
 };
 function statLine(d){var a=[];if(d.cube!=null)a.push(d.cube.toFixed(2)+' Cube');if(d.wr!=null)a.push(d.wr+'% WR');if(d.games!=null)a.push(d.games+' เกม');return a.length?a.join(' · '):'ยังไม่มีสถิติที่ยืนยันได้';}
 function metaMini(d){
-  var col2={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)'}[d.tier];
+  var col2={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
   return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-meta="'+esc(d.id)+'">'+
     '<span class="tierbadge" style="color:'+col2+'">'+esc(d.tier)+'</span>'+
     '<h3 class="mt" style="margin:8px 0 4px">'+esc(d.name)+'</h3>'+
@@ -1656,26 +1656,81 @@ V.meta=function(){
   '<h2 class="st">ตารางเมตา</h2><div class="card scroll"><table><thead><tr>'+
    '<th>Tier</th><th>เด็ค</th><th>Cube Avg</th><th>Win Rate</th><th>เกม</th></tr></thead><tbody>'+
    META.map(function(d){
-     var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)'}[d.tier];
+     var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
      return '<tr><td><span class="tierbadge" style="color:'+c+'">'+esc(d.tier)+'</span></td>'+
       '<td><b>'+esc(d.name)+'</b></td><td class="mono">'+(d.cube!=null?d.cube.toFixed(2):'—')+'</td>'+
       '<td class="mono">'+(d.wr!=null?d.wr+'%':'—')+'</td><td class="mono">'+(d.games!=null?d.games:'—')+'</td></tr>';}).join('')+
    '</tbody></table></div>'+
-  '<h2 class="st">รายละเอียดเด็ค</h2><div class="grid g2">'+META.map(function(d){
-    return '<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
-     '<h3 class="mt" style="margin:0">'+esc(d.name)+'</h3>'+
-     '<span class="tierbadge" style="color:'+({Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)'}[d.tier])+'">'+esc(d.tier)+'</span></div>'+
-     '<p class="tiny mono" style="margin:6px 0 10px">'+esc(statLine(d))+'</p>'+
-     '<div class="deck12" style="grid-template-columns:repeat(6,1fr);gap:6px">'+d.cards.map(function(n){
-       var c=byName[n.toLowerCase()]; return c? cardTile(c,{}) : '';}).join('')+'</div>'+
-     '<p class="small muted" style="margin-top:10px">'+esc(d.note)+'</p>'+
-     '<div class="btnrow" style="margin-top:10px">'+
-      '<button class="btn sm" data-loadmeta="'+esc(d.id)+'">เปิดในตัวสร้างเด็ค</button>'+
-      '<button class="btn sm pri" data-exportmeta="'+esc(d.id)+'">📋 โค้ดลงเกม</button>'+
-      '<button class="btn sm" data-arch="'+esc(d.arch)+'">คู่มือสายนี้</button></div>'+
-     '<p class="tiny" style="margin-top:8px">คุณมีการ์ดในเด็คนี้ '+
-       d.cards.filter(function(n){var c=byName[n.toLowerCase()];return c&&col.has(c.id);}).length+'/12 ใบ</p>'+
-     '</div>';}).join('')+'</div>';
+  '<div class="card" style="margin-top:16px;text-align:center">'+
+   '<p class="small muted">ดูเด็คแบบเต็ม 12 ใบ พร้อมโค้ดลงเกมและตัวกรองค้นหาได้ที่หน้า <b>คลังเด็ค</b></p>'+
+   '<button class="btn pri" style="margin-top:8px" data-go="decklib">🗃 ไปที่คลังเด็ค</button></div>';
+};
+
+/* ---------- deck library (ref: marvelsnapzone.com/decks/) ---------- */
+var deckF={q:'',arch:'',tier:'',sort:'tier'};
+var TIER_RANK={Trending:0,'Tier 1':1,'Tier 2':2,'Tier 3':3};
+function filteredMeta(){
+  var q=deckF.q.trim().toLowerCase();
+  var out=META.filter(function(d){
+    if(q && d.name.toLowerCase().indexOf(q)<0 &&
+       !d.cards.some(function(n){return n.toLowerCase().indexOf(q)>=0;})) return false;
+    if(deckF.arch && d.arch!==deckF.arch) return false;
+    if(deckF.tier && d.tier!==deckF.tier) return false;
+    return true;
+  });
+  out.sort(function(x,y){
+    if(deckF.sort==='cube') return (y.cube||0)-(x.cube||0);
+    if(deckF.sort==='wr') return (y.wr||0)-(x.wr||0);
+    if(deckF.sort==='name') return x.name.localeCompare(y.name);
+    return (TIER_RANK[x.tier]!=null?TIER_RANK[x.tier]:9)-(TIER_RANK[y.tier]!=null?TIER_RANK[y.tier]:9) || (y.cube||0)-(x.cube||0);
+  });
+  return out;
+}
+function deckLibFilterBar(){
+  var tiers=['Trending','Tier 1','Tier 2','Tier 3','มือใหม่'].filter(function(t){return META.some(function(d){return d.tier===t;});});
+  return '<div class="filters">'+
+   '<input type="search" id="dfq" placeholder="ค้นหาชื่อเด็คหรือการ์ดในเด็ค…" value="'+esc(deckF.q)+'" style="min-width:230px;flex:1;max-width:340px">'+
+   '<select id="dfarch"><option value="">ทุก Archetype</option>'+ARCH.map(function(a){
+     return '<option value="'+a.id+'"'+(deckF.arch===a.id?' selected':'')+'>'+esc(a.nameTh)+'</option>';}).join('')+'</select>'+
+   '<select id="dftier"><option value="">ทุก Tier</option>'+tiers.map(function(t){
+     return '<option value="'+esc(t)+'"'+(deckF.tier===t?' selected':'')+'>'+esc(t)+'</option>';}).join('')+'</select>'+
+   '<select id="dfsort"><option value="tier"'+(deckF.sort==='tier'?' selected':'')+'>เรียงตาม Tier</option>'+
+     '<option value="cube"'+(deckF.sort==='cube'?' selected':'')+'>เรียงตาม Cube Avg</option>'+
+     '<option value="wr"'+(deckF.sort==='wr'?' selected':'')+'>เรียงตาม Win Rate</option>'+
+     '<option value="name"'+(deckF.sort==='name'?' selected':'')+'>เรียงตามชื่อ</option></select>'+
+  '</div>';
+}
+function deckLibCard(d){
+  var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
+  var a=archById[d.arch];
+  return '<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
+   '<h3 class="mt" style="margin:0">'+esc(d.name)+'</h3>'+
+   '<span class="tierbadge" style="color:'+c+'">'+esc(d.tier)+'</span></div>'+
+   '<p class="tiny mono" style="margin:6px 0 4px">'+esc(statLine(d))+'</p>'+
+   (a?'<p class="tiny" style="color:var(--ink3);margin-bottom:8px">'+esc(a.nameTh)+'</p>':'')+
+   '<div class="deck12" style="grid-template-columns:repeat(6,1fr);gap:6px">'+d.cards.map(function(n){
+     var cc=byName[n.toLowerCase()]; return cc? cardTile(cc,{}) : '';}).join('')+'</div>'+
+   '<p class="small muted" style="margin-top:10px">'+esc(d.note)+'</p>'+
+   '<div class="btnrow" style="margin-top:10px">'+
+    '<button class="btn sm" data-loadmeta="'+esc(d.id)+'">เปิดในตัวสร้างเด็ค</button>'+
+    '<button class="btn sm pri" data-exportmeta="'+esc(d.id)+'">📋 โค้ดลงเกม</button>'+
+    (d.arch?'<button class="btn sm" data-arch="'+esc(d.arch)+'">คู่มือสายนี้</button>':'')+'</div>'+
+   '<p class="tiny" style="margin-top:8px">คุณมีการ์ดในเด็คนี้ '+
+     d.cards.filter(function(n){var cc=byName[n.toLowerCase()];return cc&&col.has(cc.id);}).length+'/12 ใบ</p>'+
+   '</div>';
+}
+function renderDeckLib(){
+  var box=document.getElementById('decklibgrid'); if(!box) return;
+  var list=filteredMeta();
+  box.innerHTML=list.length?
+    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="grid g2">'+
+      list.map(deckLibCard).join('')+'</div>'
+    :'<div class="empty"><b>ไม่พบเด็คที่ตรงกับตัวกรอง</b>ลองล้างคำค้นหรือเปลี่ยนตัวกรองดู</div>';
+}
+V.decklib=function(){
+  return '<h1 class="vt">คลังเด็ค</h1>'+
+  '<p class="vsub">เด็คตัวอย่างที่คัดมาจากเมตาจริง พร้อมการ์ดครบ 12 ใบ กดโค้ดลงเกมได้ทันที — ปรับปรุงผ่านระบบ patch เดียวกับค่าพลังการ์ด</p>'+
+  deckLibFilterBar()+'<div id="decklibgrid"></div>';
 };
 
 /* ---------- database ---------- */
@@ -2077,6 +2132,7 @@ function render(){
   if(document.getElementById('cards')) renderCards(filtered(),{});
   if(document.getElementById('vcards')) renderVariants(filteredVariants());
   if(document.getElementById('acards')) renderArtists(filteredArtists());
+  if(document.getElementById('decklibgrid')) renderDeckLib();
   bindLocal();
 }
 function bindLocal(){
@@ -2089,6 +2145,16 @@ function bindLocal(){
   ['fcost','fseries','farch','ftag','fown','fsort'].forEach(function(id){
     var el=document.getElementById(id); if(!el) return;
     el.addEventListener('change',function(){colF[id.slice(1)]=el.value;renderCards(filtered(),{});});
+  });
+  var dfq=$('#dfq');
+  if(dfq){
+    var t3;
+    dfq.addEventListener('input',function(){clearTimeout(t3);var val=dfq.value;
+      t3=setTimeout(function(){deckF.q=val;renderDeckLib();},220);});
+  }
+  ['dfarch','dftier','dfsort'].forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    el.addEventListener('change',function(){deckF[id.slice(2)]=el.value;renderDeckLib();});
   });
   var lq=$('#lq');
   if(lq){var t2;lq.addEventListener('input',function(){clearTimeout(t2);var val=lq.value;
