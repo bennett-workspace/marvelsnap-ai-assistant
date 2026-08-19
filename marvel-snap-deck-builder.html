@@ -1195,7 +1195,7 @@ function toggleDeck(id){
 /* ---------------- routing ---------------- */
 var NAV=[
  ['dashboard','🏠','แดชบอร์ด'],['collection','🃏','การ์ดของฉัน'],['builder','🧩','สร้างเด็ค'],
- ['recommend','⭐','เด็คแนะนำ'],['analyze','📊','วิเคราะห์เด็ค'],['locations','🌌','Locations'],
+ ['recommend','⭐','เด็คแนะนำ'],['advisor','🤖','ผู้ช่วยแนะนำ'],['analyze','📊','วิเคราะห์เด็ค'],['locations','🌌','Locations'],
  ['matchups','🎯','แมตช์อัพ'],['meta','🔥','เมตาปัจจุบัน'],['decklib','🗃','คลังเด็ค'],['database','📚','ฐานข้อมูลการ์ด'],
  ['series','🗂','Series'],['variants','🖼','Variants'],['artists','🎨','Variant Artists'],['settings','⚙','ตั้งค่า']
 ];
@@ -1512,6 +1512,94 @@ function archView(a){
       '<div class="note warn" style="margin-bottom:6px"><b>'+esc(l.n)+'</b><br><span class="small muted">'+esc(l.eTh)+'</span></div>':'';}).join('')+'</div>'+
   '</div>';
 }
+
+/* ---------- advisor: จับคู่คำถามกับฐานข้อมูลที่มี (ไม่ใช่ AI จริง — keyword matching ล้วนๆ ฝั่ง client) ---------- */
+var COUNTER_RE=/ต้าน|เคาน์เตอร์|กันไว้|counter|beat|เอาชนะ|รับมือ|แก้เกม/i;
+function findArchByQuery(q){
+  var ql=q.toLowerCase();
+  return ARCH.filter(function(a){
+    return ql.indexOf(a.name.toLowerCase())>=0 || q.indexOf(a.nameTh)>=0 || ql.indexOf(a.id)>=0;
+  });
+}
+function findCardsByQuery(q){
+  var ql=q.toLowerCase();
+  return CARDS.filter(function(c){ return c.n.length>=3 && ql.indexOf(c.n.toLowerCase())>=0; })
+    .sort(function(x,y){ return y.n.length-x.n.length; });
+}
+function answerAdvisor(q){
+  q=(q||'').trim();
+  if(!q) return null;
+  var archHits=findArchByQuery(q);
+  var cardHits=findCardsByQuery(q).slice(0,8);
+  var wantsCounter=COUNTER_RE.test(q);
+  var targetIds={};
+  archHits.forEach(function(a){ targetIds[a.id]=1; });
+  cardHits.forEach(function(c){ (c.arch||[]).forEach(function(p){ targetIds[p[0]]=1; }); });
+
+  var counterList=[];
+  if(wantsCounter && Object.keys(targetIds).length){
+    var scores={};
+    Object.keys(targetIds).forEach(function(tid){
+      ARCH.forEach(function(a){
+        if(a.id===tid) return;
+        var s=(MATCH[a.id]&&MATCH[a.id][tid])||0;
+        if(s>=4) scores[a.id]=Math.max(scores[a.id]||0,s);
+      });
+    });
+    counterList=Object.keys(scores).map(function(id){return {a:archById[id],score:scores[id]};})
+      .sort(function(x,y){return y.score-x.score;});
+  }
+
+  var deckHits=META.filter(function(d){
+    if(archHits.some(function(a){return a.id===d.arch;})) return true;
+    return cardHits.some(function(c){return d.cards.indexOf(c.n)>=0;});
+  }).slice(0,6);
+
+  return {q:q,wantsCounter:wantsCounter,archHits:archHits,cardHits:cardHits,counterList:counterList,deckHits:deckHits};
+}
+function advisorResultHTML(r){
+  if(!r) return '<p class="small muted">พิมพ์คำถามด้านบน เช่น "อยากได้เด็คต้าน Thanos Fractured Frontier" หรือ "มีการ์ด Venus จะเล่นสายไหนดี" — ระบบจะจับคำสำคัญค้นหาให้ ไม่ใช่ AI ที่เข้าใจภาษาจริงๆ</p>';
+  var h='';
+  if(r.wantsCounter){
+    var against=r.archHits.length?r.archHits.map(function(a){return a.nameTh;}).join(', ')
+      :(r.cardHits.length?'สายที่มี '+r.cardHits[0].n:'');
+    h+='<h3 class="mt">สายที่ได้เปรียบ'+(against?' '+esc(against):'')+'</h3>';
+    h+=r.counterList.length?
+      '<div class="grid g2">'+r.counterList.map(function(x){
+        return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-arch="'+x.a.id+'">'+
+          '<h4 class="mt" style="margin:0">'+esc(x.a.nameTh)+'</h4>'+
+          '<p class="tiny mono" style="color:var(--grn)">ได้เปรียบระดับ '+x.score+'/5</p>'+
+          '<p class="small muted" style="margin-top:6px">'+esc(x.a.strong)+'</p></button>';
+      }).join('')+'</div>'
+      : '<p class="small muted">ไม่พบข้อมูลแมตช์อัพที่ชัดเจนสำหรับคำถามนี้ ลองระบุชื่อสาย (archetype) หรือชื่อการ์ดให้ชัดขึ้น</p>';
+  } else {
+    if(r.archHits.length){
+      h+='<h3 class="mt">สายที่เกี่ยวข้อง</h3><div class="grid g2">'+r.archHits.map(function(a){
+        return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-arch="'+a.id+'">'+
+          '<h4 class="mt" style="margin:0">'+esc(a.nameTh)+'</h4><p class="tiny mono">'+esc(a.tier)+'</p>'+
+          '<p class="small muted" style="margin-top:6px">'+esc(a.desc)+'</p></button>';
+      }).join('')+'</div>';
+    }
+    if(r.cardHits.length){
+      h+='<h3 class="mt" style="margin-top:16px">การ์ดที่พบ</h3><div class="cgrid">'+r.cardHits.map(function(c){return cardTile(c,{});}).join('')+'</div>';
+    }
+  }
+  if(r.deckHits.length){
+    h+='<h3 class="mt" style="margin-top:16px">เด็คในคลังที่เกี่ยวข้อง</h3><div class="grid g2">'+r.deckHits.map(function(d){
+      return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-go="decklib">'+
+        '<h4 class="mt" style="margin:0">'+esc(d.name)+'</h4>'+
+        '<p class="tiny mono">'+esc(statLine(d))+'</p></button>';
+    }).join('')+'</div>';
+  }
+  if(!h) h='<p class="small muted">ไม่พบข้อมูลที่เกี่ยวข้องกับคำถามนี้ ลองพิมพ์ชื่อการ์ดหรือชื่อสาย (archetype) ให้ชัดเจนขึ้น</p>';
+  return h;
+}
+V.advisor=function(){
+  return '<h1 class="vt">ผู้ช่วยแนะนำ</h1>'+
+  '<p class="vsub">พิมพ์คำถามเกี่ยวกับเด็ค/การ์ด/สาย — ระบบจับคำสำคัญค้นหาจากฐานข้อมูลที่มีในแอปให้ (ไม่ใช่ AI ที่เข้าใจภาษาจริงๆ แค่จับคู่คำตรงไปตรงมา)</p>'+
+  '<div class="filters"><input type="search" id="advq" placeholder="เช่น อยากได้เด็คต้าน Thanos Fractured Frontier, มีการ์ด Venus จะเล่นสายไหนดี…" style="min-width:280px;flex:1"></div>'+
+  '<div id="advisorResult" style="margin-top:14px">'+advisorResultHTML(null)+'</div>';
+};
 
 /* ---------- analyze ---------- */
 V.analyze=function(){
@@ -2157,6 +2245,15 @@ function bindLocal(){
     var t3;
     dfq.addEventListener('input',function(){clearTimeout(t3);var val=dfq.value;
       t3=setTimeout(function(){deckF.q=val;renderDeckLib();},220);});
+  }
+  var advq=$('#advq');
+  if(advq){
+    var tAdv;
+    advq.addEventListener('input',function(){clearTimeout(tAdv);var val=advq.value;
+      tAdv=setTimeout(function(){
+        var box=document.getElementById('advisorResult');
+        if(box) box.innerHTML=advisorResultHTML(answerAdvisor(val));
+      },250);});
   }
   ['dfarch','dftier','dfsort'].forEach(function(id){
     var el=document.getElementById(id); if(!el) return;
