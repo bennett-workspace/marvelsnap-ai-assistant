@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.006",
+  "latestVersion": "2026.08.16.007",
   "schemaVersion": 1,
   "patches": [
     {
@@ -55,6 +55,15 @@
       "releasedAt": "2026-08-17T12:00:00Z",
       "source": "marvelsnapzone.com weekly meta 2026-08-17 + card release",
       "summary": "อัปเดตเมตาประจำสัปดาห์ (17 ส.ค. 2026, Fractured Frontier สัปดาห์ที่ 2) — แทนที่เด็คเก่าทั้ง 9 เด็คด้วย 13 เด็คใหม่จริงจาก Marvel Snap Zone พร้อมเพิ่มการ์ด Death Fractured Frontier ที่เปิดให้เล่นแล้ว (5/8, On Reveal: ชุบชีวิตตัวละครที่ถูกทำลายทั้งหมด)"
+    },
+    {
+      "version": "2026.08.16.007",
+      "fromVersion": "2026.08.16.006",
+      "url": "patches/2026.08.16.007.json",
+      "sha256": "5c289b0d1f9440ec9d3150449243b1d3bbff9ac00c283f4d44f9a124383c537f",
+      "releasedAt": "2026-08-20T00:00:00Z",
+      "source": "marvelsnapzone.com weekly meta archives (Jun 22 - Aug 3, 2026)",
+      "summary": "เพิ่ม 50 เด็คใหม่ที่ไม่ซ้ำกันเข้าคลังเด็ค รวบรวมจากตารางเมตารายสัปดาห์ของ Marvel Snap Zone ย้อนหลัง 7 สัปดาห์ (22 มิ.ย. - 3 ส.ค. 2026) ทุกเด็คมี Cube Average/Win Rate จริงตามที่รายงานไว้ ณ ตอนนั้น การ์ดบางใบอาจมีค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้"
     }
   ]
 }

@@ -1,0 +1,1415 @@
+{
+  "version": "2026.08.16.007",
+  "fromVersion": "2026.08.16.006",
+  "schemaVersion": 1,
+  "releasedAt": "2026-08-20T00:00:00Z",
+  "source": "marvelsnapzone.com weekly meta archives (Jun 22 - Aug 3, 2026)",
+  "summary": "เพิ่ม 50 เด็คใหม่ที่ไม่ซ้ำกันเข้าคลังเด็ค รวบรวมจากตารางเมตารายสัปดาห์ของ Marvel Snap Zone ย้อนหลัง 7 สัปดาห์ (22 มิ.ย. - 3 ส.ค. 2026) ทุกเด็คมี Cube Average/Win Rate จริงตามที่รายงานไว้ ณ ตอนนั้น การ์ดบางใบอาจมีค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-0-buffed-zombies",
+        "name": "Buffed Zombies",
+        "tier": "Tier 1",
+        "cube": 1.1,
+        "wr": 66,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed Zombies เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 1.10 · Win Rate 66%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Majestic Wingbeat",
+          "The Hunger",
+          "Kitty Pryde",
+          "Nightcrawler",
+          "Zombie Sentry",
+          "Jeff the Baby Dolphin!?",
+          "Zombie Mister Fantastic",
+          "Venus",
+          "Zombie Scarlet Witch",
+          "Mother Askani",
+          "Absorbing Man",
+          "Zombie Giant-Man"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-1-zombie-galacti",
+        "name": "Zombie Galacti",
+        "tier": "Tier 1",
+        "cube": 1.3,
+        "wr": 64,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Zombie Galacti เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 1.30 · Win Rate 64%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Majestic Wingbeat",
+          "America Chavez",
+          "Nico Minoru",
+          "Adam Warlock",
+          "Surge",
+          "Forge",
+          "Magik",
+          "Maverick",
+          "Superior Spider-Man",
+          "Stick",
+          "Gwenpool",
+          "Zombie Galacti"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-2-nimrolactus",
+        "name": "Nimrolactus",
+        "tier": "Tier 1",
+        "cube": 1.3,
+        "wr": 64,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Nimrolactus เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 1.30 · Win Rate 64%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Fastball Special",
+          "Kid Omega",
+          "Carnage",
+          "Magik",
+          "Venom",
+          "Adamantium Infusion",
+          "Shuri",
+          "Symbiote Spider-Man",
+          "Black Panther",
+          "Nimrod",
+          "Arnim Zola",
+          "Galactus"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-3-war-machine-ramp",
+        "name": "War Machine Ramp",
+        "tier": null,
+        "cube": 0.65,
+        "wr": 63,
+        "games": null,
+        "arch": "ramp",
+        "note": "เด็ค War Machine Ramp เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.65 · Win Rate 63%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Chamber",
+          "Lockjaw",
+          "Electro",
+          "Jubilee",
+          "Dragon Lord",
+          "Blink",
+          "War Machine",
+          "Arnim Zola",
+          "Galactus First Steps",
+          "Giganto",
+          "The Infinaut",
+          "Fin Fang Foom"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-4-high-evo-control",
+        "name": "High Evo Control",
+        "tier": "Tier 2",
+        "cube": 0.9,
+        "wr": 62.5,
+        "games": null,
+        "arch": "highevo",
+        "note": "เด็ค High Evo Control เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.90 · Win Rate 62.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Sunspot",
+          "Misty Knight",
+          "Armor",
+          "Scorpion",
+          "Shocker",
+          "Cyclops",
+          "Shang-Chi",
+          "High Evolutionary",
+          "The Thing",
+          "Enchantress",
+          "Abomination",
+          "Hulk"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-5-fantomex",
+        "name": "Fantomex",
+        "tier": "Tier 1",
+        "cube": 0.45,
+        "wr": 62.5,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Fantomex เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 12 ก.ค. 2026 (Cube 0.45 · Win Rate 62.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Moira X",
+          "Nico Minoru",
+          "Blade",
+          "Wild Child",
+          "Carnage",
+          "Marrow",
+          "Angel",
+          "Gambit",
+          "Venom",
+          "Air-Walker",
+          "Morgan le Fay",
+          "Fantomex"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-6-iron-hand",
+        "name": "Iron Hand",
+        "tier": "Tier 2",
+        "cube": 0.75,
+        "wr": 62.5,
+        "games": null,
+        "arch": "created",
+        "note": "เด็ค Iron Hand เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.75 · Win Rate 62.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Majestic Wingbeat",
+          "Quinjet",
+          "Nico Minoru",
+          "Victoria Hand",
+          "Iron Patriot",
+          "Mirage",
+          "Valentina",
+          "Gambit",
+          "Gambit Horseman of Death",
+          "Mother Askani",
+          "Moon Girl",
+          "Sasquatch"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-7-virused-10-power",
+        "name": "Virused 10 Power",
+        "tier": "Tier 1",
+        "cube": 0.6,
+        "wr": 62,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค Virused 10 Power เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.60 · Win Rate 62%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "King Eitri",
+          "Techno-Organic Virus",
+          "Tarantula",
+          "Scarlet Witch",
+          "Shadowlands Daredevil",
+          "Lizard",
+          "Shadow King",
+          "Starbrand",
+          "Wilson Fisk",
+          "Sasquatch",
+          "Skaar",
+          "Monstro"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-8-buffed-1-costs",
+        "name": "Buffed 1-Costs",
+        "tier": "Tier 2",
+        "cube": 0.9,
+        "wr": 62,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed 1-Costs เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.90 · Win Rate 62%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Kitty Pryde",
+          "Spider-Man Brand New Day",
+          "Clea",
+          "Nightcrawler",
+          "Jeff the Baby Dolphin!?",
+          "Merlin",
+          "Angela",
+          "Bishop",
+          "Marvel Boy",
+          "Venus",
+          "Elsa Bloodstone",
+          "Shang-Chi"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-9-high-power-summons",
+        "name": "High Power Summons",
+        "tier": "Tier 2",
+        "cube": 0.7,
+        "wr": 61.5,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค High Power Summons เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.70 · Win Rate 61.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Chamber",
+          "Lockjaw",
+          "Astral Projection",
+          "Caliban Horseman of Pestilence",
+          "Jubilee",
+          "Dragon Lord",
+          "Blink",
+          "Arnim Zola",
+          "Hulk",
+          "Giganto",
+          "The Infinaut",
+          "Skaar"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-10-lockdown-move",
+        "name": "Lockdown Move",
+        "tier": "Tier 1",
+        "cube": 0.35,
+        "wr": 61,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Lockdown Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.35 · Win Rate 61%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Batroc the Leaper",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Kraven",
+          "Sam Wilson Captain America",
+          "Silk",
+          "Cosmo",
+          "Hydra Stomper",
+          "Mary Jane",
+          "Viv Vision",
+          "Professor X",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-11-pure-move",
+        "name": "Pure Move",
+        "tier": "Tier 2",
+        "cube": 0.7,
+        "wr": 61,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Pure Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.70 · Win Rate 61%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Batroc the Leaper",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Madame Web",
+          "Kraven",
+          "Sam Wilson Captain America",
+          "Silk",
+          "Hydra Stomper",
+          "Mary Jane",
+          "Mother Askani",
+          "Miles Morales Spider-Man",
+          "Heimdall"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-12-buffed-1-cost",
+        "name": "Buffed 1-cost",
+        "tier": "Tier 2",
+        "cube": 0.35,
+        "wr": 60,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed 1-cost เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.35 · Win Rate 60%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Kitty Pryde",
+          "Sub-Mariner",
+          "Clea",
+          "Nightcrawler",
+          "Jeff the Baby Dolphin!?",
+          "Angela",
+          "Bishop",
+          "Marvel Boy",
+          "Mobius M. Mobius",
+          "Venus",
+          "Elsa Bloodstone",
+          "Shang-Chi"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-13-supergiant-rocks",
+        "name": "Supergiant Rocks",
+        "tier": "Tier 1",
+        "cube": 0.55,
+        "wr": 59.5,
+        "games": null,
+        "arch": "junk",
+        "note": "เด็ค Supergiant Rocks เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.55 · Win Rate 59.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Nightcrawler",
+          "Hydra Bob",
+          "Askani'son",
+          "Iron Patriot",
+          "Rhino",
+          "Cosmo",
+          "Shadow King",
+          "Debrii",
+          "Negasonic Teenage Warhead",
+          "Supergiant",
+          "Wilson Fisk",
+          "Ozymandias"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-14-flexible-lockdown",
+        "name": "Flexible Lockdown",
+        "tier": "Tier 2",
+        "cube": 0.4,
+        "wr": 59.5,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Flexible Lockdown เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.40 · Win Rate 59.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Majestic Wingbeat",
+          "Iceman",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Jeff the Baby Land Shark",
+          "Mysterio",
+          "Rocket and Groot",
+          "Mercury",
+          "Isca the Unbeaten",
+          "Professor X",
+          "The Thing First Steps",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-15-buffed-surfer",
+        "name": "Buffed Surfer",
+        "tier": "Tier 3",
+        "cube": 0.9,
+        "wr": 59.5,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed Surfer เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.90 · Win Rate 59.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Agony",
+          "Spider-Man Brand New Day",
+          "Grand Master",
+          "Storm Horseman of Famine",
+          "Brood",
+          "Captain Carter",
+          "Maverick",
+          "Silver Surfer",
+          "Hope Summers",
+          "Prodigy",
+          "Stick",
+          "Mother Askani"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-16-move",
+        "name": "Move",
+        "tier": "Tier 1",
+        "cube": 0.5,
+        "wr": 59,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.50 · Win Rate 59%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Araña",
+          "Ghost-Spider",
+          "Iron Fist",
+          "Madame Web",
+          "Hulkbuster",
+          "Peni Parker",
+          "Doctor Strange",
+          "Multiple Man",
+          "Human Torch",
+          "Isca the Unbeaten",
+          "Juggernaut",
+          "Symbiote Spider-Man"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-17-end-of-turn-2099",
+        "name": "End of Turn 2099",
+        "tier": "Tier 2",
+        "cube": 0.45,
+        "wr": 58.5,
+        "games": null,
+        "arch": "eot",
+        "note": "เด็ค End of Turn 2099 เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.45 · Win Rate 58.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Moondragon",
+          "Sam Wilson Captain America",
+          "Drax, Avatar Of Life",
+          "Invisible Woman First Steps",
+          "Caliban Horseman of Pestilence",
+          "Isca the Unbeaten",
+          "Doctor Doom 2099",
+          "Iron Lad",
+          "Cosmic Ghost Rider",
+          "Sandman",
+          "Doctor Doom",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-18-scream-move",
+        "name": "Scream Move",
+        "tier": null,
+        "cube": 0.3,
+        "wr": 58.5,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Scream Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 20 ก.ค. 2026 (Cube 0.30 · Win Rate 58.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Batroc the Leaper",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Scream",
+          "Kraven",
+          "Sam Wilson Captain America",
+          "Silk",
+          "Prowler",
+          "Polaris",
+          "Stegron",
+          "Aero",
+          "Magneto"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-19-discard-combo",
+        "name": "Discard Combo",
+        "tier": null,
+        "cube": 0.45,
+        "wr": 58.5,
+        "games": null,
+        "arch": "discard",
+        "note": "เด็ค Discard Combo เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.45 · Win Rate 58.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Miek",
+          "Spider-Ham",
+          "Morbius",
+          "Marrow",
+          "Wolverine",
+          "Invisible Woman",
+          "Daken",
+          "Moon Girl",
+          "Supergiant",
+          "Proxima Midnight",
+          "M.O.D.O.K.",
+          "Blink"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-20-high-power-black-bolt",
+        "name": "High Power Black Bolt",
+        "tier": null,
+        "cube": 0.25,
+        "wr": 58,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค High Power Black Bolt เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.25 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "King Eitri",
+          "Hydra Bob",
+          "Adam Warlock",
+          "Marrow",
+          "Shadowlands Daredevil",
+          "Lizard",
+          "Shadow King",
+          "Silver Samurai",
+          "Stature",
+          "Black Bolt",
+          "Enchantress",
+          "Wilson Fisk"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-21-flexible-move",
+        "name": "Flexible Move",
+        "tier": "Tier 2",
+        "cube": 0.35,
+        "wr": 58,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Flexible Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.35 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Batroc the Leaper",
+          "Spider-Man Brand New Day",
+          "Luke Cage",
+          "Kraven",
+          "Sam Wilson Captain America",
+          "Silk",
+          "Cosmo",
+          "Hydra Stomper",
+          "Mercury",
+          "Isca the Unbeaten",
+          "Miles Morales Spider-Man",
+          "Hellion"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-22-buffed-move",
+        "name": "Buffed Move",
+        "tier": "Tier 2",
+        "cube": 0.5,
+        "wr": 58,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Buffed Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 12 ก.ค. 2026 (Cube 0.50 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Web Sling",
+          "Araña",
+          "Ghost-Spider",
+          "Madame Web",
+          "Peni Parker",
+          "Doctor Strange",
+          "Multiple Man",
+          "Human Torch",
+          "Cosmo",
+          "Isca the Unbeaten",
+          "Juggernaut",
+          "Symbiote Spider-Man"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-23-discard-dracula",
+        "name": "Discard Dracula",
+        "tier": "Tier 3",
+        "cube": 0.45,
+        "wr": 58,
+        "games": null,
+        "arch": "discard",
+        "note": "เด็ค Discard Dracula เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 12 ก.ค. 2026 (Cube 0.45 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Scorn",
+          "Blade",
+          "Morbius",
+          "Colleen Wing",
+          "Gambit",
+          "Corvus Glaive",
+          "Lady Sif",
+          "Dracula",
+          "Proxima Midnight",
+          "M.O.D.O.K.",
+          "Khonshu",
+          "Apocalypse"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-24-blind-power",
+        "name": "Blind Power",
+        "tier": null,
+        "cube": 0.4,
+        "wr": 58,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค Blind Power เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.40 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Squirrel Girl",
+          "King Eitri",
+          "Adam Warlock",
+          "Strange Supreme",
+          "Askani'son",
+          "Shadowlands Daredevil",
+          "Cosmo",
+          "Venus",
+          "Debrii",
+          "Crossbones",
+          "Professor X",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-25-buffed-aurora",
+        "name": "Buffed Aurora",
+        "tier": "Tier 3",
+        "cube": 0.2,
+        "wr": 57.5,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed Aurora เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.20 · Win Rate 57.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Spider-Ham",
+          "Hydra Bob",
+          "Zombie Mister Fantastic",
+          "Awesome Andy",
+          "H.E.R.B.I.E.",
+          "Sam Wilson Captain America",
+          "Cosmo",
+          "Drax, Avatar Of Life",
+          "Venus",
+          "Isca the Unbeaten",
+          "The Thing First Steps",
+          "Aurora"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-26-created-on-reveal",
+        "name": "Created On Reveal",
+        "tier": "Tier 1",
+        "cube": 0.6,
+        "wr": 57.5,
+        "games": null,
+        "arch": "created",
+        "note": "เด็ค Created On Reveal เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.60 · Win Rate 57.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Quinjet",
+          "King Eitri",
+          "Iron Patriot",
+          "Lady Bullseye",
+          "Valentina",
+          "Sage",
+          "Prodigy",
+          "Gambit Horseman of Death",
+          "Luna Snow",
+          "Wong",
+          "Mother Askani",
+          "Agamotto"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-27-small-buffed-cards",
+        "name": "Small Buffed Cards",
+        "tier": "Tier 2",
+        "cube": 0.45,
+        "wr": 57,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Small Buffed Cards เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.45 · Win Rate 57%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Kitty Pryde",
+          "Spider-Man Brand New Day",
+          "Clea",
+          "Nightcrawler",
+          "Jeff the Baby Dolphin!?",
+          "Angela",
+          "Bishop",
+          "Marvel Boy",
+          "Cosmo",
+          "Venus",
+          "Elsa Bloodstone",
+          "Shang-Chi"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-28-nimrod-destroy",
+        "name": "Nimrod Destroy",
+        "tier": "Tier 2",
+        "cube": 0.4,
+        "wr": 57,
+        "games": null,
+        "arch": "destroy",
+        "note": "เด็ค Nimrod Destroy เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 20 ก.ค. 2026 (Cube 0.40 · Win Rate 57%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Fastball Special",
+          "Kid Omega",
+          "Carnage",
+          "Magik",
+          "Venom",
+          "Adamantium Infusion",
+          "Shuri",
+          "Phoenix Force",
+          "Symbiote Spider-Man",
+          "Black Panther",
+          "Nimrod",
+          "Arnim Zola"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-29-ongoing-affliction",
+        "name": "Ongoing Affliction",
+        "tier": "Tier 2",
+        "cube": 0.4,
+        "wr": 56,
+        "games": null,
+        "arch": "ongoing",
+        "note": "เด็ค Ongoing Affliction เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.40 · Win Rate 56%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Luke Cage",
+          "Lady Bullseye",
+          "Scorpion",
+          "Mystique",
+          "Magik",
+          "Hazmat",
+          "Rogue",
+          "Prodigy",
+          "The Ancient One",
+          "Luna Snow",
+          "Blink",
+          "Scorpion Brand New Day"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-30-end-of-turn",
+        "name": "End of Turn",
+        "tier": "Tier 2",
+        "cube": 0.5,
+        "wr": 56,
+        "games": null,
+        "arch": "eot",
+        "note": "เด็ค End of Turn เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.50 · Win Rate 56%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Sunspot",
+          "Black Cat",
+          "Hydra Bob",
+          "Adam Warlock",
+          "Thena",
+          "Havok",
+          "Invisible Woman First Steps",
+          "Jocasta",
+          "Venus",
+          "Prodigy",
+          "Isca the Unbeaten",
+          "Fantasticar"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-31-virused-creation",
+        "name": "Virused Creation",
+        "tier": null,
+        "cube": 0.5,
+        "wr": 55.5,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค Virused Creation เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.50 · Win Rate 55.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Quinjet",
+          "Loki",
+          "Nico Minoru",
+          "Techno-Organic Virus",
+          "Surge",
+          "Mirage",
+          "Valentina",
+          "Shadow King",
+          "Copycat",
+          "Gambit Horseman of Death",
+          "Mother Askani",
+          "Stardust"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-32-dormammu-destroy",
+        "name": "Dormammu Destroy",
+        "tier": "Tier 3",
+        "cube": 0.2,
+        "wr": 55,
+        "games": null,
+        "arch": "destroy",
+        "note": "เด็ค Dormammu Destroy เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.20 · Win Rate 55%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "X-23",
+          "Squirrel Girl",
+          "Uncle Ben",
+          "Bucky Barnes",
+          "Carnage",
+          "Weapon X Wolverine",
+          "Killmonger",
+          "Muse",
+          "Venom",
+          "Debrii",
+          "Dormammu",
+          "Death"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-33-virused-high-power",
+        "name": "Virused High Power",
+        "tier": "Tier 3",
+        "cube": 0.2,
+        "wr": 54.5,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค Virused High Power เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.20 · Win Rate 54.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Quinjet",
+          "Martyr",
+          "Techno-Organic Virus",
+          "Punisher War Machine",
+          "Lizard",
+          "Shadow King",
+          "Starbrand",
+          "Ares",
+          "Wilson Fisk",
+          "Sasquatch",
+          "Skaar",
+          "Monstro"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-34-4-costs-afflict",
+        "name": "4-Costs Afflict",
+        "tier": "Tier 3",
+        "cube": 0.25,
+        "wr": 54,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค 4-Costs Afflict เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.25 · Win Rate 54%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Zabu",
+          "Surge",
+          "Luke Cage",
+          "Scorpion",
+          "Rogue",
+          "Caliban Horseman of Pestilence",
+          "Omega Sentinel",
+          "Anti-Venom",
+          "Iron Lad",
+          "Man-Thing",
+          "Blink",
+          "Scorpion Brand New Day"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-35-hela-discard",
+        "name": "Hela Discard",
+        "tier": "Tier 3",
+        "cube": 0.25,
+        "wr": 54,
+        "games": null,
+        "arch": "discard",
+        "note": "เด็ค Hela Discard เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.25 · Win Rate 54%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Blade",
+          "Lockjaw",
+          "Gambit",
+          "Lady Sif",
+          "Jubilee",
+          "Ghost Rider",
+          "Iron Man",
+          "Hela",
+          "Odin",
+          "The Infinaut",
+          "Skaar",
+          "Death"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-36-arishem-disrupts",
+        "name": "Arishem Disrupts",
+        "tier": "Tier 2",
+        "cube": 0.35,
+        "wr": 53.5,
+        "games": null,
+        "arch": "arishem",
+        "note": "เด็ค Arishem Disrupts เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.35 · Win Rate 53.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Merlin",
+          "Valentina",
+          "Cable",
+          "Killmonger",
+          "Gambit Horseman of Death",
+          "Shang-Chi",
+          "Galacta",
+          "Stardust",
+          "Cosmic Ghost Rider",
+          "Legion",
+          "Doctor Doom",
+          "Arishem"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-37-buffed-4-costs",
+        "name": "Buffed 4-costs",
+        "tier": null,
+        "cube": 0.2,
+        "wr": 53,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed 4-costs เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.20 · Win Rate 53%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Zabu",
+          "Surge",
+          "Jeff the Baby Dolphin!?",
+          "Mister Sinister",
+          "Psylocke",
+          "Brood",
+          "Viv Vision",
+          "Isca the Unbeaten",
+          "Jubilee Silver Surfer",
+          "Stick",
+          "Galacta",
+          "Iron Lad"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-38-high-evo-control-3-ส-ค",
+        "name": "High Evo Control (3 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.5,
+        "wr": 60.5,
+        "games": null,
+        "arch": "highevo",
+        "note": "เด็ค High Evo Control เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.50 · Win Rate 60.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Nebula",
+          "Misty Knight",
+          "Armor",
+          "Scorpion",
+          "Shocker",
+          "Cyclops",
+          "Shang-Chi",
+          "High Evolutionary",
+          "The Thing",
+          "Enchantress",
+          "Abomination",
+          "Hulk"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-39-lockdown-move-22-มิ-ย",
+        "name": "Lockdown Move (22 มิ.ย.)",
+        "tier": "Tier 2",
+        "cube": 0.35,
+        "wr": 60.5,
+        "games": null,
+        "arch": "move",
+        "note": "เด็ค Lockdown Move เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.35 · Win Rate 60.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Batroc the Leaper",
+          "Nightcrawler",
+          "Kraven",
+          "Sam Wilson Captain America",
+          "Silk",
+          "Cosmo",
+          "Drax, Avatar Of Life",
+          "Hydra Stomper",
+          "Viv Vision",
+          "Negasonic Teenage Warhead",
+          "Professor X",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-40-iron-hand-12-ก-ค",
+        "name": "Iron Hand (12 ก.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.55,
+        "wr": 60.5,
+        "games": null,
+        "arch": "created",
+        "note": "เด็ค Iron Hand เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 12 ก.ค. 2026 (Cube 0.55 · Win Rate 60.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Majestic Wingbeat",
+          "Quinjet",
+          "Nico Minoru",
+          "Victoria Hand",
+          "Grand Master",
+          "Iron Patriot",
+          "Mirage",
+          "Mobius M. Mobius",
+          "Gambit Horseman of Death",
+          "Mother Askani",
+          "Moon Girl",
+          "Sasquatch"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-41-supergiant-rocks-5-ก-ค",
+        "name": "Supergiant Rocks (5 ก.ค.)",
+        "tier": "Tier 3",
+        "cube": 0.65,
+        "wr": 59,
+        "games": null,
+        "arch": "junk",
+        "note": "เด็ค Supergiant Rocks เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 5 ก.ค. 2026 (Cube 0.65 · Win Rate 59%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Spider-Man Brand New Day",
+          "Hydra Bob",
+          "Askani'son",
+          "Iron Patriot",
+          "Rhino",
+          "Cosmo",
+          "Shadow King",
+          "Debrii",
+          "Supergiant",
+          "Valkyrie",
+          "Wilson Fisk",
+          "Ozymandias"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-42-high-power-summons-22-มิ-ย",
+        "name": "High Power Summons (22 มิ.ย.)",
+        "tier": "Tier 1",
+        "cube": 0.6,
+        "wr": 59,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค High Power Summons เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.60 · Win Rate 59%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Quicksilver",
+          "Domino",
+          "Caliban Horseman of Pestilence",
+          "Debrii",
+          "Jubilee",
+          "En Sabah Nur",
+          "Dragon Lord",
+          "Blink",
+          "Hulk",
+          "Giganto",
+          "The Infinaut",
+          "Fin Fang Foom"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-43-virused-10-power-3-ส-ค",
+        "name": "Virused 10 Power (3 ส.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.4,
+        "wr": 58,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค Virused 10 Power เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 3 ส.ค. 2026 (Cube 0.40 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "King Eitri",
+          "Adam Warlock",
+          "Techno-Organic Virus",
+          "Tarantula",
+          "Shadowlands Daredevil",
+          "Lizard",
+          "Shadow King",
+          "Starbrand",
+          "Wilson Fisk",
+          "Sasquatch",
+          "Skaar",
+          "Monstro"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-44-buffed-surfer-22-มิ-ย",
+        "name": "Buffed Surfer (22 มิ.ย.)",
+        "tier": "Tier 2",
+        "cube": 0.5,
+        "wr": 58,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed Surfer เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 22 มิ.ย. 2026 (Cube 0.50 · Win Rate 58%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Nova",
+          "Forge",
+          "Jeff the Baby Dolphin!?",
+          "Brood",
+          "Captain Carter",
+          "Silver Surfer",
+          "Killmonger",
+          "Venus",
+          "Viv Vision",
+          "Sebastian Shaw",
+          "Mother Askani",
+          "Sera"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-45-supergiant-rocks-27-ก-ค",
+        "name": "Supergiant Rocks (27 ก.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.35,
+        "wr": 57.5,
+        "games": null,
+        "arch": "junk",
+        "note": "เด็ค Supergiant Rocks เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 27 ก.ค. 2026 (Cube 0.35 · Win Rate 57.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Spider-Man Brand New Day",
+          "Hydra Bob",
+          "Askani'son",
+          "Iron Patriot",
+          "Rhino",
+          "Cosmo",
+          "Shadow King",
+          "Debrii",
+          "Negasonic Teenage Warhead",
+          "Supergiant",
+          "Wilson Fisk",
+          "Ozymandias"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-46-discard-combo-20-ก-ค",
+        "name": "Discard Combo (20 ก.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.55,
+        "wr": 57.5,
+        "games": null,
+        "arch": "discard",
+        "note": "เด็ค Discard Combo เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 20 ก.ค. 2026 (Cube 0.55 · Win Rate 57.5%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Miek",
+          "Scorn",
+          "Morbius",
+          "The Collector",
+          "Marrow",
+          "Wolverine",
+          "Daken",
+          "Moon Girl",
+          "Supergiant",
+          "Proxima Midnight",
+          "M.O.D.O.K.",
+          "Blink"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-47-zombie-galacti-12-ก-ค",
+        "name": "Zombie Galacti (12 ก.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.6,
+        "wr": 57,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Zombie Galacti เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 12 ก.ค. 2026 (Cube 0.60 · Win Rate 57%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Majestic Wingbeat",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Martyr",
+          "Adam Warlock",
+          "Surge",
+          "Jeff the Baby Dolphin!?",
+          "Maverick",
+          "Hope Summers",
+          "Superior Spider-Man",
+          "Gwenpool",
+          "Zombie Galacti"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-48-high-power-summons-12-ก-ค",
+        "name": "High Power Summons (12 ก.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.6,
+        "wr": 57,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็ค High Power Summons เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 12 ก.ค. 2026 (Cube 0.60 · Win Rate 57%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Quicksilver",
+          "Domino",
+          "Debrii",
+          "Dracula",
+          "Jubilee",
+          "En Sabah Nur",
+          "Dragon Lord",
+          "Odin",
+          "Magneto",
+          "Hulk",
+          "Giganto",
+          "The Infinaut"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-49-buffed-surfer-29-มิ-ย",
+        "name": "Buffed Surfer (29 มิ.ย.)",
+        "tier": "Tier 1",
+        "cube": 0.5,
+        "wr": 57,
+        "games": null,
+        "arch": null,
+        "note": "เด็ค Buffed Surfer เคยติดตารางเมตาของ Marvel Snap Zone ช่วงวันที่ 29 มิ.ย. 2026 (Cube 0.50 · Win Rate 57%) เป็นข้อมูลสถิติจริงที่รายงานไว้ตอนนั้น อาจมีการ์ดบางใบที่ค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้",
+        "cards": [
+          "Storm Horseman of Famine",
+          "Brood",
+          "Captain Carter",
+          "Silver Surfer",
+          "Makkari",
+          "Rogue",
+          "Venus",
+          "Shadow King",
+          "Namorita",
+          "Sebastian Shaw",
+          "Mother Askani",
+          "Sera"
+        ]
+      }
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.007"
+    }
+  ]
+}
