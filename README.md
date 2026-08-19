@@ -1,33 +1,49 @@
-# Marvel Snap AI Assistant — Patch Data Repo
+# Marvel Snap Deck Builder AI
 
-This repo hosts patch data for the [Marvel Snap Deck Builder AI](https://github.com/bennett-workspace/marvelsnap-ai-assistant) single-file HTML tool.
+เครื่องมือจัดเด็ค Marvel Snap ที่ทำงานจากการ์ดที่คุณมีจริง แปลภาษาไทยทั้งการ์ดและ Location ครบ พร้อมระบบอัปเดตข้อมูล/แพตช์แบบไม่ต้องมี backend
 
-It contains **no server code** — the client app fetches `manifest.json` and patch files
-directly from this repo via [jsdelivr's GitHub CDN](https://www.jsdelivr.com/?docs=gh)
-(`cdn.jsdelivr.net/gh/...`), which serves public GitHub repo content with CORS enabled,
-so no backend is required.
+## 🔗 ใช้งานได้เลยที่นี่
 
-## Structure
+**[bennett-workspace.github.io/marvelsnap-ai-assistant/marvel-snap-deck-builder.html](https://bennett-workspace.github.io/marvelsnap-ai-assistant/marvel-snap-deck-builder.html)**
 
-- `manifest.json` — lists all available patch versions, their download URL, and SHA-256 hash
-- `patches/{version}.json` — individual patch files, each a small set of
-  [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) (RFC 6902) operations
-  (`add` / `replace` / `remove`) applied against the app's in-memory data — **not** a full
-  data replacement, so downloads stay small even as the card/location database grows.
+เปิดลิงก์นี้ในเบราว์เซอร์ได้เลย ไม่ต้องดาวน์โหลดหรือติดตั้งอะไร — ข้อมูล (การ์ดที่คุณมี, เด็คที่บันทึกไว้) จะถูกเก็บไว้ในเบราว์เซอร์ของคุณเองเท่านั้น (localStorage/IndexedDB) ไม่ส่งขึ้นเซิร์ฟเวอร์ไหนทั้งนั้น
 
-## Versioning
+## ✨ ฟีเจอร์หลัก
 
-Version strings are `YYYY.MM.DD.NNN` (date + sequence number), always increasing,
-so simple string comparison determines "newer".
+- **ฐานข้อมูลการ์ด 488 ใบ** — ครบทุกใบ พร้อมคำอธิบายความสามารถแปลไทยแบบธรรมชาติ (ไม่ใช่แปลตรงตัว), รูปภาพ Variant ทุกแบบ, ตัวกรองตาม Series/Archetype/กลไก
+- **ประวัติการปรับสมดุล (บัฟ/เนิร์ฟ)** ต่อการ์ด — ย้อนดูได้ว่าการ์ดแต่ละใบเคยถูกปรับอะไรมาบ้าง พร้อม badge "▲ บัฟ / ▼ เนิร์ฟ / NEW" บนการ์ดที่เพิ่งเปลี่ยนใน 21 วันล่าสุด
+- **เด็คแนะนำอัจฉริยะ** — วิเคราะห์จากการ์ดที่คุณมีจริง แยกชัดเจนระหว่าง "สร้างได้เลยตอนนี้" กับ "ขาดอีกกี่ใบ" ไม่ยัดการ์ดสุ่มๆ มาให้ครบ 12 ใบ
+- **คลังเด็ค (Deck Library)** — เด็คตัวอย่างกว่า 60 เด็ค ทั้งจากเมตาจริง (Cube/Win Rate จริงจาก Marvel Snap Zone) และเด็คมือใหม่ Pool 1-3 ที่คัดมาเอง มีตัวกรองค้นหา + ปุ่มโค้ดลงเกม
+- **เมตาปัจจุบัน** — ตารางเมตารายสัปดาห์ พร้อมลิงก์แหล่งข้อมูลจริงทุกจุด
+- **Locations, Series, Variants, Variant Artists** — ฐานข้อมูลแยกหมวดครบ
+- **ระบบอัปเดต Patch ในตัว** — กดปุ่มเดียวอัปเดตข้อมูลใหม่ (ค่าพลัง, การ์ดใหม่, เมตา) โดยไม่ต้องโหลดไฟล์ใหม่ทั้งไฟล์ พร้อมแจ้งเตือนอัตโนมัติเมื่อมีแพตช์ใหม่ และย้อนกลับเวอร์ชันได้หลายขั้นถ้าแพตช์มีปัญหา
 
-## How a patch gets published
+## 🧩 ระบบอัปเดตข้อมูล (ไม่มี backend)
 
-There's no automated pipeline (by design — no backend to run one). A patch is authored by:
-1. Comparing the current live Marvel Snap data (cards, locations, balance changes) against
-   what's already baked into the client, usually via a Claude session doing the research/scraping
-2. Writing the diff as a `patches/{version}.json` file
-3. Computing its SHA-256 and adding an entry to `manifest.json`
-4. Committing and pushing
+ตัวแอปเป็นไฟล์ HTML เดียวโหลดจาก GitHub Pages — แต่ **ข้อมูล** (ค่าพลังการ์ด, เมตา, เด็คตัวอย่าง) แยกเก็บใน repo นี้ แล้วให้แอปดึงมาอัปเดตเองได้แบบ diff-only (ไม่โหลดข้อมูลทั้งก้อนใหม่ทุกครั้ง) ผ่าน [raw.githubusercontent.com](https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file) ซึ่งรองรับ CORS โดยไม่ต้องมี backend ใดๆ
 
-The client verifies the hash before applying anything, and keeps one previous snapshot in
-IndexedDB for one-step rollback if a patch turns out to be wrong.
+### โครงสร้าง repo
+
+- `marvel-snap-deck-builder.html` — ตัวแอปหลัก (โฮสต์ผ่าน GitHub Pages)
+- `manifest.json` — รายการเวอร์ชัน patch ทั้งหมด พร้อม URL และ SHA-256 hash สำหรับตรวจสอบความถูกต้อง
+- `patches/{version}.json` — ไฟล์ patch แต่ละเวอร์ชัน เป็นชุดคำสั่ง [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) (RFC 6902) แบบ `add` / `replace` / `remove` แก้เฉพาะจุดที่เปลี่ยน ไม่ใช่แทนที่ข้อมูลทั้งหมด — ไฟล์เลยเล็กแม้ฐานข้อมูลการ์ด/เด็คจะโตขึ้นเรื่อยๆ
+
+### ความปลอดภัยของข้อมูล
+
+- ตรวจ SHA-256 ก่อนติดตั้งทุกครั้ง — ถ้า hash ไม่ตรง (ไฟล์เสียหาย/ถูกแก้) จะยกเลิกทันที
+- ตรวจ schema version ก่อนติดตั้ง — patch ที่เขียนมาสำหรับแอปเวอร์ชันใหม่กว่าจะถูกพักไว้ ไม่ทำให้ข้อมูลพัง
+- เก็บ snapshot ย้อนหลังได้สูงสุด 10 เวอร์ชันใน IndexedDB — กด **ย้อนกลับ** ได้ทุกเมื่อถ้า patch มีปัญหา รวมถึงย้อนกลับไปข้อมูลตั้งต้นในไฟล์ได้เลย
+
+### เวอร์ชัน
+
+รูปแบบ `YYYY.MM.DD.NNN` (วันที่ + เลขลำดับ) เรียงจากน้อยไปมากเสมอ เทียบด้วย string ธรรมดาก็รู้ว่าอันไหนใหม่กว่า
+
+### ขั้นตอนออก patch ใหม่
+
+ไม่มีระบบอัตโนมัติ (ตั้งใจ เพราะไม่มี backend ให้รัน) ทำด้วยมือทุกครั้ง:
+1. เทียบข้อมูลปัจจุบันในเกมจริง (ค่าพลัง, การ์ดใหม่, เมตา) กับสิ่งที่ฝังอยู่ในแอป — ปกติทำผ่าน Claude ช่วยหาข้อมูล/ตรวจสอบ
+2. เขียน diff เป็นไฟล์ `patches/{version}.json`
+3. คำนวณ SHA-256 แล้วเพิ่มรายการใน `manifest.json`
+4. Commit + push
+
+ฝั่งแอปจะตรวจ hash ก่อนติดตั้งทุกครั้ง และมี snapshot ย้อนหลังให้ rollback ได้เสมอถ้า patch ผิดพลาด
