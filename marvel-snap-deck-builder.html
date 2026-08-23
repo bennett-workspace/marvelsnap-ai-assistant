@@ -70,6 +70,9 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .pill{font-family:var(--mono);font-size:11px;color:var(--ink2);border:1px solid var(--line);
   border-radius:999px;padding:6px 12px;white-space:nowrap}
 .pill b{color:var(--gold)}
+#syncstatus{background:transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+#syncstatus:hover{background:rgba(150,120,255,.1);color:var(--ink)}
+#syncstatus.synced{color:var(--grn);border-color:rgba(90,255,140,.4);background:rgba(90,255,140,.08)}
 .view{padding:24px 22px 70px;max-width:1600px;width:100%}
 @media(min-width:1900px){.view{max-width:2200px}}
 @media(min-width:2600px){.view{max-width:2600px}.sb{width:290px;flex:0 0 290px}}
@@ -274,6 +277,8 @@ th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink
         <kbd>/</kbd>
       </div>
       <span class="pill" id="ownpill">มี <b>0</b>/0</span>
+      <button class="pill" id="syncstatus" data-synccol="1" title="ซิงค์คอลเลกชันจากไฟล์ CollectionState.json ที่เกมสร้างไว้ในเครื่องคุณเอง — อ่านในเบราว์เซอร์ล้วนๆ ไม่อัปโหลดไฟล์ไปไหนทั้งนั้น">🔄 Sync your collection</button>
+      <input type="file" id="colsyncfile" accept="application/json,.json" style="display:none">
     </header>
     <main class="view" id="view" tabindex="-1"></main>
   </div>
@@ -646,13 +651,14 @@ function patchSectionHTML(){
 }
 
 /* ---------------- storage ---------------- */
-var K={col:'snapdb.collection.v1',decks:'snapdb.decks.v1',set:'snapdb.settings.v1'};
+var K={col:'snapdb.collection.v1',decks:'snapdb.decks.v1',set:'snapdb.settings.v1',syncedAt:'snapdb.collection.syncedAt.v1'};
 function load(k,dflt){try{var v=localStorage.getItem(k);return v?JSON.parse(v):dflt;}catch(e){return dflt;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}
   catch(e){toast('บันทึกไม่สำเร็จ — พื้นที่จัดเก็บของเบราว์เซอร์เต็ม ลองลบเด็คที่ไม่ใช้');return false;}}
 var col = new Set(load(K.col,[]).filter(function(i){return byId[i];}));
 var decks = load(K.decks,[]);
 var S = Object.assign({images:true,onlyOwned:false},load(K.set,{}));
+var lastSyncedAt = load(K.syncedAt,null);
 function saveCol(){save(K.col,Array.from(col));paintOwn();}
 function saveDecks(){save(K.decks,decks);}
 function saveSet(){save(K.set,S);}
@@ -1209,7 +1215,21 @@ function paintNav(){
 }
 function go(r){ route=r; paintNav(); render(); $('#sb').classList.remove('on');
   try{window.scrollTo(0,0);}catch(err){} $('#view').focus(); }
-function paintOwn(){ $('#ownpill').innerHTML='มี <b>'+col.size+'</b>/'+CARDS.length; }
+function paintOwn(){
+  $('#ownpill').innerHTML='มี <b>'+col.size+'</b>/'+CARDS.length;
+  var sb=$('#syncstatus');
+  if(sb){
+    if(lastSyncedAt){
+      sb.classList.add('synced');
+      sb.innerHTML='✓ Synced';
+      sb.title='ซิงค์ล่าสุด: '+fmtLocalDateTime(lastSyncedAt)+' — กดอีกครั้งเพื่อซิงค์ใหม่';
+    } else {
+      sb.classList.remove('synced');
+      sb.innerHTML='🔄 Sync your collection';
+      sb.title='ซิงค์คอลเลกชันจากไฟล์ CollectionState.json ที่เกมสร้างไว้ในเครื่องคุณเอง — อ่านในเบราว์เซอร์ล้วนๆ ไม่อัปโหลดไฟล์ไปไหนทั้งนั้น';
+    }
+  }
+}
 
 /* ---------------- views ---------------- */
 var V={};
@@ -2125,15 +2145,8 @@ V.settings=function(){
      '<button class="btn sm" data-exportcol="1">ส่งออกคอลเลกชัน</button>'+
      '<button class="btn sm" data-selectall="1">เลือกการ์ดทั้งหมด</button>'+
      '<button class="btn sm dgr" data-clearcol="1">ล้างคอลเลกชัน</button></div>'+
-    '<div class="note" style="margin-top:14px">'+
-     '<h3 class="mt" style="margin-top:0">📂 ซิงค์คอลเลกชันจากไฟล์เกม</h3>'+
-     '<p class="small muted">อ่านไฟล์ <code>CollectionState.json</code> ที่เกมสร้างไว้ในเครื่องคุณเอง — ประมวลผลในเบราว์เซอร์ล้วนๆ '+
-       'ไม่มีการอัปโหลดไฟล์ไปที่ไหนทั้งนั้น</p>'+
-     '<p class="tiny mono" style="margin-top:6px;word-break:break-all">%AppData%\\LocalLow\\Second Dinner\\SNAP\\Standalone\\States\\nvprod\\CollectionState.json</p>'+
-     '<div class="btnrow" style="margin-top:10px">'+
-      '<button class="btn sm pri" data-synccol="1">เลือกไฟล์ CollectionState.json</button>'+
-      '<input type="file" id="colsyncfile" accept="application/json,.json" style="display:none">'+
-     '</div></div>'+
+    '<p class="tiny" style="margin-top:10px">อยากซิงค์คอลเลกชันอัตโนมัติ กดปุ่ม "🔄 Sync your collection" มุมขวาบนของหน้าเว็บได้เลย'+
+      (lastSyncedAt?' · ซิงค์ล่าสุด '+fmtLocalDateTime(lastSyncedAt):'')+'</p>'+
     '<h3 class="mt">นำเข้าคอลเลกชัน</h3>'+
     '<p class="tiny">วางชื่อการ์ดบรรทัดละใบ หรือวางข้อความที่ส่งออกไว้ก่อนหน้า</p>'+
     '<textarea id="impcol" placeholder="Iron Man&#10;Shang-Chi&#10;High Evolutionary"></textarea>'+
@@ -2354,11 +2367,6 @@ function bindLocal(){
     var el=document.getElementById(id); if(!el) return;
     el.addEventListener('change',function(){deckF[id.slice(2)]=el.value;renderDeckLib();});
   });
-  var colsyncfile=$('#colsyncfile');
-  if(colsyncfile) colsyncfile.addEventListener('change',function(){
-    if(colsyncfile.files&&colsyncfile.files[0]) syncCollectionFromFile(colsyncfile.files[0]);
-    colsyncfile.value='';
-  });
   var lq=$('#lq');
   if(lq){var t2;lq.addEventListener('input',function(){clearTimeout(t2);var val=lq.value;
     t2=setTimeout(function(){locF.q=val;render();var e=$('#lq');if(e){e.focus();
@@ -2539,9 +2547,10 @@ function syncCollectionFromFile(file){
     var idList=Object.keys(ids);
     var matched=0, unmatched=0;
     idList.forEach(function(id){ if(byId[id]){ col.add(id); matched++; } else unmatched++; });
-    if(!matched){ toast('อ่านไฟล์ได้ แต่จับคู่การ์ดกับฐานข้อมูลไม่ได้เลย ('+idList.length+' รายการในไฟล์)'); return; }
+    if(!matched){ toast('ซิงค์ไม่สำเร็จ — จับคู่การ์ดกับฐานข้อมูลไม่ได้เลย'); return; }
     saveCol();
-    toast('ซิงค์สำเร็จ! พบการ์ดที่มี '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
+    lastSyncedAt=new Date().toISOString(); save(K.syncedAt,lastSyncedAt); paintOwn();
+    toast('✓ ซิงค์คอลเลกชันสำเร็จ! มีการ์ด '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
     go('collection');
   };
   reader.readAsText(file);
@@ -2625,6 +2634,13 @@ $('#ov').addEventListener('click',function(e){if(e.target===this) closeModal();}
 
 /* boot */
 paintNav(); paintOwn();
+(function(){
+  var colsyncfile=$('#colsyncfile');
+  if(colsyncfile) colsyncfile.addEventListener('change',function(){
+    if(colsyncfile.files&&colsyncfile.files[0]) syncCollectionFromFile(colsyncfile.files[0]);
+    colsyncfile.value='';
+  });
+})();
 (async function(){
   await loadStoredSnapshotIfAny(); // ใช้ snapshot ที่เคย patch ไว้ใน IndexedDB ถ้ามี (ไฟล์ .html ไม่ถูกแตะเลย)
   await refreshPatchState();
