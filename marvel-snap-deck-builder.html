@@ -653,7 +653,7 @@ function patchSectionHTML(){
 }
 
 /* ---------------- storage ---------------- */
-var K={col:'snapdb.collection.v1',decks:'snapdb.decks.v1',set:'snapdb.settings.v1',syncedAt:'snapdb.collection.syncedAt.v1'};
+var K={col:'snapdb.collection.v1',decks:'snapdb.decks.v1',set:'snapdb.settings.v1',syncedAt:'snapdb.collection.syncedAt.v1',collLevel:'snapdb.collection.level.v1'};
 function load(k,dflt){try{var v=localStorage.getItem(k);return v?JSON.parse(v):dflt;}catch(e){return dflt;}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}
   catch(e){toast('บันทึกไม่สำเร็จ — พื้นที่จัดเก็บของเบราว์เซอร์เต็ม ลองลบเด็คที่ไม่ใช้');return false;}}
@@ -661,6 +661,7 @@ var col = new Set(load(K.col,[]).filter(function(i){return byId[i];}));
 var decks = load(K.decks,[]);
 var S = Object.assign({images:true,onlyOwned:false},load(K.set,{}));
 var lastSyncedAt = load(K.syncedAt,null);
+var lastCollectionLevel = load(K.collLevel,null);
 function saveCol(){save(K.col,Array.from(col));paintOwn();}
 function saveDecks(){save(K.decks,decks);}
 function saveSet(){save(K.set,S);}
@@ -1218,7 +1219,10 @@ function paintNav(){
 function go(r){ route=r; paintNav(); render(); $('#sb').classList.remove('on');
   try{window.scrollTo(0,0);}catch(err){} $('#view').focus(); }
 function paintOwn(){
-  $('#ownpill').innerHTML='มี <b>'+col.size+'</b>/'+CARDS.length;
+  var op=$('#ownpill');
+  op.innerHTML='มี <b>'+col.size+'</b>/'+CARDS.length+
+    (lastCollectionLevel!=null?' · Lv.<b>'+lastCollectionLevel+'</b>':'');
+  op.title=lastCollectionLevel!=null?'Collection Level (Collection Score) จากไฟล์เกมของคุณ':'';
   var sb=$('#syncstatus');
   if(sb){
     if(lastSyncedAt){
@@ -2638,6 +2642,11 @@ function applyCollectionSyncText(text,opts){
     newSet.forEach(function(id){ col.add(id); });
     saveCol();
   }
+  /* Collection Level: เอกสารทางการของเกม (marvelsnap.helpshift.com) เรียกค่านี้ว่า
+     "Collection Level (or Collection Score)" ใช้แทนกันได้ — เลยเอาค่า Amount ตรงๆ มาโชว์
+     เป็น Level ได้เลย ไม่ใช่การเดา */
+  var scoreAmt=data.ServerState.CollectionScore&&data.ServerState.CollectionScore.Amount;
+  if(typeof scoreAmt==='number'){ lastCollectionLevel=scoreAmt; save(K.collLevel,scoreAmt); }
   lastSyncedAt=new Date().toISOString(); save(K.syncedAt,lastSyncedAt); paintOwn();
   if(!opts.silent || changed){
     toast((opts.silent?'🧩 ซิงค์อัตโนมัติจาก extension':'✓ ซิงค์คอลเลกชันสำเร็จ')+'! แทนที่คอลเลกชันเดิมด้วยการ์ดที่มีตอนนี้ '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
