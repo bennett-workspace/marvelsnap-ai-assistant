@@ -2125,6 +2125,15 @@ V.settings=function(){
      '<button class="btn sm" data-exportcol="1">ส่งออกคอลเลกชัน</button>'+
      '<button class="btn sm" data-selectall="1">เลือกการ์ดทั้งหมด</button>'+
      '<button class="btn sm dgr" data-clearcol="1">ล้างคอลเลกชัน</button></div>'+
+    '<div class="note" style="margin-top:14px">'+
+     '<h3 class="mt" style="margin-top:0">📂 ซิงค์คอลเลกชันจากไฟล์เกม</h3>'+
+     '<p class="small muted">อ่านไฟล์ <code>CollectionState.json</code> ที่เกมสร้างไว้ในเครื่องคุณเอง — ประมวลผลในเบราว์เซอร์ล้วนๆ '+
+       'ไม่มีการอัปโหลดไฟล์ไปที่ไหนทั้งนั้น</p>'+
+     '<p class="tiny mono" style="margin-top:6px;word-break:break-all">%AppData%\\LocalLow\\Second Dinner\\SNAP\\Standalone\\States\\nvprod\\CollectionState.json</p>'+
+     '<div class="btnrow" style="margin-top:10px">'+
+      '<button class="btn sm pri" data-synccol="1">เลือกไฟล์ CollectionState.json</button>'+
+      '<input type="file" id="colsyncfile" accept="application/json,.json" style="display:none">'+
+     '</div></div>'+
     '<h3 class="mt">นำเข้าคอลเลกชัน</h3>'+
     '<p class="tiny">วางชื่อการ์ดบรรทัดละใบ หรือวางข้อความที่ส่งออกไว้ก่อนหน้า</p>'+
     '<textarea id="impcol" placeholder="Iron Man&#10;Shang-Chi&#10;High Evolutionary"></textarea>'+
@@ -2345,6 +2354,11 @@ function bindLocal(){
     var el=document.getElementById(id); if(!el) return;
     el.addEventListener('change',function(){deckF[id.slice(2)]=el.value;renderDeckLib();});
   });
+  var colsyncfile=$('#colsyncfile');
+  if(colsyncfile) colsyncfile.addEventListener('change',function(){
+    if(colsyncfile.files&&colsyncfile.files[0]) syncCollectionFromFile(colsyncfile.files[0]);
+    colsyncfile.value='';
+  });
   var lq=$('#lq');
   if(lq){var t2;lq.addEventListener('input',function(){clearTimeout(t2);var val=lq.value;
     t2=setTimeout(function(){locF.q=val;render();var e=$('#lq');if(e){e.focus();
@@ -2387,12 +2401,13 @@ document.addEventListener('click',function(e){
     '[data-importcol],[data-importdeck],[data-toggleimg],[data-cleardecks],[data-export],'+
     '[data-exportarch],[data-exportmeta],[data-copycode],[data-copyplain],'+
     '[data-lbimg],[data-lbclose],[data-lbopencard],[data-artist],[data-clearartist],[data-series],'+
-    '[data-checkpatch],[data-rollbackpatch]');
+    '[data-checkpatch],[data-rollbackpatch],[data-synccol]');
   if(!t){ if(e.target.id==='lb') closeLightbox(); return; }
   var d=t.dataset;
 
   if(d.checkpatch!==undefined){ doPatchUpdate(); return; }
   if(d.rollbackpatch!==undefined){ doPatchRollback(d.rollbackpatch); return; }
+  if(d.synccol!==undefined){ var fi=$('#colsyncfile'); if(fi) fi.click(); return; }
   if(d.close!==undefined || e.target.id==='ov'){closeModal();return;}
   if(d.lbimg!==undefined){openLightbox(d.lbimg,d.lbcap||'',d.lbcard);return;}
   if(d.lbclose!==undefined || e.target.id==='lb'){closeLightbox();return;}
@@ -2505,6 +2520,31 @@ function copyList(names,label){
     try{document.execCommand('copy');done();}catch(err){prompt('คัดลอกข้อความนี้:',txt);}
     document.body.removeChild(ta);
   }
+}
+/* ---------------- sync คอลเลกชันจาก CollectionState.json ของเกม (อ่านไฟล์ local ล้วนๆ ไม่อัปโหลดไปไหน) ---------------- */
+function syncCollectionFromFile(file){
+  var reader=new FileReader();
+  reader.onerror=function(){ toast('อ่านไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง'); };
+  reader.onload=function(){
+    var data;
+    try{ data=JSON.parse(reader.result); }
+    catch(e){ toast('ไฟล์นี้ไม่ใช่ JSON ที่ถูกต้อง — ตรวจว่าเลือกไฟล์ CollectionState.json จริงๆ'); return; }
+    var cards=data&&data.ServerState&&data.ServerState.Cards;
+    if(!Array.isArray(cards)){
+      toast('ไม่พบข้อมูลการ์ดในไฟล์นี้ (คาดว่าจะมี ServerState.Cards) — ไฟล์อาจไม่ใช่ CollectionState.json หรือรูปแบบเปลี่ยนไป');
+      return;
+    }
+    var ids={};
+    cards.forEach(function(c){ if(c&&c.CardDefId) ids[c.CardDefId]=1; });
+    var idList=Object.keys(ids);
+    var matched=0, unmatched=0;
+    idList.forEach(function(id){ if(byId[id]){ col.add(id); matched++; } else unmatched++; });
+    if(!matched){ toast('อ่านไฟล์ได้ แต่จับคู่การ์ดกับฐานข้อมูลไม่ได้เลย ('+idList.length+' รายการในไฟล์)'); return; }
+    saveCol();
+    toast('ซิงค์สำเร็จ! พบการ์ดที่มี '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
+    go('collection');
+  };
+  reader.readAsText(file);
 }
 function importNames(text,mode){
   if(!text||!text.trim()){toast('ยังไม่ได้วางรายชื่อการ์ดหรือโค้ดเด็ค');return;}
