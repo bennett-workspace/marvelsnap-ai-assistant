@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Marvel Snap Collection Auto-Sync — ตั้งค่า</title>
+<style>
+  body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:22px;max-width:440px;
+    background:#0d0728;color:#eae6ff}
+  h3{margin:0 0 4px}
+  p{font-size:13px;color:#b3a9e0;line-height:1.5}
+  code{background:#1c1440;padding:1px 5px;border-radius:4px;font-size:12px}
+  label{display:block;margin-top:16px;font-size:13px;font-weight:600}
+  input{width:100%;padding:9px 10px;margin-top:6px;box-sizing:border-box;border-radius:8px;
+    border:1px solid #3a2f6e;background:#160e3d;color:#eae6ff;font-size:14px}
+  button{margin-top:16px;padding:9px 18px;border-radius:8px;border:0;background:#ffc94a;
+    color:#1a1030;font-weight:700;cursor:pointer}
+  button:hover{background:#ffd873}
+  #status{font-size:12px;color:#5ef2a4;margin-top:10px;min-height:16px}
+  .hint{font-size:11px;color:#8a7fc0;margin-top:6px}
+</style>
+</head>
+<body>
+<h3>🧩 Marvel Snap Collection Auto-Sync</h3>
+<p>Extension นี้อ่านไฟล์คอลเลกชันที่เกม Marvel Snap เขียนไว้ในเครื่องคุณเองเท่านั้น
+  ไม่มีการส่งข้อมูลไปที่ไหนทั้งนั้น (ดูโค้ดได้เต็มๆ ใน repo — ไฟล์นี้เล็กมาก อ่านเองได้)</p>
+
+<label>Windows username ของคุณ
+  <input id="username" placeholder="เช่น natta">
+</label>
+<p class="hint">ดูได้จาก path โฟลเดอร์ผู้ใช้ของคุณ ปกติคือ <code>C:\Users\&lt;username&gt;\...</code></p>
+
+<button id="save">บันทึก</button>
+<p id="status"></p>
+
+<p class="hint" style="margin-top:20px">อย่าลืมเปิด "Allow access to file URLs" ให้ extension นี้ด้วย —
+  ไปที่ <code>chrome://extensions</code> → คลิก "Details" ที่ extension นี้ → เปิด toggle นั้น</p>
+
+<script src="options.js"></script>
+</body>
+</html>

@@ -2585,6 +2585,7 @@ function doUnsyncCollection(){
   toast('ยกเลิกการซิงค์แล้ว — คอลเลกชันปัจจุบันยังอยู่เหมือนเดิม ครั้งหน้ากด Sync จะให้เลือกไฟล์ใหม่');
 }
 async function doSyncCollection(){
+  if(extensionDetected){ requestExtensionSync(true); return; }
   if(!HAS_FS_ACCESS){ var fi=$('#colsyncfile'); if(fi) fi.click(); return; }
   try{
     var handle=null;
@@ -2609,35 +2610,66 @@ async function doSyncCollection(){
     toast('ซิงค์ไม่สำเร็จ: '+(e&&e.message||'เกิดข้อผิดพลาด'));
   }
 }
-function syncCollectionFromFile(file){
-  var reader=new FileReader();
-  reader.onerror=function(){ toast('อ่านไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง'); };
-  reader.onload=function(){
-    var data;
-    try{ data=JSON.parse(reader.result); }
-    catch(e){ toast('ไฟล์นี้ไม่ใช่ JSON ที่ถูกต้อง — ตรวจว่าเลือกไฟล์ CollectionState.json จริงๆ'); return; }
-    var cards=data&&data.ServerState&&data.ServerState.Cards;
-    if(!Array.isArray(cards)){
-      toast('ไม่พบข้อมูลการ์ดในไฟล์นี้ (คาดว่าจะมี ServerState.Cards) — ไฟล์อาจไม่ใช่ CollectionState.json หรือรูปแบบเปลี่ยนไป');
-      return;
-    }
-    var ids={};
-    cards.forEach(function(c){ if(c&&c.CardDefId) ids[c.CardDefId]=1; });
-    var idList=Object.keys(ids);
-    /* สร้างชุดใหม่แยกไว้ก่อน แล้วค่อย "แทนที่" col ทั้งหมด (ไม่ใช่ add เพิ่ม) — สำคัญมากตอนสลับ
-       บัญชีเกม: ไฟล์ CollectionState.json สะท้อนบัญชีที่ล็อกอินอยู่ตอนนั้นเท่านั้น ถ้าใช้ col.add()
-       สะสมไปเรื่อยๆ การ์ดจากบัญชีเก่าที่ไม่มีในบัญชีใหม่จะค้างอยู่ผิดๆ */
-    var newSet=new Set(), matched=0, unmatched=0;
-    idList.forEach(function(id){ if(byId[id]){ newSet.add(id); matched++; } else unmatched++; });
-    if(!matched){ toast('ซิงค์ไม่สำเร็จ — จับคู่การ์ดกับฐานข้อมูลไม่ได้เลย'); return; }
+/* เก็บ logic การ apply ไว้จุดเดียว ใช้ร่วมกันทั้งเส้นทาง "เลือกไฟล์เอง" (FileReader) กับ
+   เส้นทาง "extension auto-sync" (ได้ text มาจาก postMessage โดยตรง ไม่ผ่านไฟล์เบราว์เซอร์เลือกเอง)
+   opts.silent=true ใช้ตอน auto-sync เงียบๆ ตอนเปิดหน้า — ไม่ toast/ไม่เด้งหน้าเว้นแต่ข้อมูลเปลี่ยนจริง */
+function applyCollectionSyncText(text,opts){
+  opts=opts||{};
+  var data;
+  try{ data=JSON.parse(text); }
+  catch(e){ if(!opts.silent) toast('ไฟล์นี้ไม่ใช่ JSON ที่ถูกต้อง — ตรวจว่าเป็น CollectionState.json จริงๆ'); return false; }
+  var cards=data&&data.ServerState&&data.ServerState.Cards;
+  if(!Array.isArray(cards)){
+    if(!opts.silent) toast('ไม่พบข้อมูลการ์ดในไฟล์นี้ (คาดว่าจะมี ServerState.Cards) — ไฟล์อาจไม่ใช่ CollectionState.json หรือรูปแบบเปลี่ยนไป');
+    return false;
+  }
+  var ids={};
+  cards.forEach(function(c){ if(c&&c.CardDefId) ids[c.CardDefId]=1; });
+  var idList=Object.keys(ids);
+  /* สร้างชุดใหม่แยกไว้ก่อน แล้วค่อย "แทนที่" col ทั้งหมด (ไม่ใช่ add เพิ่ม) — สำคัญมากตอนสลับ
+     บัญชีเกม: ไฟล์ CollectionState.json สะท้อนบัญชีที่ล็อกอินอยู่ตอนนั้นเท่านั้น ถ้าใช้ col.add()
+     สะสมไปเรื่อยๆ การ์ดจากบัญชีเก่าที่ไม่มีในบัญชีใหม่จะค้างอยู่ผิดๆ */
+  var newSet=new Set(), matched=0, unmatched=0;
+  idList.forEach(function(id){ if(byId[id]){ newSet.add(id); matched++; } else unmatched++; });
+  if(!matched){ if(!opts.silent) toast('ซิงค์ไม่สำเร็จ — จับคู่การ์ดกับฐานข้อมูลไม่ได้เลย'); return false; }
+  var changed = newSet.size!==col.size || Array.from(newSet).some(function(id){return !col.has(id);});
+  if(changed){
     col.clear();
     newSet.forEach(function(id){ col.add(id); });
     saveCol();
-    lastSyncedAt=new Date().toISOString(); save(K.syncedAt,lastSyncedAt); paintOwn();
-    toast('✓ ซิงค์คอลเลกชันสำเร็จ! แทนที่คอลเลกชันเดิมด้วยการ์ดที่มีตอนนี้ '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
-    go('collection');
-  };
+  }
+  lastSyncedAt=new Date().toISOString(); save(K.syncedAt,lastSyncedAt); paintOwn();
+  if(!opts.silent || changed){
+    toast((opts.silent?'🧩 ซิงค์อัตโนมัติจาก extension':'✓ ซิงค์คอลเลกชันสำเร็จ')+'! แทนที่คอลเลกชันเดิมด้วยการ์ดที่มีตอนนี้ '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
+  }
+  if(!opts.silent) go('collection');
+  return true;
+}
+function syncCollectionFromFile(file){
+  var reader=new FileReader();
+  reader.onerror=function(){ toast('อ่านไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง'); };
+  reader.onload=function(){ applyCollectionSyncText(reader.result,{}); };
   reader.readAsText(file);
+}
+/* ---------------- bridge รับข้อมูลจาก browser extension (ถ้าติดตั้งไว้) ผ่าน postMessage
+   extension จะยิงข้อความมาเองอัตโนมัติตอนโหลดหน้า (auto-sync แบบเงียบๆ) และตอบกลับตอนกด
+   ปุ่ม sync ด้วยถ้า extensionDetected=true (ดู doSyncCollection) ---------------- */
+var extensionDetected=false, pendingManualSync=false;
+window.addEventListener('message',function(ev){
+  if(ev.source!==window) return;
+  var d=ev.data; if(!d||d.source!=='marvelsnap-sync-ext') return;
+  extensionDetected=true;
+  if(d.ok&&d.text){
+    var ok=applyCollectionSyncText(d.text,{silent:!pendingManualSync});
+    if(ok&&pendingManualSync) go('collection');
+  } else if(pendingManualSync){
+    toast('ซิงค์จาก extension ไม่สำเร็จ: '+(d.error||'ไม่ทราบสาเหตุ — เช็คว่าตั้งค่า username ใน extension ถูกต้องไหม'));
+  }
+  pendingManualSync=false;
+});
+function requestExtensionSync(manual){
+  pendingManualSync=!!manual;
+  window.postMessage({type:'marvelsnap-request-sync'},'*');
 }
 function importNames(text,mode){
   if(!text||!text.trim()){toast('ยังไม่ได้วางรายชื่อการ์ดหรือโค้ดเด็ค');return;}

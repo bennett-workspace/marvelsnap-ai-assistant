@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Marvel Snap Collection Auto-Sync",
+  "version": "1.0.0",
+  "description": "Reads your Marvel Snap collection file locally (CollectionState.json) and auto-syncs it into the Deck Builder AI web app. Nothing is ever uploaded anywhere.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "file:///*",
+    "https://bennett-workspace.github.io/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://bennett-workspace.github.io/marvelsnap-ai-assistant/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html"
+}
