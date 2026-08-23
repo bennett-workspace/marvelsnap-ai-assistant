@@ -17,12 +17,18 @@
   button:hover{background:#ffd873}
   #status{font-size:12px;color:#5ef2a4;margin-top:10px;min-height:16px}
   .hint{font-size:11px;color:#8a7fc0;margin-top:6px}
+  .warn{font-size:12px;color:#ffc94a;background:rgba(255,201,74,.1);border:1px solid rgba(255,201,74,.35);
+    border-radius:8px;padding:10px 12px;margin-top:14px;line-height:1.5}
 </style>
 </head>
 <body>
 <h3>🧩 Marvel Snap Collection Auto-Sync</h3>
 <p>Extension นี้อ่านไฟล์คอลเลกชันที่เกม Marvel Snap เขียนไว้ในเครื่องคุณเองเท่านั้น
   ไม่มีการส่งข้อมูลไปที่ไหนทั้งนั้น (ดูโค้ดได้เต็มๆ ใน repo — ไฟล์นี้เล็กมาก อ่านเองได้)</p>
+
+<p class="warn">⚠️ ใช้ได้เฉพาะเครื่อง PC ที่เล่น Marvel Snap ผ่าน <b>Steam</b> เท่านั้น เพราะอ่านไฟล์แคช
+  คอลเลกชันที่เกมเวอร์ชัน Steam เขียนไว้บนเครื่องโดยเฉพาะ — เล่นผ่านมือถือหรือแพลตฟอร์มอื่นจะไม่มีไฟล์นี้
+  ต้อง import คอลเลกชันแบบ manual แทน (มีปุ่มอยู่แล้วในหน้าตั้งค่าของเว็บแอป)</p>
 
 <label>Windows username ของคุณ
   <input id="username" placeholder="เช่น natta">

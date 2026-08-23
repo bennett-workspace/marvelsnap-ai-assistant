@@ -3,6 +3,10 @@
 ติดตั้ง Chrome/Edge extension เล็กๆ นี้ครั้งเดียว แล้วเปิดหน้าเว็บ [Marvel Snap Deck Builder AI](https://bennett-workspace.github.io/marvelsnap-ai-assistant/marvel-snap-deck-builder.html)
 ครั้งต่อไปจะ **ซิงค์คอลเลกชันให้อัตโนมัติทุกครั้งที่เปิดหน้า ไม่ต้องกดอะไรเลย**
 
+> ⚠️ **ใช้ได้เฉพาะเครื่อง PC ที่เล่น Marvel Snap ผ่าน Steam เท่านั้น** เพราะ extension นี้อ่านไฟล์แคชคอลเลกชัน
+> ที่เกมเวอร์ชัน Steam เขียนไว้ในเครื่องโดยเฉพาะ — ถ้าเล่นผ่านมือถือ (iOS/Android) หรือแพลตฟอร์มอื่น
+> จะไม่มีไฟล์นี้ให้อ่าน ต้องใช้วิธี import คอลเลกชันแบบ manual แทน (มีอยู่แล้วในหน้าตั้งค่าของแอป)
+
 ## มันทำงานยังไง
 
 Extension อ่านไฟล์ `CollectionState.json` ที่ตัวเกม Marvel Snap เขียนไว้ในเครื่องคุณเองอยู่แล้ว
