@@ -73,6 +73,8 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 #syncstatus{background:transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
 #syncstatus:hover{background:rgba(150,120,255,.1);color:var(--ink)}
 #syncstatus.synced{color:var(--grn);border-color:rgba(90,255,140,.4);background:rgba(90,255,140,.08)}
+.syncx{display:inline-block;margin-left:4px;padding:0 4px;border-radius:4px;color:var(--ink3)}
+.syncx:hover{color:var(--red);background:rgba(255,90,90,.15)}
 .view{padding:24px 22px 70px;max-width:1600px;width:100%}
 @media(min-width:1900px){.view{max-width:2200px}}
 @media(min-width:2600px){.view{max-width:2600px}.sb{width:290px;flex:0 0 290px}}
@@ -277,7 +279,7 @@ th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink
         <kbd>/</kbd>
       </div>
       <span class="pill" id="ownpill">มี <b>0</b>/0</span>
-      <button class="pill" id="syncstatus" data-synccol="1" title="ซิงค์คอลเลกชันจากไฟล์ CollectionState.json ที่เกมสร้างไว้ในเครื่องคุณเอง — อ่านในเบราว์เซอร์ล้วนๆ ไม่อัปโหลดไฟล์ไปไหนทั้งนั้น">🔄 Sync your collection</button>
+      <button class="pill" id="syncstatus" data-synccol="1" title="ซิงค์คอลเลกชันจากไฟล์ CollectionState.json ที่เกมสร้างไว้ในเครื่องคุณเอง — อ่านในเบราว์เซอร์ล้วนๆ ไม่อัปโหลดไฟล์ไปไหนทั้งนั้น (เลือกไฟล์แค่ครั้งแรก ครั้งถัดไปกดแล้วซิงค์ได้เลย)">🔄 Sync your collection</button>
       <input type="file" id="colsyncfile" accept="application/json,.json" style="display:none">
     </header>
     <main class="view" id="view" tabindex="-1"></main>
@@ -1221,12 +1223,12 @@ function paintOwn(){
   if(sb){
     if(lastSyncedAt){
       sb.classList.add('synced');
-      sb.innerHTML='✓ Synced';
-      sb.title='ซิงค์ล่าสุด: '+fmtLocalDateTime(lastSyncedAt)+' — กดอีกครั้งเพื่อซิงค์ใหม่';
+      sb.innerHTML='✓ Synced <span class="syncx" data-unsync="1" title="ยกเลิกการซิงค์">✕</span>';
+      sb.title='ซิงค์ล่าสุด: '+fmtLocalDateTime(lastSyncedAt)+' — กดที่ตัวปุ่มเพื่อซิงค์ใหม่ กด ✕ เพื่อยกเลิกการซิงค์';
     } else {
       sb.classList.remove('synced');
       sb.innerHTML='🔄 Sync your collection';
-      sb.title='ซิงค์คอลเลกชันจากไฟล์ CollectionState.json ที่เกมสร้างไว้ในเครื่องคุณเอง — อ่านในเบราว์เซอร์ล้วนๆ ไม่อัปโหลดไฟล์ไปไหนทั้งนั้น';
+      sb.title='ซิงค์คอลเลกชันจากไฟล์ CollectionState.json ที่เกมสร้างไว้ในเครื่องคุณเอง — อ่านในเบราว์เซอร์ล้วนๆ ไม่อัปโหลดไฟล์ไปไหนทั้งนั้น (เลือกไฟล์แค่ครั้งแรก ครั้งถัดไปกดแล้วซิงค์ได้เลย)';
     }
   }
 }
@@ -2409,13 +2411,14 @@ document.addEventListener('click',function(e){
     '[data-importcol],[data-importdeck],[data-toggleimg],[data-cleardecks],[data-export],'+
     '[data-exportarch],[data-exportmeta],[data-copycode],[data-copyplain],'+
     '[data-lbimg],[data-lbclose],[data-lbopencard],[data-artist],[data-clearartist],[data-series],'+
-    '[data-checkpatch],[data-rollbackpatch],[data-synccol]');
+    '[data-checkpatch],[data-rollbackpatch],[data-synccol],[data-unsync]');
   if(!t){ if(e.target.id==='lb') closeLightbox(); return; }
   var d=t.dataset;
 
   if(d.checkpatch!==undefined){ doPatchUpdate(); return; }
   if(d.rollbackpatch!==undefined){ doPatchRollback(d.rollbackpatch); return; }
-  if(d.synccol!==undefined){ var fi=$('#colsyncfile'); if(fi) fi.click(); return; }
+  if(d.unsync!==undefined){ doUnsyncCollection(); return; }
+  if(d.synccol!==undefined){ doSyncCollection(); return; }
   if(d.close!==undefined || e.target.id==='ov'){closeModal();return;}
   if(d.lbimg!==undefined){openLightbox(d.lbimg,d.lbcap||'',d.lbcard);return;}
   if(d.lbclose!==undefined || e.target.id==='lb'){closeLightbox();return;}
@@ -2529,7 +2532,83 @@ function copyList(names,label){
     document.body.removeChild(ta);
   }
 }
-/* ---------------- sync คอลเลกชันจาก CollectionState.json ของเกม (อ่านไฟล์ local ล้วนๆ ไม่อัปโหลดไปไหน) ---------------- */
+/* ---------------- sync คอลเลกชันจาก CollectionState.json ของเกม (อ่านไฟล์ local ล้วนๆ ไม่อัปโหลดไปไหน) ----------------
+   ใช้ File System Access API (Chrome/Edge) เก็บ handle ของไฟล์ที่เคยเลือกไว้ใน IndexedDB
+   ครั้งถัดไปกด sync แล้วจะขอ "permission" สั้นๆ (ไม่ต้องเปิด dialog เลือกไฟล์ใหม่) หรือถ้า permission
+   ยังไม่หมดอายุก็อ่านไฟล์ได้เลยทันทีโดยไม่มี popup อะไรขึ้นมาเลย
+   เบราว์เซอร์ที่ไม่รองรับ (Firefox/Safari) จะ fallback ไปใช้ <input type=file> แบบเดิม (ต้องเลือกไฟล์ใหม่ทุกครั้ง) */
+var HAS_FS_ACCESS = typeof window.showOpenFilePicker==='function';
+var FDB_NAME='snapdb_files', FDB_VER=1;
+function fidbOpen(){
+  return new Promise(function(resolve,reject){
+    var req=indexedDB.open(FDB_NAME,FDB_VER);
+    req.onupgradeneeded=function(){ if(!req.result.objectStoreNames.contains('handles')) req.result.createObjectStore('handles'); };
+    req.onsuccess=function(){resolve(req.result);};
+    req.onerror=function(){reject(req.error);};
+  });
+}
+function fidbGet(key){
+  return fidbOpen().then(function(db){
+    return new Promise(function(resolve,reject){
+      var req=db.transaction('handles','readonly').objectStore('handles').get(key);
+      req.onsuccess=function(){resolve(req.result);};
+      req.onerror=function(){reject(req.error);};
+    });
+  });
+}
+function fidbSet(key,val){
+  return fidbOpen().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').put(val,key);
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){reject(tx.error);};
+    });
+  });
+}
+function fidbDel(key){
+  return fidbOpen().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').delete(key);
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){reject(tx.error);};
+    });
+  });
+}
+/* ยกเลิกการซิงค์: ลืม handle ไฟล์ที่จำไว้ + รีเซ็ตสถานะกลับเป็น "ยังไม่ซิงค์"
+   ไม่แตะคอลเลกชัน (col) เลย — การ์ดที่ซิงค์เข้ามาก่อนหน้ายังอยู่เหมือนเดิม ถ้าอยากล้างการ์ดด้วย
+   ให้ใช้ปุ่ม "ล้างคอลเลกชัน" ในหน้าตั้งค่าแยกต่างหาก */
+function doUnsyncCollection(){
+  lastSyncedAt=null; save(K.syncedAt,null); paintOwn();
+  fidbDel('collectionStateHandle').catch(function(){});
+  toast('ยกเลิกการซิงค์แล้ว — คอลเลกชันปัจจุบันยังอยู่เหมือนเดิม ครั้งหน้ากด Sync จะให้เลือกไฟล์ใหม่');
+}
+async function doSyncCollection(){
+  if(!HAS_FS_ACCESS){ var fi=$('#colsyncfile'); if(fi) fi.click(); return; }
+  try{
+    var handle=null;
+    var saved=await fidbGet('collectionStateHandle').catch(function(){return null;});
+    if(saved){
+      var perm=await saved.queryPermission({mode:'read'});
+      if(perm!=='granted') perm=await saved.requestPermission({mode:'read'});
+      if(perm==='granted') handle=saved;
+    }
+    if(!handle){
+      var picked=await window.showOpenFilePicker({
+        types:[{description:'Marvel Snap Collection',accept:{'application/json':['.json']}}],
+        excludeAcceptAllOption:false, multiple:false
+      });
+      handle=picked[0];
+      fidbSet('collectionStateHandle',handle).catch(function(){});
+    }
+    var file=await handle.getFile();
+    syncCollectionFromFile(file);
+  }catch(e){
+    if(e&&e.name==='AbortError') return; /* ผู้ใช้กดยกเลิก dialog เอง ไม่ต้องแจ้งอะไร */
+    toast('ซิงค์ไม่สำเร็จ: '+(e&&e.message||'เกิดข้อผิดพลาด'));
+  }
+}
 function syncCollectionFromFile(file){
   var reader=new FileReader();
   reader.onerror=function(){ toast('อ่านไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง'); };
@@ -2545,12 +2624,17 @@ function syncCollectionFromFile(file){
     var ids={};
     cards.forEach(function(c){ if(c&&c.CardDefId) ids[c.CardDefId]=1; });
     var idList=Object.keys(ids);
-    var matched=0, unmatched=0;
-    idList.forEach(function(id){ if(byId[id]){ col.add(id); matched++; } else unmatched++; });
+    /* สร้างชุดใหม่แยกไว้ก่อน แล้วค่อย "แทนที่" col ทั้งหมด (ไม่ใช่ add เพิ่ม) — สำคัญมากตอนสลับ
+       บัญชีเกม: ไฟล์ CollectionState.json สะท้อนบัญชีที่ล็อกอินอยู่ตอนนั้นเท่านั้น ถ้าใช้ col.add()
+       สะสมไปเรื่อยๆ การ์ดจากบัญชีเก่าที่ไม่มีในบัญชีใหม่จะค้างอยู่ผิดๆ */
+    var newSet=new Set(), matched=0, unmatched=0;
+    idList.forEach(function(id){ if(byId[id]){ newSet.add(id); matched++; } else unmatched++; });
     if(!matched){ toast('ซิงค์ไม่สำเร็จ — จับคู่การ์ดกับฐานข้อมูลไม่ได้เลย'); return; }
+    col.clear();
+    newSet.forEach(function(id){ col.add(id); });
     saveCol();
     lastSyncedAt=new Date().toISOString(); save(K.syncedAt,lastSyncedAt); paintOwn();
-    toast('✓ ซิงค์คอลเลกชันสำเร็จ! มีการ์ด '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
+    toast('✓ ซิงค์คอลเลกชันสำเร็จ! แทนที่คอลเลกชันเดิมด้วยการ์ดที่มีตอนนี้ '+matched+' ใบ'+(unmatched?' (มี '+unmatched+' ใบที่ฐานข้อมูลเรายังไม่รู้จัก)':''));
     go('collection');
   };
   reader.readAsText(file);
