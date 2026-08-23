@@ -15,5 +15,7 @@ document.getElementById('save').addEventListener('click', function () {
   chrome.storage.local.set({ winUsername: v }, function () {
     status.textContent = 'บันทึกแล้ว ✓ — กลับไปที่หน้าเว็บแล้วรีเฟรชได้เลย';
     status.style.color = '#5ef2a4';
+    alert('บันทึกสำเร็จ ✓\n\nตั้งค่าเรียบร้อยแล้ว กด OK เพื่อปิดหน้านี้ แล้วไปที่หน้าเว็บ Marvel Snap Deck Builder AI รีเฟรชได้เลย');
+    window.close();
   });
 });
