@@ -1,0 +1,226 @@
+{
+  "version": "2026.08.16.009",
+  "fromVersion": "2026.08.16.008",
+  "schemaVersion": 1,
+  "releasedAt": "2026-08-27T12:00:00Z",
+  "source": "marvelsnapzone.com OTA 2026-08-27 + card releases (Jul 22 - Aug 25, 2026)",
+  "summary": "เพิ่มการ์ดที่เปิดให้เล่นแล้ว 3 ใบที่เคยอยู่ในลิสต์ \"การ์ดที่จะมาในซีซั่นนี้\" (Spider Sense, Hellcow Fractured Frontier, Red Hulk Fractured Frontier) และแก้ข้อมูลผิดพลาดที่ค้างไว้ — J. Jonah Jameson มีอยู่ในเกมจริงแล้วตั้งแต่ปี 2023 แต่ถูกจัดเข้าลิสต์ \"กำลังจะมา\" ผิด จึงลบออกจากลิสต์นั้น พร้อม OTA Balance Update 27 ส.ค. 2026: เนิร์ฟ Sam Wilson Captain America (2/3→2/2); บัฟ Mister Fantastic First Steps (3/4→3/5), Strong Guy (3/3→3/4), Death Fractured Frontier (5/8→5/9); ปรับ Spider Sense (คอส 5→6, +2→+3 พลัง) และ Klaw (5/4→4/2, +7→+6 พลังเลนขวา)",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "SpiderSense",
+        "n": "Spider Sense",
+        "c": 6,
+        "p": 0,
+        "a": "On Reveal: Give your characters here +3 Power. Costs 1 less for each Moveable card you've played.",
+        "aTh": "เมื่อเปิด: มอบพลัง +3 ให้ตัวละครของคุณที่เลนนี้ ค่าใช้จ่ายลดลง 1 สำหรับการ์ดเคลื่อนที่ได้ทุกใบที่คุณเล่นไปแล้ว",
+        "s": "Series 4",
+        "art": "https://static.marvelsnap.pro/cards/SpiderSense.webp",
+        "t": [
+          "onreveal",
+          "buff",
+          "cost",
+          "move"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-08-27",
+            0,
+            "6",
+            "0",
+            "On Reveal: Give your characters here +3 Power. Costs 1 less for each Moveable card you've played."
+          ],
+          [
+            "2026-07-22",
+            1,
+            "5",
+            "0",
+            "On Reveal: Give your characters here +2 Power. Costs 1 less for each Moveable card you've played."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "HellcowFracturedFrontier",
+        "n": "Hellcow Fractured Frontier",
+        "c": 3,
+        "p": 3,
+        "a": "End of Turn: Afflict ALL other cards here with -1 Power. Then destroy your cards here with 0 Power or less.",
+        "aTh": "จบเทิร์น: สาปลดพลังการ์ดอื่นทั้งหมดที่เลนนี้ -1 จากนั้นทำลายการ์ดของคุณที่เลนนี้ที่มีพลัง 0 หรือต่ำกว่า",
+        "s": "Series 4",
+        "art": "https://static.marvelsnap.pro/cards/HellcowFracturedFrontier.webp",
+        "t": [
+          "eot",
+          "afflict",
+          "destroy"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-08-24",
+            1,
+            "3",
+            "3",
+            "End of Turn: Afflict ALL other cards here with -1 Power. Then destroy your cards here with 0 Power or less."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "RedHulkFracturedFrontier",
+        "n": "Red Hulk Fractured Frontier",
+        "c": 3,
+        "p": 8,
+        "a": "On Reveal: -1 Power for each enemy card here. Quickdraw: +1 Power instead.",
+        "aTh": "เมื่อเปิด: ลดพลังตัวเอง -1 ต่อการ์ดฝ่ายตรงข้ามที่เลนนี้ 1 ใบ ควิกดรอว์: รับ +1 พลังแทน",
+        "s": "Series 5",
+        "art": "https://static.marvelsnap.pro/cards/RedHulkFracturedFrontier.webp",
+        "t": [
+          "onreveal",
+          "quickdraw"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-08-25",
+            1,
+            "3",
+            "8",
+            "On Reveal: -1 Power for each enemy card here. Quickdraw: +1 Power instead."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/upcoming",
+      "value": []
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/129/p",
+      "value": 2
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/129/hist/0",
+      "value": [
+        "2026-08-27",
+        0,
+        "2",
+        "2",
+        "On Reveal: Add Cap's Shield to another location. Ongoing: Cap's Shield is Moveable."
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/243/p",
+      "value": 5
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/243/hist/0",
+      "value": [
+        "2026-08-27",
+        0,
+        "3",
+        "5",
+        "End of Turn: Give a card in your hand -1 Cost or +2 Power."
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/284/p",
+      "value": 4
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/284/hist/0",
+      "value": [
+        "2026-08-27",
+        0,
+        "3",
+        "4",
+        "Ongoing: +6 Power if your hand has 1 or fewer cards."
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/487/p",
+      "value": 9
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/487/hist/0",
+      "value": [
+        "2026-08-27",
+        0,
+        "5",
+        "9",
+        "On Reveal: Resurrect all your destroyed characters to random locations."
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/431/c",
+      "value": 4
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/431/p",
+      "value": 2
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/431/a",
+      "value": "Ongoing: The location to the right has +6 Power."
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/431/aTh",
+      "value": "ต่อเนื่อง: เลนทางขวามีพลัง +6"
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/431/hist/0",
+      "value": [
+        "2026-08-27",
+        0,
+        "4",
+        "2",
+        "Ongoing: The location to the right has +6 Power."
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/ota",
+      "value": "OTA Balance Update — 27 ส.ค. 2026"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.009"
+    }
+  ]
+}
