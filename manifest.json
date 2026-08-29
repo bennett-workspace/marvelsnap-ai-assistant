@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.007",
+  "latestVersion": "2026.08.16.008",
   "schemaVersion": 1,
   "patches": [
     {
@@ -64,6 +64,15 @@
       "releasedAt": "2026-08-20T00:00:00Z",
       "source": "marvelsnapzone.com weekly meta archives (Jun 22 - Aug 3, 2026)",
       "summary": "เพิ่ม 50 เด็คใหม่ที่ไม่ซ้ำกันเข้าคลังเด็ค รวบรวมจากตารางเมตารายสัปดาห์ของ Marvel Snap Zone ย้อนหลัง 7 สัปดาห์ (22 มิ.ย. - 3 ส.ค. 2026) ทุกเด็คมี Cube Average/Win Rate จริงตามที่รายงานไว้ ณ ตอนนั้น การ์ดบางใบอาจมีค่าพลังเปลี่ยนไปแล้วจากการอัปเดตหลังจากนี้"
+    },
+    {
+      "version": "2026.08.16.008",
+      "fromVersion": "2026.08.16.007",
+      "url": "patches/2026.08.16.008.json",
+      "sha256": "ae78dcc6f419e6905c9dedd2e14120bc8a214a6e706bd1dc3d26de5e32fc9789",
+      "releasedAt": "2026-08-30T00:00:00Z",
+      "source": "static.marvelsnap.pro (community CDN, no hotlink protection)",
+      "summary": "แก้รูปการ์ด/Location ที่ไม่ขึ้น — marvelsnapzone.com เปิดระบบป้องกัน hotlink ผ่าน Cloudflare ทำให้รูปทั้งหมดที่ฝังจากที่นั่นใช้งานไม่ได้อีกต่อไป ย้ายไปใช้ static.marvelsnap.pro แทน — ใช้ได้ครบ 488/488 การ์ด และ 174/184 Location (อีก 10 Location ใหม่ล่าสุดยังไม่มีในซีดีเอ็นนี้ ยังคงใช้ URL เดิมไปก่อน) ยังไม่ได้แก้รูป Variant/สกินการ์ด"
     }
   ]
 }
