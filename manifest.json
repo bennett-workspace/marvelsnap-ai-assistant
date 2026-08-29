@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.009",
+  "latestVersion": "2026.08.16.010",
   "schemaVersion": 1,
   "patches": [
     {
@@ -82,6 +82,15 @@
       "releasedAt": "2026-08-27T12:00:00Z",
       "source": "marvelsnapzone.com OTA 2026-08-27 + card releases (Jul 22 - Aug 25, 2026)",
       "summary": "เพิ่มการ์ดที่เปิดให้เล่นแล้ว 3 ใบที่เคยอยู่ในลิสต์ \"การ์ดที่จะมาในซีซั่นนี้\" (Spider Sense, Hellcow Fractured Frontier, Red Hulk Fractured Frontier) และแก้ข้อมูลผิดพลาดที่ค้างไว้ — J. Jonah Jameson มีอยู่ในเกมจริงแล้วตั้งแต่ปี 2023 แต่ถูกจัดเข้าลิสต์ \"กำลังจะมา\" ผิด จึงลบออกจากลิสต์นั้น พร้อม OTA Balance Update 27 ส.ค. 2026: เนิร์ฟ Sam Wilson Captain America (2/3→2/2); บัฟ Mister Fantastic First Steps (3/4→3/5), Strong Guy (3/3→3/4), Death Fractured Frontier (5/8→5/9); ปรับ Spider Sense (คอส 5→6, +2→+3 พลัง) และ Klaw (5/4→4/2, +7→+6 พลังเลนขวา)"
+    },
+    {
+      "version": "2026.08.16.010",
+      "fromVersion": "2026.08.16.009",
+      "url": "patches/2026.08.16.010.json",
+      "sha256": "d4d4bb1eb5d56634dda21ed448982f9050d4d7e6c343c3e8ead6b806c68b4029",
+      "releasedAt": "2026-08-29T18:20:00Z",
+      "source": "snapcomplete-cdn.pages.dev (community CDN, permissive CORS, no hotlink protection)",
+      "summary": "แก้รูป Location ที่ยังไม่ขึ้น 10 อัน (ค้างมาตั้งแต่ patch v008 เพราะ static.marvelsnap.pro ยังไม่มี) — Fractured Outpost, Fractured Frontier, Empire State University, Genosha, Kvch, Madripoor, Proscenium, Stark Industries, Survivor's Camp, The Deadlands — ย้ายไปใช้ snapcomplete-cdn.pages.dev แทน (เจอว่า marvelsnapzone.com เปลี่ยนโครงสร้าง URL รูปเก่าทั้งหมดเป็น 404 ถาวรไปแล้ว ทำให้ fallback เดิมก็ใช้ไม่ได้ด้วย) — ตอนนี้ครบทั้ง 184/184 Location แล้ว"
     }
   ]
 }

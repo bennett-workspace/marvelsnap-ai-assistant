@@ -1,0 +1,177 @@
+{
+  "version": "2026.08.16.010",
+  "fromVersion": "2026.08.16.009",
+  "schemaVersion": 1,
+  "releasedAt": "2026-08-29T18:20:00Z",
+  "source": "snapcomplete-cdn.pages.dev (community CDN, permissive CORS, no hotlink protection)",
+  "summary": "แก้รูป Location ที่ยังไม่ขึ้น 10 อัน (ค้างมาตั้งแต่ patch v008 เพราะ static.marvelsnap.pro ยังไม่มี) — Fractured Outpost, Fractured Frontier, Empire State University, Genosha, Kvch, Madripoor, Proscenium, Stark Industries, Survivor's Camp, The Deadlands — ย้ายไปใช้ snapcomplete-cdn.pages.dev แทน (เจอว่า marvelsnapzone.com เปลี่ยนโครงสร้าง URL รูปเก่าทั้งหมดเป็น 404 ถาวรไปแล้ว ทำให้ fallback เดิมก็ใช้ไม่ได้ด้วย)",
+  "operations": [
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/42/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/EmpireStateUniversity.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/42/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/EmpireStateUniversity.webp",
+        "https://snapjson.untapped.gg/art/loc/EmpireStateUniversity.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/empire-state-university.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-empire-state-university.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/empire-state-university.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-empire-state-university.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/49/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/FracturedFrontier.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/49/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/FracturedFrontier.webp",
+        "https://snapjson.untapped.gg/art/loc/FracturedFrontier.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/fractured-frontier.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-fractured-frontier.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/fractured-frontier.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-fractured-frontier.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/50/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/FrontierOutpost.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/50/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/FrontierOutpost.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/fractured-outpost.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-fractured-outpost.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/fractured-outpost.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-fractured-outpost.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/52/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/Genosha.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/52/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/Genosha.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/genosha.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-genosha.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/genosha.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-genosha.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/70/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/Kvch.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/70/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/Kvch.webp",
+        "https://snapjson.untapped.gg/art/loc/Kvch.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/kvch.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-kvch.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/kvch.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-kvch.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/80/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/Madripoor.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/80/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/Madripoor.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/madripoor.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-madripoor.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/madripoor.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-madripoor.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/108/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/Proscenium.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/108/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/Proscenium.webp",
+        "https://snapjson.untapped.gg/art/loc/Proscenium.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/proscenium.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-proscenium.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/proscenium.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-proscenium.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/132/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/StarkIndustries.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/132/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/StarkIndustries.webp",
+        "https://snapjson.untapped.gg/art/loc/StarkIndustries.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/stark-industries.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-stark-industries.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/stark-industries.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-stark-industries.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/137/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/SurvivorsCamp.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/137/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/SurvivorsCamp.webp",
+        "https://snapjson.untapped.gg/art/loc/SurvivorsCamp.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/survivors-camp.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-survivors-camp.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/survivors-camp.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-survivors-camp.webp"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/144/art",
+      "value": "https://snapcomplete-cdn.pages.dev/locations-framed/TheDeadlands.webp"
+    },
+    {
+      "op": "replace",
+      "path": "/LOCATIONS/144/arts",
+      "value": [
+        "https://snapcomplete-cdn.pages.dev/locations-framed/TheDeadlands.webp",
+        "https://snapjson.untapped.gg/art/loc/TheDeadlands.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/the-deadlands.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/deadlands.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/the-deadlands.webp",
+        "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/locations/deadlands.webp"
+      ]
+    }
+  ]
+}
