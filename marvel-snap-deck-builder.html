@@ -259,6 +259,26 @@ th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink
 @media(hover:none) and (pointer:coarse){
   .cg:hover{transform:none}
 }
+:root{
+  --dur-fast:120ms; --dur:220ms; --dur-slow:420ms;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes itemIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+
+.viewin{animation:viewIn var(--dur) var(--ease) both}
+.stagger>*{animation:itemIn var(--dur) var(--ease) both;animation-delay:calc(var(--i,0) * 28ms)}
+
+.card{transition:transform var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease)}
+.card:hover{transform:translateY(-2px);border-color:var(--line2)}
+.btn,.pill,.card{transition:transform var(--dur-fast) var(--ease-spring),background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}
+.btn:active,.pill:active,.card:active{transform:scale(.97)}
+
+.skel{background:linear-gradient(90deg,var(--panel) 25%,var(--panel2) 37%,var(--panel) 63%);
+  background-size:200% 100%;animation:shimmer 1.4s linear infinite;border-radius:var(--r)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#stars{display:none}}
 </style>
 </head>
@@ -693,6 +713,11 @@ function shopBuckets(shop, todayISO){
   return out;
 }
 /* @end:shop */
+/* Stagger is capped so a long list cannot queue an absurd delay: the deck
+   library renders 77 cards, and an uncapped 28ms step would leave the last
+   one waiting over two seconds while every one of them holds an animation. */
+var STAGGER_CAP=12;
+function staggerIdx(i){ return ' style="--i:'+(i<STAGGER_CAP?i:STAGGER_CAP)+'"'; }
 var $=function(s){return document.querySelector(s);};
 var toastT;
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');
@@ -1930,10 +1955,10 @@ function deckLibFilterBar(){
      '<option value="name"'+(deckF.sort==='name'?' selected':'')+'>เรียงตามชื่อ</option></select>'+
   '</div>';
 }
-function deckLibCard(d){
+function deckLibCard(d,i){
   var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
   var a=archById[d.arch];
-  return '<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
+  return '<div class="card"'+staggerIdx(i||0)+'><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
    '<h3 class="mt" style="margin:0">'+esc(d.name)+'</h3>'+
    '<span class="tierbadge" style="color:'+c+'">'+esc(d.tier)+'</span></div>'+
    '<p class="tiny mono" style="margin:6px 0 4px">'+esc(statLine(d))+'</p>'+
@@ -1953,8 +1978,8 @@ function renderDeckLib(){
   var box=document.getElementById('decklibgrid'); if(!box) return;
   var list=filteredMeta();
   box.innerHTML=list.length?
-    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="grid g2">'+
-      list.map(deckLibCard).join('')+'</div>'
+    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="grid g2 stagger">'+
+      list.map(function(d,i){return deckLibCard(d,i);}).join('')+'</div>'
     :'<div class="empty"><b>ไม่พบเด็คที่ตรงกับตัวกรอง</b>ลองล้างคำค้นหรือเปลี่ยนตัวกรองดู</div>';
 }
 V.decklib=function(){
@@ -2363,6 +2388,9 @@ function render(){
     if(window.console) console.error(e);
   }
   v.innerHTML=html;
+  v.classList.remove('viewin');
+  void v.offsetWidth;   /* restart the animation on every route change */
+  v.classList.add('viewin');
   if(document.getElementById('cards')) renderCards(filtered(),{});
   if(document.getElementById('vcards')) renderVariants(filteredVariants());
   if(document.getElementById('acards')) renderArtists(filteredArtists());
