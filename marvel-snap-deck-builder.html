@@ -734,12 +734,12 @@ function highlightChips(){
   if(P.season) out.push({icon:'🎬',text:'ซีซั่นใหม่ — '+P.season,go:'meta'});
   var nCards=CARDS.filter(function(c){return c['new'];}).length;
   if(nCards) out.push({icon:'🃏',text:'การ์ดใหม่ '+nCards+' ใบ',go:'database'});
-  var ref=(P.metaDate||'').match(/\d{4}-\d{2}-\d{2}/);
-  var nBal=CARDS.filter(function(c){
-    var h=c.hist&&c.hist[0]; if(!h||h[1]) return false;
-    return !ref || Math.abs(Date.parse(h[0])-Date.parse(ref[0]))<=14*86400000;
-  }).length;
-  if(nBal&&P.ota) out.push({icon:'⚖️',text:P.ota+' — ปรับ '+nBal+' ใบ',go:'database'});
+  var chg=CARDS.map(function(c){var h=c.hist&&c.hist[0];return (h&&!h[1])?h[0]:null;}).filter(Boolean);
+  if(chg.length&&P.ota){
+    var latest=chg.reduce(function(a,b){return b>a?b:a;});
+    var nBal=chg.filter(function(d){return d===latest;}).length;
+    out.push({icon:'⚖️',text:P.ota+' — ปรับ '+nBal+' ใบ',go:'database'});
+  }
   if(P.upcoming&&P.upcoming.length) out.push({icon:'🔮',text:'กำลังจะมา '+P.upcoming.length+' ใบ',go:'meta'});
   return out;
 }
