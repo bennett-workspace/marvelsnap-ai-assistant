@@ -696,9 +696,26 @@ and with the OS setting on (or via devtools emulation), reload and confirm no an
 
 - [ ] **Step 6: Measure frame rate on the deck library**
 
-This is the constraint from the spec and must be a number, not an impression. With devtools Performance open, record while navigating to คลังเด็ค, and note the FPS during the entry animation.
+This is the constraint from the spec and must be a number, not an impression. The devtools Performance panel is a GUI, so use this in-page probe instead — paste it into the browser console with the app already loaded, and it navigates to คลังเด็ค and samples frame pacing across the entry animation:
 
-Expected: sustained above 50fps. If below, reduce `STAGGER_CAP` and re-measure. Record the figure in the commit message.
+```js
+await (async () => {
+  const nav = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '🗃คลังเด็ค');
+  const frames = [];
+  let last = performance.now(), stop = false;
+  const tick = t => { frames.push(t - last); last = t; if (!stop) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+  nav.click();
+  await new Promise(r => setTimeout(r, 2000));
+  stop = true;
+  const s = frames.slice(1).sort((a, b) => a - b);
+  const q = p => s[Math.floor(s.length * p)].toFixed(1);
+  console.log('frames', s.length, '| median', q(.5) + 'ms', '| p95', q(.95) + 'ms',
+              '| >32ms (dropped)', s.filter(x => x > 32).length);
+})();
+```
+
+Expected: median frame time at or under 20ms (≈50fps) and no more than a couple of dropped frames. If it is worse, reduce `STAGGER_CAP` and re-measure. Record the printed numbers in the commit message and the report.
 
 - [ ] **Step 7: Sync and commit**
 
