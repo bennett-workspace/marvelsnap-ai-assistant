@@ -218,7 +218,7 @@ module.exports = { parsePrice, parsePct, parseDateRange, classifyItem, slugify }
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/`
-Expected: PASS — 13 tests, 0 fail.
+Expected: PASS — 14 tests, 0 fail.
 
 - [ ] **Step 5: Commit**
 
@@ -296,7 +296,7 @@ function toLines(html) {
 
 const RANGE_RE = /^[A-Z][a-z]{2}\s+\d{1,2}\s*-\s*(?:[A-Z][a-z]{2}\s+)?\d{1,2}$/;
 
-function parseBundles(lines, snapshotAt) {
+function parseBundles(lines, snapshotAt, skipped) {
   const out = [];
   for (let i = 1; i < lines.length; i++) {
     if (!RANGE_RE.test(lines[i])) continue;
@@ -304,7 +304,12 @@ function parseBundles(lines, snapshotAt) {
     const rangeText = lines[i];
     // Fields follow a fixed order: price, "Bundle Value", pct, "Currency Value", pct
     const priceText = lines[i + 1];
-    if (priceText === 'Bundle Value') continue; // listing with no price published; skip quietly
+    if (priceText === 'Bundle Value') {
+      // snap.fan really does list some entries with no published price. Skip
+      // them, but count and report — a dropped bundle must never be silent.
+      skipped.push(name);
+      continue;
+    }
 
     let price, dates;
     try { dates = parseDateRange(rangeText, snapshotAt); }
@@ -361,9 +366,15 @@ function parseBundles(lines, snapshotAt) {
 (async function main() {
   const snapshotAt = new Date().toISOString().slice(0, 10);
   const html = process.argv[2] ? fs.readFileSync(process.argv[2], 'utf8') : await fetchText(SOURCE_URL);
-  const bundles = parseBundles(toLines(html), snapshotAt);
+  const skipped = [];
+  const bundles = parseBundles(toLines(html), snapshotAt, skipped);
 
   if (!bundles.length) throw new Error('no bundles parsed — page layout probably changed; refusing to emit an empty shop');
+  if (skipped.length) console.warn('skipped (no published price): ' + skipped.length + ' — ' + skipped.join(', '));
+  if (skipped.length > bundles.length) {
+    throw new Error('skipped more listings (' + skipped.length + ') than parsed (' + bundles.length +
+      ') — the price column probably moved; refusing to ship a half-populated shop');
+  }
 
   const seen = new Set();
   for (const b of bundles) {
