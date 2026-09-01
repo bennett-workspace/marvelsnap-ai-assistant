@@ -1,0 +1,777 @@
+{
+  "version": "2026.08.16.011",
+  "fromVersion": "2026.08.16.010",
+  "schemaVersion": 1,
+  "releasedAt": "2026-09-01T17:00:00Z",
+  "source": "marvelsnapzone.com — September 2026 season (AXIS: Inversion), Ranked Meta Tier List 2026-08-31, release schedule",
+  "summary": "ซีซั่นใหม่ AXIS: Inversion (1 ก.ย. – 6 ต.ค. 2026) แทน Fractured Frontier พร้อมการ์ดใหม่ 9 ใบที่จะทยอยปล่อยในซีซั่นนี้ (Superior Iron Man, Anti-Polar Magneto, Red Onslaught, Kluh, Rogue Scion of Division, Friendly Neighborhood Carnage, Scarlet Witch Queen of Chaos, Entropic Havok, The Inversion) — คราวนี้มีค่าใช้จ่าย/พลังยืนยันจากฐานข้อมูลการ์ดแล้ว; อัปเดตตารางเมตาเป็นฉบับ 31 ส.ค. 2026 (Fractured Frontier สัปดาห์ที่ 4) 9 เด็ค และย้ายเด็คชุดเก่า 13 เด็คของ 17 ส.ค. เข้าคลังเด็คแทนการลบทิ้ง; อัปเดตเลขแพตช์เกมเป็น 56.4.1 (18 ส.ค. 2026); แก้ Series ของ Spider-Man Brand New Day เป็น Series 5 (ย้ายจริงตั้งแต่ 4 ส.ค. 2026)",
+  "operations": [
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "remove",
+      "path": "/META/0"
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-double-thanos",
+        "name": "Double Thanos",
+        "tier": "Tier 3",
+        "cube": 0.15,
+        "wr": 56.5,
+        "games": null,
+        "arch": "quickdraw",
+        "note": "ผู้เขียนใส่มาเป็นตัวแทนสายที่มี Thanos Fractured Frontier แต่ตัวเลขกลางๆ หลักๆ ก็เล่นการ์ดแรงชุดเดียวกับเด็คอื่น บวก Kraglin เข้ามาอีกใบ",
+        "cards": [
+          "King Eitri",
+          "Surge",
+          "Luke Cage",
+          "Iron Patriot",
+          "Marvel Boy",
+          "Cosmo",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Kraglin",
+          "Juggernaut",
+          "Thanos Fractured Frontier",
+          "Thanos"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-ongoing-affliction",
+        "name": "Ongoing Affliction",
+        "tier": "Tier 3",
+        "cube": 0.5,
+        "wr": 55,
+        "games": null,
+        "arch": "ongoing",
+        "note": "เด็คเดียวในสิบอันดับแรกที่ไม่ได้ใส่ Thanos Fractured Frontier ตอนนี้ยังไม่ค่อยเจอ Luke Cage เท่าไหร่ แต่ต้องเริ่มระวังเมื่อสาย High Evolutionary หันไปเล่นบิลด์ Hellcow กันมากขึ้น",
+        "cards": [
+          "Lady Bullseye",
+          "Scorpion",
+          "Mystique",
+          "Magik",
+          "Hazmat",
+          "Hellcow Fractured Frontier",
+          "Psylocke Fractured Frontier",
+          "The Ancient One",
+          "Luna Snow",
+          "Sera",
+          "Blink",
+          "Scorpion Brand New Day"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-curved-hammer-time",
+        "name": "Curved Hammer Time",
+        "tier": "Tier 3",
+        "cube": 0.5,
+        "wr": 57.5,
+        "games": null,
+        "arch": null,
+        "note": "สายเซอร์ไพรส์ประจำซีซั่นนี้ ถึงจะหลุดจากการแย่งอันดับต้นๆ ไปแล้ว แต่ตัวเลขโดยรวมยังดีมาก น่าจะเป็นซีซั่นแรกที่สาย Hammer แข่งขันได้ตลอดทั้งเดือน",
+        "cards": [
+          "Wasp",
+          "Iceman",
+          "King Eitri",
+          "Surge",
+          "Lockjaw",
+          "Phastos",
+          "Thor",
+          "Beta Ray Bill",
+          "En Sabah Nur",
+          "Thanos Fractured Frontier",
+          "Jane Foster Mighty Thor",
+          "Gorr the God Butcher"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-curved-move",
+        "name": "Curved Move",
+        "tier": "Tier 3",
+        "cube": 0.45,
+        "wr": 58.5,
+        "games": null,
+        "arch": "move",
+        "note": "โดนลดพลังไป 1 แต้มจาก OTA รอบล่าสุดแล้วผลงานตกชัดเจน ลง Batroc the Leaper เทิร์นแรกต่อด้วย Sam Wilson Captain America ตอนนี้ได้พลังรวมแค่ 16 จาก 3 พลังงาน ซึ่งถือว่าไม่คุ้มแล้ว",
+        "cards": [
+          "Batroc the Leaper",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Sam Wilson Captain America",
+          "Kraven",
+          "Silk",
+          "Cosmo",
+          "Hydra Stomper",
+          "Mary Jane",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Thanos Fractured Frontier"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-curved-10-power",
+        "name": "Curved 10 Power",
+        "tier": "Tier 2",
+        "cube": 0.6,
+        "wr": 62.5,
+        "games": null,
+        "arch": "highpower",
+        "note": "สาย 10 Power แทบไม่เปลี่ยนอะไร แค่สลับจาก Lizard มาเป็น Luke Cage จุดอ่อนคือ Demon ที่ถูกสับเข้าเด็คทำให้จั่วการ์ดสำคัญยากกว่าเด็ค Thanos สายอื่น",
+        "cards": [
+          "King Eitri",
+          "Martyr",
+          "Techno-Organic Virus",
+          "Surge",
+          "Luke Cage",
+          "Shadowlands Daredevil",
+          "Red Hulk Fractured Frontier",
+          "Starbrand",
+          "Ares",
+          "Thanos Fractured Frontier",
+          "Sasquatch",
+          "Skaar"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-wiccan-curves",
+        "name": "Wiccan Curves",
+        "tier": "Tier 2",
+        "cube": 0.6,
+        "wr": 62.5,
+        "games": null,
+        "arch": "quickdraw",
+        "note": "มีบิลด์ที่ตัด Domino ออกเพื่อใส่ Luke Cage ได้ถ้าอยากสู้กับเมตาตอนนี้ ส่วน Enchantress เข้ามาแทน Blink เพื่อรับมือเด็ค Scorpion Brand New Day โดยเฉพาะ",
+        "cards": [
+          "Quicksilver",
+          "Domino",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Psylocke Fractured Frontier",
+          "Copycat",
+          "Crystal",
+          "Karen Page",
+          "Wiccan",
+          "Enchantress",
+          "Thanos Fractured Frontier",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-affliction-high-evo",
+        "name": "Affliction High Evo",
+        "tier": "Tier 1",
+        "cube": 0.65,
+        "wr": 66,
+        "games": null,
+        "arch": "highevo",
+        "note": "บิลด์ใหม่ที่เพิ่งเกิดขึ้นหลัง Hellcow Fractured Frontier เปิดให้เล่น โครงไม่ต่างจาก High Evolutionary เดิมมากนัก แต่เปลี่ยนจาก Hulk มาเน้นการสาปลดพลังเพื่อกดค่าใช้จ่ายของ Abomination ลง",
+        "cards": [
+          "Wasp",
+          "Nebula",
+          "Misty Knight",
+          "Luke Cage",
+          "Scorpion",
+          "Hellcow Fractured Frontier",
+          "Jane Foster Fractured Frontier",
+          "Cyclops",
+          "High Evolutionary",
+          "Thanos Fractured Frontier",
+          "Abomination",
+          "Scorpion Brand New Day"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-small-buffed-cards",
+        "name": "Small Buffed Cards",
+        "tier": "Tier 1",
+        "cube": 0.7,
+        "wr": 66.5,
+        "games": null,
+        "arch": "onreveal",
+        "note": "ยืดหยุ่นที่สุดในบรรดาเด็คสาย Thanos Fractured Frontier ผู้เขียนตารางบอกว่าถ้าใส่ Luke Cage ลงไปได้ด้วย เด็คนี้น่าจะขึ้นไปนั่งอันดับหนึ่งของตารางเลยด้วยซ้ำ",
+        "cards": [
+          "Kitty Pryde",
+          "Spider-Man Brand New Day",
+          "Clea",
+          "Nightcrawler",
+          "Jeff the Baby Dolphin!?",
+          "Angela",
+          "Bishop",
+          "Marvel Boy",
+          "Venus",
+          "Elsa Bloodstone",
+          "Shang-Chi",
+          "Thanos Fractured Frontier"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/0",
+      "value": {
+        "id": "ff4-curved-aurora",
+        "name": "Curved Aurora",
+        "tier": "Tier 1",
+        "cube": 0.85,
+        "wr": 66,
+        "games": null,
+        "arch": "quickdraw",
+        "note": "Luke Cage คือตัวแปรสำคัญที่ดันผลงาน Aurora ขึ้นมา ส่วน Echo ก็เข้ามาช่วยรับมือสาย Ongoing Affliction ได้ดี การเนิร์ฟ Sam Wilson Captain America รอบล่าสุดไม่ได้ทำให้สายนี้หลุดจากแถวหน้าอย่างที่หลายคนคาด",
+        "cards": [
+          "Spider-Ham",
+          "Echo",
+          "Hydra Bob",
+          "Surge",
+          "Luke Cage",
+          "Sam Wilson Captain America",
+          "Awesome Andy",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Wong",
+          "Thanos Fractured Frontier",
+          "Aurora"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-small-good-cards",
+        "name": "Small Good Cards (17 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.7,
+        "wr": 65.5,
+        "games": null,
+        "arch": "onreveal",
+        "note": "เด็คนี้อาศัยการ์ดราคาถูกที่เล่นได้ทันทีที่จั่วขึ้นมา ผสาน Venus กับ Thanos Fractured Frontier เป็นแกนหลัก ไม่มีการ์ดกวนเลยสักใบ ต้องพัฒนาแต้มทุกเทิร์นให้เต็มที่ แต่ผลงานพิสูจน์แล้วว่าได้ผลดีมาก",
+        "cards": [
+          "America Chavez",
+          "Nico Minoru",
+          "Spider-Man Brand New Day",
+          "Black Cat",
+          "Hydra Bob",
+          "Surge",
+          "Jeff the Baby Dolphin!?",
+          "Iron Patriot",
+          "Marvel Boy",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Thanos Fractured Frontier"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-onreveal-hammer",
+        "name": "On Reveal Hammer (17 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.7,
+        "wr": 62.5,
+        "games": null,
+        "arch": null,
+        "note": "แพ็กเกจ Mjolnir/Thor ที่ไม่เคยติดเมตามาก่อน แต่พอใส่ Thanos Fractured Frontier เข้าไปกลับพลิกกลายเป็นเด็คแข่งขันได้จริง แสดงให้เห็นว่าธานอสตัวนี้แรงแค่ไหน",
+        "cards": [
+          "Wasp",
+          "Iceman",
+          "King Eitri",
+          "Surge",
+          "Lockjaw",
+          "Psylocke Fractured Frontier",
+          "Thor",
+          "Beta Ray Bill",
+          "En Sabah Nur",
+          "Thanos Fractured Frontier",
+          "Jane Foster Mighty Thor",
+          "Gorr the God Butcher"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-aurora",
+        "name": "Aurora (17 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.65,
+        "wr": 62,
+        "games": null,
+        "arch": "quickdraw",
+        "note": "Aurora เคยตกยุคไปหลายซีซั่น แต่ Thanos Fractured Frontier ทำให้เด็คที่เน้นเล่นการ์ดทันทีที่จั่วกลับมาแข็งแกร่งอีกครั้ง ยังใช้ Wong เป็น Ongoing เพื่อยิง Infinity Shot ซ้ำได้ด้วย",
+        "cards": [
+          "Spider-Ham",
+          "Iceman",
+          "Hydra Bob",
+          "Surge",
+          "Awesome Andy",
+          "Hawkeye Kate Bishop",
+          "Sam Wilson Captain America",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Wong",
+          "Thanos Fractured Frontier",
+          "Aurora"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-high-evolutionary",
+        "name": "High Evolutionary (17 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.65,
+        "wr": 62,
+        "games": null,
+        "arch": "highevo",
+        "note": "ไฮอีโวเวอร์ชันนี้ไม่ใช่สาย Series 3 อ่อนโยนเหมือนก่อนแล้ว ใส่ Thanos Fractured Frontier เข้าไปเสริมแต้มปลายเกม ทำให้กลับมาติดอันดับ Tier 1 อีกครั้ง",
+        "cards": [
+          "Sunspot",
+          "Nebula",
+          "Misty Knight",
+          "Scorpion",
+          "Shocker",
+          "Cosmo",
+          "Jane Foster Fractured Frontier",
+          "Cyclops",
+          "High Evolutionary",
+          "Thanos Fractured Frontier",
+          "Abomination",
+          "Hulk"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-curved-wiccan",
+        "name": "Curved Wiccan (17 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.55,
+        "wr": 61,
+        "games": null,
+        "arch": "quickdraw",
+        "note": "เด็คที่รอคอยตั้งแต่ต้นซีซั่นเพราะเข้ากับ Thanos Fractured Frontier พอดี การมาของการ์ดค่า 5 ตัวใหม่ (ธานอส) เปลี่ยนเกมของสาย Wiccan ไปเลย ตอนนี้กลายเป็นหนึ่งในตัวเลือกที่แรงที่สุด",
+        "cards": [
+          "Quicksilver",
+          "Domino",
+          "Cosmo",
+          "Drax, Avatar Of Life",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Crystal",
+          "Isca the Unbeaten",
+          "Karen Page",
+          "Wiccan",
+          "Thanos Fractured Frontier",
+          "Galactus First Steps"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-created-cards",
+        "name": "Created Cards (17 ส.ค.)",
+        "tier": "Tier 1",
+        "cube": 0.65,
+        "wr": 60,
+        "games": null,
+        "arch": "created",
+        "note": "ยืมโครงจาก Iron Hand และ High Power มาผสมกัน แล้วใส่ Thanos Fractured Frontier ปิดท้าย ผลงานเกือบเทียบเท่าเด็คอันดับ 1 ของซีซั่นก่อน",
+        "cards": [
+          "Quinjet",
+          "Spider-Ham",
+          "King Eitri",
+          "Techno-Organic Virus",
+          "Iron Patriot",
+          "Shadowlands Daredevil",
+          "Valentina",
+          "Shadow King",
+          "Gambit Horseman of Death",
+          "Mother Askani",
+          "Blink",
+          "Thanos Fractured Frontier"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-move",
+        "name": "Move (17 ส.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.5,
+        "wr": 59,
+        "games": null,
+        "arch": "move",
+        "note": "สาย Move ยังคงเป็นซินเนอร์จีที่ทรงพลังที่สุดในเกมถ้าเล่นเข้าจังหวะ แต่ปัญหาคือเกมตอนนี้ให้รางวัลกับ Thanos Fractured Frontier มากกว่าการสร้างคอมโบเฉพาะทางแบบนี้",
+        "cards": [
+          "Batroc the Leaper",
+          "Spider-Man Brand New Day",
+          "Nightcrawler",
+          "Kraven",
+          "Sam Wilson Captain America",
+          "Silk",
+          "Cosmo",
+          "Hydra Stomper",
+          "Mary Jane",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Thanos Fractured Frontier"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-zombies",
+        "name": "Zombies (17 ส.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.65,
+        "wr": 58.5,
+        "games": null,
+        "arch": null,
+        "note": "Thanos Fractured Frontier ยืดหยุ่นพอจะใส่ในแทบทุกสายรวมถึง Zombies ด้วย แรงขนาดที่บางเด็คถึงกับปรับโครงใหม่เพื่อเพิ่มโอกาสโหลด Infinity Shot ให้ครบ",
+        "cards": [
+          "Majestic Wingbeat",
+          "The Hunger",
+          "Nico Minoru",
+          "Merlin",
+          "Pixie",
+          "Venus",
+          "Jane Foster Fractured Frontier",
+          "Psylocke Fractured Frontier",
+          "Zombie Scarlet Witch",
+          "Zombie Giant-Man",
+          "Thanos Fractured Frontier",
+          "Emperor Hulkling"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-kazootriot",
+        "name": "Kazootriot (17 ส.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.7,
+        "wr": 58,
+        "games": null,
+        "arch": "ongoing",
+        "note": "ใช้ Goose ปิดเลน และ Cosmo กันธานอสของฝ่ายตรงข้าม เป็นทางที่ทำให้เด็คนี้ไต่มาติดตารางแข่งขันได้ เล่นเป็นก็ใช้ Mystique อัด Cosmo ปิดได้ทุกเลนเลย แต่ต้องแลกกับการไม่ได้ใช้ Ultron",
+        "cards": [
+          "Ant Man",
+          "Squirrel Girl",
+          "Misty Knight",
+          "Dazzler",
+          "Goose",
+          "Mystique",
+          "Patriot",
+          "Cosmo",
+          "Ka-Zar",
+          "Blue Marvel",
+          "Onslaught",
+          "Ultron"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-high-power",
+        "name": "High Power (17 ส.ค.)",
+        "tier": "Tier 2",
+        "cube": 0.45,
+        "wr": 57,
+        "games": null,
+        "arch": "highpower",
+        "note": "เด็คที่แรงที่สุดในรอบสามซีซั่นที่ผ่านมาโดยไม่ต้องพึ่งการเนิร์ฟเลย เกมแค่ต้องการการ์ดที่แรงพอจะท้าชนสายพลังสูงในเกมแต้มดิบตรงๆ ก็พอ",
+        "cards": [
+          "King Eitri",
+          "Martyr",
+          "Techno-Organic Virus",
+          "Hawkeye Kate Bishop",
+          "Scarlet Witch",
+          "Shadowlands Daredevil",
+          "Lizard",
+          "Shadow King",
+          "Crystal",
+          "Starbrand",
+          "Thanos Fractured Frontier",
+          "Wilson Fisk"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-discard-dracula",
+        "name": "Discard Dracula (17 ส.ค.)",
+        "tier": "Tier 3",
+        "cube": 0.3,
+        "wr": 57,
+        "games": null,
+        "arch": "discard",
+        "note": "สายทิ้งการ์ดเวอร์ชันเน้น Dracula เก็บพลังจากการ์ดที่ทิ้งไปตอนจบเกม ใส่ Weapon H และ M.O.D.O.K. เสริมความแรง แม้ cube average จะไม่สูงแต่ win rate ยังยืนได้",
+        "cards": [
+          "Scorn",
+          "Blade",
+          "Morbius",
+          "Gambit",
+          "Corvus Glaive",
+          "Lady Sif",
+          "Dracula",
+          "Proxima Midnight",
+          "M.O.D.O.K.",
+          "Khonshu",
+          "Apocalypse",
+          "Weapon H"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-ongoing-affliction",
+        "name": "Ongoing Affliction (17 ส.ค.)",
+        "tier": "Tier 3",
+        "cube": 0.5,
+        "wr": 55.5,
+        "games": null,
+        "arch": "ongoing",
+        "note": "สาย Ongoing ผสมสาปลดพลัง เน้นกด -1 Power สะสมด้วย Hazmat/Prodigy/The Ancient One แล้วปิดท้ายด้วย Sera กับ Blink",
+        "cards": [
+          "Lady Bullseye",
+          "Scorpion",
+          "Mystique",
+          "Magik",
+          "Hazmat",
+          "Prodigy",
+          "Psylocke Fractured Frontier",
+          "The Ancient One",
+          "Luna Snow",
+          "Sera",
+          "Blink",
+          "Scorpion Brand New Day"
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/META/-",
+      "value": {
+        "id": "arch-ff2w2-double-thanos",
+        "name": "Double Thanos (17 ส.ค.)",
+        "tier": "Tier 3",
+        "cube": 0.3,
+        "wr": 55,
+        "games": null,
+        "arch": "quickdraw",
+        "note": "เด็คนี้อาศัยการที่ Infinity Stone เล่นได้ทันทีที่จั่วขึ้นมา โหลด Infinity Shot ได้ครบทุกนัดโดยไม่ต้องพึ่ง Aurora หรือ Arishem แม้จะร่วงจาก Tier 1 ของสัปดาห์ก่อนมาอยู่ Tier 3 แต่ยังใช้งานได้อยู่",
+        "cards": [
+          "King Eitri",
+          "Domino",
+          "Cosmo",
+          "Mobius M. Mobius",
+          "Psylocke Fractured Frontier",
+          "Viv Vision",
+          "Isca the Unbeaten",
+          "En Sabah Nur",
+          "The Thing First Steps",
+          "Thanos Fractured Frontier",
+          "Mockingbird",
+          "Thanos"
+        ]
+      }
+    },
+    {
+      "op": "replace",
+      "path": "/META/41/name",
+      "value": "Small Buffed Cards (27 ก.ค.)"
+    },
+    {
+      "op": "replace",
+      "path": "/META/43/name",
+      "value": "Ongoing Affliction (3 ส.ค.)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/season",
+      "value": "AXIS: Inversion (Season 52 · 1 ก.ย. – 6 ต.ค. 2026)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/version",
+      "value": "56.4.1 (แพตช์ 18 ส.ค. 2026)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/metaDate",
+      "value": "31 ส.ค. 2026 (Fractured Frontier สัปดาห์ที่ 4)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/notice",
+      "value": "ตารางเมตานี้อัปเดตวันที่ 31 ส.ค. 2026 ซึ่งเป็นสัปดาห์สุดท้ายของซีซั่น Fractured Frontier — หลัง OTA 27 ส.ค. มี 10 สายที่ win rate เกิน 50% จากกลุ่มตัวอย่างเกิน 100 เกมในแรงก์ Infinite และในนั้น 9 สายใส่ Thanos Fractured Frontier เหลือ Ongoing Affliction สายเดียวที่ไม่ใส่ ผู้เขียนตารางระบุว่าการเปิดตัว Hellcow Fractured Frontier ส่งผลต่อเมตามากกว่าตัว OTA เองเสียอีก และดัน Luke Cage ขึ้นมาเป็นการ์ดป้องกันที่ดีที่สุดในเกมตอนนี้ (หมายเหตุ: สัปดาห์นี้เก็บกลุ่มตัวอย่างได้น้อยกว่าปกติ เกณฑ์แต่ละ Tier จึงสูงกว่าปกติ — สัปดาห์อื่นเด็ค Tier 2 ในตารางนี้ส่วนใหญ่จะได้ Tier 1)"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/upcoming",
+      "value": [
+        [
+          "Superior Iron Man",
+          "5/7 · Series 5 · Season Pass (Premium) — 1 ก.ย. 2026",
+          "Double Cost reductions to this. Ongoing: Double Power increases to this."
+        ],
+        [
+          "Anti-Polar Magneto",
+          "6/9 · Series 5 · Season Pass (Super Premium) — 1 ก.ย. 2026",
+          "On Reveal: Add a 3 or 4-Cost card from your hand to each other location."
+        ],
+        [
+          "Red Onslaught",
+          "4/4 · Series 5 · Seasonal SNAP Pack",
+          "Ongoing: Has 3 random Ongoing abilities."
+        ],
+        [
+          "Kluh",
+          "5/10 · Series 5 · Seasonal SNAP Pack",
+          "On Reveal: EACH player randomly gives a card in their hand -1 Cost for each different Cost among their cards in play."
+        ],
+        [
+          "Rogue Scion of Division",
+          "5/5 · Series 5 · Seasonal SNAP Pack",
+          "On Reveal: Steal the text of the highest-Cost card in your opponent's hand."
+        ],
+        [
+          "Friendly Neighborhood Carnage",
+          "3/4 · Series 5 · Seasonal SNAP Pack",
+          "On Reveal: Move your other cards here to the right. +2 Power for each moved."
+        ],
+        [
+          "Scarlet Witch Queen of Chaos",
+          "3/4 · Series 5 · Seasonal SNAP Pack",
+          "Start of Turn: Add an EXTREMELY random skill to your hand. It costs 0 this turn."
+        ],
+        [
+          "Entropic Havok",
+          "3/3 · Series 4 · Limited Time Event — 16 ก.ย. 2026",
+          "Each turn, steal 1 bonus Energy from your opponent. (if they have any)"
+        ],
+        [
+          "The Inversion",
+          "3/0 · Series 4 · Limited Time Event (Skill)",
+          "On Reveal: Invert the Power of the lowest-Power card(s) here. (positive becomes negative and vice versa)"
+        ]
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/sources/0",
+      "value": [
+        "Marvel Snap Zone — Ranked Meta Tier List (31 ส.ค. 2026, Fractured Frontier Week 4)",
+        "https://marvelsnapzone.com/marvel-snap-ranked-meta-tier-list-august-31-2026/"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/CARDS/44/s",
+      "value": "Series 5"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.011"
+    }
+  ]
+}

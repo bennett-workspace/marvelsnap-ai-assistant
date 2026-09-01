@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.010",
+  "latestVersion": "2026.08.16.011",
   "schemaVersion": 1,
   "patches": [
     {
@@ -91,6 +91,15 @@
       "releasedAt": "2026-08-29T18:20:00Z",
       "source": "snapcomplete-cdn.pages.dev (community CDN, permissive CORS, no hotlink protection)",
       "summary": "แก้รูป Location ที่ยังไม่ขึ้น 10 อัน (ค้างมาตั้งแต่ patch v008 เพราะ static.marvelsnap.pro ยังไม่มี) — Fractured Outpost, Fractured Frontier, Empire State University, Genosha, Kvch, Madripoor, Proscenium, Stark Industries, Survivor's Camp, The Deadlands — ย้ายไปใช้ snapcomplete-cdn.pages.dev แทน (เจอว่า marvelsnapzone.com เปลี่ยนโครงสร้าง URL รูปเก่าทั้งหมดเป็น 404 ถาวรไปแล้ว ทำให้ fallback เดิมก็ใช้ไม่ได้ด้วย) — ตอนนี้ครบทั้ง 184/184 Location แล้ว"
+    },
+    {
+      "version": "2026.08.16.011",
+      "fromVersion": "2026.08.16.010",
+      "url": "patches/2026.08.16.011.json",
+      "sha256": "4f5eb1f525f8949eeafe8ce0c0a77cdbdb793bf330a54bcce0366448e696b50d",
+      "releasedAt": "2026-09-01T17:00:00Z",
+      "source": "marvelsnapzone.com — September 2026 season (AXIS: Inversion), Ranked Meta Tier List 2026-08-31, release schedule",
+      "summary": "ซีซั่นใหม่ AXIS: Inversion (1 ก.ย. – 6 ต.ค. 2026) แทน Fractured Frontier พร้อมการ์ดใหม่ 9 ใบที่จะทยอยปล่อยในซีซั่นนี้ (Superior Iron Man, Anti-Polar Magneto, Red Onslaught, Kluh, Rogue Scion of Division, Friendly Neighborhood Carnage, Scarlet Witch Queen of Chaos, Entropic Havok, The Inversion) — คราวนี้มีค่าใช้จ่าย/พลังยืนยันจากฐานข้อมูลการ์ดแล้ว; อัปเดตตารางเมตาเป็นฉบับ 31 ส.ค. 2026 (Fractured Frontier สัปดาห์ที่ 4) 9 เด็ค และย้ายเด็คชุดเก่า 13 เด็คของ 17 ส.ค. เข้าคลังเด็คแทนการลบทิ้ง; อัปเดตเลขแพตช์เกมเป็น 56.4.1 (18 ส.ค. 2026); แก้ Series ของ Spider-Man Brand New Day เป็น Series 5"
     }
   ]
 }
