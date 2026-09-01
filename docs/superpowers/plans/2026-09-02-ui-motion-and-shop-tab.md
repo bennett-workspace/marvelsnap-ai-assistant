@@ -129,7 +129,7 @@ test('slugify makes a stable id', () => {
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/`
+Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test`
 Expected: FAIL — `Cannot find module './shop-parse.js'`
 
 - [ ] **Step 3: Write the implementation**
@@ -217,7 +217,7 @@ module.exports = { parsePrice, parsePct, parseDateRange, classifyItem, slugify }
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/`
+Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test`
 Expected: PASS — 14 tests, 0 fail.
 
 - [ ] **Step 5: Commit**
@@ -541,7 +541,7 @@ test('a missing or empty shop yields empty buckets rather than throwing', () => 
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/shop-status.test.js`
+Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test`
 Expected: FAIL — "shop status block markers not found".
 
 - [ ] **Step 3: Add the marked block to the app**
@@ -577,7 +577,7 @@ function shopBuckets(shop, todayISO){
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `node --test scripts/lib/shop-status.test.js`
+Run: `node --test`
 Expected: PASS — 8 tests, 0 fail.
 
 - [ ] **Step 5: Sync the Desktop copy and commit**
@@ -1073,7 +1073,7 @@ upcoming cards as a grid. Verified all 77 decks survive the regrouping."
 
 ```bash
 cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant"
-node --test scripts/lib/
+node --test
 node verify-manifest.js
 ```
 Expected: all tests pass; ALL CHECKS PASSED with 12 patches.
