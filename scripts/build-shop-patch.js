@@ -67,10 +67,22 @@ function parseBundles(lines, snapshotAt, skipped) {
     if (lines[i + 2] === 'Bundle Value') valuePct = parsePct(lines[i + 3]);
     if (lines[i + 4] === 'Currency Value') currencyPct = parsePct(lines[i + 5]);
 
-    // Rewards run from after the percentages to "View Breakdown"
+    // Nothing past the next bundle's own name line belongs to this bundle.
+    // That line L is identified by lines[L+1] matching RANGE_RE (the next
+    // bundle's date range) — a bundle that publishes no rewards has no
+    // "View Breakdown" token to stop on, so without this boundary the
+    // reward loop and the Total Gold Value lookup below both walk straight
+    // into the next bundle's block and fabricate data for this one.
+    let boundary = lines.length;
+    for (let n = i + 1; n < lines.length; n++) {
+      if (RANGE_RE.test(lines[n])) { boundary = n - 1; break; }
+    }
+
+    // Rewards run from after the percentages to "View Breakdown", but never
+    // past the boundary.
     let j = i + 6;
     const rewardLabels = [];
-    while (j < lines.length && lines[j] !== 'View Breakdown' && !RANGE_RE.test(lines[j])) {
+    while (j < boundary && lines[j] !== 'View Breakdown') {
       rewardLabels.push(lines[j]); j++;
     }
 
@@ -78,7 +90,7 @@ function parseBundles(lines, snapshotAt, skipped) {
     const goldByLabel = {};
     if (lines[j] === 'View Breakdown') {
       let k = j;
-      while (k < lines.length && lines[k] !== 'Total Gold Value' && !RANGE_RE.test(lines[k])) k++;
+      while (k < boundary && lines[k] !== 'Total Gold Value') k++;
       const seg = lines.slice(j, k);
       for (let p = 0; p < seg.length - 1; p++) {
         if (rewardLabels.includes(seg[p]) && /^[\d,]+$/.test(seg[p + 1])) {
@@ -89,7 +101,7 @@ function parseBundles(lines, snapshotAt, skipped) {
 
     let goldValue = null;
     const tot = lines.indexOf('Total Gold Value', i);
-    if (tot > -1 && tot < i + 60 && /^[\d,]+$/.test(lines[tot + 1] || '')) {
+    if (tot > -1 && tot < boundary && /^[\d,]+$/.test(lines[tot + 1] || '')) {
       goldValue = Number(lines[tot + 1].replace(/,/g, ''));
     }
 
@@ -117,6 +129,14 @@ function parseBundles(lines, snapshotAt, skipped) {
 
   if (!bundles.length) throw new Error('no bundles parsed — page layout probably changed; refusing to emit an empty shop');
   if (skipped.length) console.warn('skipped (no published price): ' + skipped.length + ' — ' + skipped.join(', '));
+
+  // A bundle can genuinely publish zero rewards (e.g. a Battle Pass upgrade
+  // that's just a price with no items). That is not a parser failure, but it
+  // must stay visible rather than pass silently.
+  const zeroReward = bundles.filter(b => b.items.length === 0);
+  if (zeroReward.length) {
+    console.log('bundles with zero rewards: ' + zeroReward.length + ' — ' + zeroReward.map(b => b.id).join(', '));
+  }
   if (skipped.length > bundles.length) {
     throw new Error('skipped more listings (' + skipped.length + ') than parsed (' + bundles.length +
       ') — the price column probably moved; refusing to ship a half-populated shop');

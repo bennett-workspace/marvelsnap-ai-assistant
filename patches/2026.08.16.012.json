@@ -2,7 +2,7 @@
   "version": "2026.08.16.012",
   "fromVersion": "2026.08.16.011",
   "schemaVersion": 1,
-  "releasedAt": "2026-09-01T18:29:27Z",
+  "releasedAt": "2026-09-01T18:56:40Z",
   "source": "snap.fan/bundles snapshot 2026-09-01",
   "summary": "เพิ่มหน้าร้านค้า — bundle ที่ขายอยู่และที่กำลังจะเข้า 21 รายการ (ข้อมูล ณ 2026-09-01) พร้อมราคา ช่วงวันที่ ความคุ้ม และของที่ได้",
   "operations": [
@@ -319,14 +319,8 @@
             },
             "valuePct": 0,
             "currencyPct": 0,
-            "goldValue": 8200,
-            "items": [
-              {
-                "kind": "other",
-                "label": "Super Premium Instant Reward Season 051 August 2026",
-                "goldValue": null
-              }
-            ]
+            "goldValue": null,
+            "items": []
           },
           {
             "id": "sep-26-t-t-01",
