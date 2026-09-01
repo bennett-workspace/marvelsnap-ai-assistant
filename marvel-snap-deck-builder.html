@@ -669,6 +669,30 @@ function saveSet(){save(K.set,S);}
 /* ---------------- utils ---------------- */
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
+/* @testable:shop */
+/* Bundle status is computed at render time from the snapshot's dates, so one
+   snapshot stays correct for days. Dates are plain YYYY-MM-DD and compare
+   correctly as strings, which sidesteps timezone drift entirely. */
+function shopStatus(b, todayISO){
+  if(!b||!b.from||!b.to) return 'ended';
+  if(todayISO < b.from) return 'upcoming';
+  if(todayISO > b.to) return 'ended';
+  return 'live';
+}
+function shopBuckets(shop, todayISO){
+  var out={live:[],upcoming:[],ended:[],stale:false,daysOld:0};
+  if(!shop||!shop.bundles) return out;
+  shop.bundles.forEach(function(b){ out[shopStatus(b,todayISO)].push(b); });
+  out.live.sort(function(x,y){ return x.to<y.to?-1:x.to>y.to?1:0; });
+  out.upcoming.sort(function(x,y){ return x.from<y.from?-1:x.from>y.from?1:0; });
+  out.ended.sort(function(x,y){ return x.to<y.to?1:x.to>y.to?-1:0; });
+  if(shop.snapshotAt){
+    out.daysOld=Math.floor((Date.parse(todayISO+'T00:00:00Z')-Date.parse(shop.snapshotAt+'T00:00:00Z'))/86400000);
+    out.stale=out.daysOld>10;
+  }
+  return out;
+}
+/* @end:shop */
 var $=function(s){return document.querySelector(s);};
 var toastT;
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');
