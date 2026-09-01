@@ -279,6 +279,15 @@ th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink
 
 .skel{background:linear-gradient(90deg,var(--panel) 25%,var(--panel2) 37%,var(--panel) 63%);
   background-size:200% 100%;animation:shimmer 1.4s linear infinite;border-radius:var(--r)}
+
+.hlbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;padding:10px 12px;
+  border:1px solid var(--line2);border-radius:var(--r);background:linear-gradient(90deg,var(--panel),var(--panel2))}
+.hlchip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);font-size:.82rem;cursor:pointer}
+.hlchip:hover{border-color:var(--gold);color:var(--gold)}
+.hlic{animation:pulse 2.4s var(--ease) infinite}
+.hlx{margin-left:auto;background:none;border:0;color:var(--ink3);cursor:pointer;font-size:.9rem;padding:4px 6px}
+.hlx:hover{color:var(--red)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#stars{display:none}}
 </style>
 </head>
@@ -718,6 +727,34 @@ function shopBuckets(shop, todayISO){
    one waiting over two seconds while every one of them holds an animation. */
 var STAGGER_CAP=12;
 function staggerIdx(i){ return ' style="--i:'+(i<STAGGER_CAP?i:STAGGER_CAP)+'"'; }
+/* Derived from data the patch already carries — nothing new is stored, so
+   this cannot drift out of sync with what it describes. */
+function highlightChips(){
+  var out=[];
+  if(P.season) out.push({icon:'🎬',text:'ซีซั่นใหม่ — '+P.season,go:'meta'});
+  var nCards=CARDS.filter(function(c){return c['new'];}).length;
+  if(nCards) out.push({icon:'🃏',text:'การ์ดใหม่ '+nCards+' ใบ',go:'database'});
+  var ref=(P.metaDate||'').match(/\d{4}-\d{2}-\d{2}/);
+  var nBal=CARDS.filter(function(c){
+    var h=c.hist&&c.hist[0]; if(!h||h[1]) return false;
+    return !ref || Math.abs(Date.parse(h[0])-Date.parse(ref[0]))<=14*86400000;
+  }).length;
+  if(nBal&&P.ota) out.push({icon:'⚖️',text:P.ota+' — ปรับ '+nBal+' ใบ',go:'database'});
+  if(P.upcoming&&P.upcoming.length) out.push({icon:'🔮',text:'กำลังจะมา '+P.upcoming.length+' ใบ',go:'meta'});
+  return out;
+}
+var HL_KEY='snapdb.highlight.dismissed.';
+function highlightBar(){
+  var chips=highlightChips();
+  if(!chips.length) return '';
+  if(load(HL_KEY+(P.dataVersion||'0'),false)) return '';
+  return '<div class="hlbar stagger" id="hlbar">'+
+    chips.map(function(c,i){
+      return '<button class="hlchip" data-go="'+esc(c.go)+'"'+staggerIdx(i)+'>'+
+        '<span class="hlic">'+c.icon+'</span>'+esc(c.text)+'</button>';
+    }).join('')+
+    '<button class="hlx" data-hldismiss="1" title="ซ่อนแถบนี้" aria-label="ซ่อนแถบอัปเดต">✕</button></div>';
+}
 var $=function(s){return document.querySelector(s);};
 var toastT;
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');
@@ -1292,7 +1329,7 @@ var V={};
 V.dashboard=function(){
   var sp=recommendSplit();
   var top=sp.ready.slice(0,3);
-  return '<h1 class="vt">แดชบอร์ด</h1>'+
+  return highlightBar()+'<h1 class="vt">แดชบอร์ด</h1>'+
   '<p class="vsub">เครื่องมือจัดเด็ค Marvel SNAP ที่ทำงานจากการ์ดที่คุณมีจริง ข้อมูลการ์ด Location และเมตาดึงจากแหล่งสาธารณะ ณ '+esc(P.metaDate)+'</p>'+
   notice()+'<div class="tiles" style="margin-top:14px">'+
     '<div class="tile"><div class="k">การ์ดที่มี</div><div class="v">'+col.size+' <small>/ '+CARDS.length+'</small></div></div>'+
@@ -2469,10 +2506,11 @@ document.addEventListener('click',function(e){
     '[data-importcol],[data-importdeck],[data-toggleimg],[data-cleardecks],[data-export],'+
     '[data-exportarch],[data-exportmeta],[data-copycode],[data-copyplain],'+
     '[data-lbimg],[data-lbclose],[data-lbopencard],[data-artist],[data-clearartist],[data-series],'+
-    '[data-checkpatch],[data-rollbackpatch],[data-synccol],[data-unsync]');
+    '[data-checkpatch],[data-rollbackpatch],[data-synccol],[data-unsync],[data-hldismiss]');
   if(!t){ if(e.target.id==='lb') closeLightbox(); return; }
   var d=t.dataset;
 
+  if(d.hldismiss!==undefined){ save(HL_KEY+(P.dataVersion||'0'),true); render(); return; }
   if(d.checkpatch!==undefined){ doPatchUpdate(); return; }
   if(d.rollbackpatch!==undefined){ doPatchRollback(d.rollbackpatch); return; }
   if(d.unsync!==undefined){ doUnsyncCollection(); return; }
