@@ -1,0 +1,680 @@
+{
+  "version": "2026.08.16.012",
+  "fromVersion": "2026.08.16.011",
+  "schemaVersion": 1,
+  "releasedAt": "2026-09-01T18:29:27Z",
+  "source": "snap.fan/bundles snapshot 2026-09-01",
+  "summary": "เพิ่มหน้าร้านค้า — bundle ที่ขายอยู่และที่กำลังจะเข้า 21 รายการ (ข้อมูล ณ 2026-09-01) พร้อมราคา ช่วงวันที่ ความคุ้ม และของที่ได้",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/SHOP",
+      "value": {
+        "snapshotAt": "2026-09-01",
+        "source": "snap.fan/bundles",
+        "bundles": [
+          {
+            "id": "aug-26-b-p-04",
+            "name": "B P 04",
+            "from": "2026-08-31",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "gold",
+              "amount": 600
+            },
+            "valuePct": 140,
+            "currencyPct": 133,
+            "goldValue": 840,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 1000,
+                "label": "1000 Credits",
+                "goldValue": 800
+              },
+              {
+                "kind": "boosters",
+                "qty": 65,
+                "label": "65 Random Boosters",
+                "goldValue": 8
+              }
+            ]
+          },
+          {
+            "id": "aug-26-flash-0746",
+            "name": "Flash 0746",
+            "from": "2026-08-30",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 160,
+            "currencyPct": 160,
+            "goldValue": 6400,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 8000,
+                "label": "8000 Credits",
+                "goldValue": 6400
+              }
+            ]
+          },
+          {
+            "id": "aug-26-webshop-flash-0746",
+            "name": "Webshop Flash 0746",
+            "from": "2026-08-30",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 160,
+            "currencyPct": 160,
+            "goldValue": 6400,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 8000,
+                "label": "8000 Credits",
+                "goldValue": 6400
+              }
+            ]
+          },
+          {
+            "id": "aug-26-webshop-r-r-sini",
+            "name": "Webshop R R Sini",
+            "from": "2026-08-28",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 378,
+            "currencyPct": 160,
+            "goldValue": 15116,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Sinister Six",
+                "variantId": "SinisterSix_01",
+                "label": "SinisterSix_01",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 8000,
+                "label": "8000 Credits",
+                "goldValue": 6400
+              },
+              {
+                "kind": "boosters",
+                "qty": 465,
+                "label": "465 Boosters",
+                "goldValue": 116
+              }
+            ]
+          },
+          {
+            "id": "aug-26-storm-stry",
+            "name": "Storm Stry",
+            "from": "2026-08-25",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 99.99
+            },
+            "valuePct": 325,
+            "currencyPct": 191,
+            "goldValue": 26004,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Storm Horseman",
+                "variantId": "StormHorseman_04",
+                "label": "StormHorseman_04",
+                "goldValue": 700
+              },
+              {
+                "kind": "variant",
+                "card": "Stryfe",
+                "variantId": "Stryfe_10",
+                "label": "Stryfe_10",
+                "goldValue": 700
+              },
+              {
+                "kind": "tokens",
+                "qty": 5000,
+                "label": "5000 Collector's Tokens",
+                "goldValue": 6250
+              },
+              {
+                "kind": "credits",
+                "qty": 5000,
+                "label": "5000 Credits",
+                "goldValue": 4000
+              },
+              {
+                "kind": "gold",
+                "qty": 5000,
+                "label": "5000 Gold",
+                "goldValue": 5000
+              },
+              {
+                "kind": "boosters",
+                "qty": 310,
+                "label": "310 Boosters",
+                "goldValue": 77
+              },
+              {
+                "kind": "boosters",
+                "qty": 310,
+                "label": "310 Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "aug-26-webshop-syn-r-hulk",
+            "name": "Webshop Syn R Hulk",
+            "from": "2026-08-25",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 213,
+            "currencyPct": 154,
+            "goldValue": 8504,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Angela",
+                "variantId": "Angela_07",
+                "label": "Angela_07",
+                "goldValue": 700
+              },
+              {
+                "kind": "variant",
+                "card": "Iron Patriot",
+                "variantId": "IronPatriot_10",
+                "label": "IronPatriot_10",
+                "goldValue": 700
+              },
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "credits",
+                "qty": 3000,
+                "label": "3000 Credits",
+                "goldValue": 2400
+              },
+              {
+                "kind": "boosters",
+                "qty": 310,
+                "label": "310 Boosters",
+                "goldValue": 77
+              },
+              {
+                "kind": "boosters",
+                "qty": 310,
+                "label": "310 Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "aug-26-goose",
+            "name": "Goose",
+            "from": "2026-08-18",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 14.99
+            },
+            "valuePct": 299,
+            "currencyPct": 167,
+            "goldValue": 3588,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Goose",
+                "variantId": "Goose_25",
+                "label": "Goose_25",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 1000,
+                "label": "1000 Credits",
+                "goldValue": 800
+              },
+              {
+                "kind": "gold",
+                "qty": 1200,
+                "label": "1200 Gold",
+                "goldValue": 1200
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "battle-pass-premium-basic-aug-2026",
+            "name": "Battle Pass Premium Basic Aug 2026",
+            "from": "2026-08-04",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 626,
+            "currencyPct": 0,
+            "goldValue": 5000,
+            "items": [
+              {
+                "kind": "other",
+                "label": "OldSeries5",
+                "goldValue": 0
+              }
+            ]
+          },
+          {
+            "id": "battle-pass-premium-super-aug-2026",
+            "name": "Battle Pass Premium Super Aug 2026",
+            "from": "2026-08-04",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 19.99
+            },
+            "valuePct": 313,
+            "currencyPct": 0,
+            "goldValue": 5000,
+            "items": [
+              {
+                "kind": "other",
+                "label": "OldSeries5",
+                "goldValue": 0
+              }
+            ]
+          },
+          {
+            "id": "battle-pass-premium-upgrade-aug-2026",
+            "name": "Battle Pass Premium Upgrade Aug 2026",
+            "from": "2026-08-04",
+            "to": "2026-09-01",
+            "price": {
+              "kind": "usd",
+              "amount": 10.99
+            },
+            "valuePct": 0,
+            "currencyPct": 0,
+            "goldValue": 8200,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Super Premium Instant Reward Season 051 August 2026",
+                "goldValue": null
+              }
+            ]
+          },
+          {
+            "id": "sep-26-t-t-01",
+            "name": "T T 01",
+            "from": "2026-09-01",
+            "to": "2026-09-02",
+            "price": {
+              "kind": "gold",
+              "amount": 1500
+            },
+            "valuePct": 101,
+            "currencyPct": 100,
+            "goldValue": 1513,
+            "items": [
+              {
+                "kind": "tokens",
+                "qty": 1200,
+                "label": "1200 Collector's Tokens",
+                "goldValue": 1500
+              },
+              {
+                "kind": "boosters",
+                "qty": 105,
+                "label": "105 Random Boosters",
+                "goldValue": 13
+              }
+            ]
+          },
+          {
+            "id": "aug-26-surtur",
+            "name": "Surtur",
+            "from": "2026-08-26",
+            "to": "2026-09-02",
+            "price": {
+              "kind": "usd",
+              "amount": 29.99
+            },
+            "valuePct": 145,
+            "currencyPct": 0,
+            "goldValue": 3488,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Surtur",
+                "variantId": "Surtur_11",
+                "label": "Surtur_11",
+                "goldValue": 700
+              },
+              {
+                "kind": "other",
+                "label": "OldSeries4",
+                "goldValue": 0
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "aug-26-i-w-f-s",
+            "name": "I W F S",
+            "from": "2026-08-27",
+            "to": "2026-09-03",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 376,
+            "currencyPct": 163,
+            "goldValue": 15027,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Invisible Woman First Steps",
+                "variantId": "InvisibleWomanFirstSteps_09",
+                "label": "InvisibleWomanFirstSteps_09",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 5000,
+                "label": "5000 Credits",
+                "goldValue": 4000
+              },
+              {
+                "kind": "gold",
+                "qty": 2500,
+                "label": "2500 Gold",
+                "goldValue": 2500
+              },
+              {
+                "kind": "boosters",
+                "qty": 310,
+                "label": "310 Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "aug-26-krag",
+            "name": "Krag",
+            "from": "2026-08-28",
+            "to": "2026-09-04",
+            "price": {
+              "kind": "usd",
+              "amount": 19.99
+            },
+            "valuePct": 687,
+            "currencyPct": 156,
+            "goldValue": 10988,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Kraglin",
+                "variantId": "Kraglin_04",
+                "label": "Kraglin_04",
+                "goldValue": 700
+              },
+              {
+                "kind": "tokens",
+                "qty": 2000,
+                "label": "2000 Collector's Tokens",
+                "goldValue": 2500
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-barg-01",
+            "name": "Barg 01",
+            "from": "2026-09-04",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 14.99
+            },
+            "valuePct": 153,
+            "currencyPct": 150,
+            "goldValue": 1838,
+            "items": [
+              {
+                "kind": "gold",
+                "qty": 1800,
+                "label": "1800 Gold",
+                "goldValue": 1800
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Random Boosters",
+                "goldValue": 19
+              }
+            ]
+          },
+          {
+            "id": "sep-26-cage",
+            "name": "Cage",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 4.99
+            },
+            "valuePct": 1334,
+            "currencyPct": 157,
+            "goldValue": 5325,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Luke Cage",
+                "variantId": "LukeCage_10",
+                "label": "LukeCage_10",
+                "goldValue": 700
+              },
+              {
+                "kind": "tokens",
+                "qty": 500,
+                "label": "500 Collector's Tokens",
+                "goldValue": 625
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-anti",
+            "name": "Webshop Anti",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 299,
+            "currencyPct": 156,
+            "goldValue": 2388,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Cosmo",
+                "variantId": "Cosmo_07",
+                "label": "Cosmo_07",
+                "goldValue": 700
+              },
+              {
+                "kind": "tokens",
+                "qty": 1000,
+                "label": "1000 Collector's Tokens",
+                "goldValue": 1250
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-red",
+            "name": "Webshop Red",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 284,
+            "currencyPct": 160,
+            "goldValue": 2268,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Onslaught",
+                "variantId": "Onslaught_09",
+                "label": "Onslaught_09",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 1600,
+                "label": "1600 Credits",
+                "goldValue": 1280
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-supe",
+            "name": "Webshop Supe",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 303,
+            "currencyPct": 160,
+            "goldValue": 2418,
+            "items": [
+              {
+                "kind": "variant",
+                "card": "Sera",
+                "variantId": "Sera_14",
+                "label": "Sera_14",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 1600,
+                "label": "1600 Credits",
+                "goldValue": 1280
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-barg-02",
+            "name": "Barg 02",
+            "from": "2026-09-05",
+            "to": "2026-09-06",
+            "price": {
+              "kind": "usd",
+              "amount": 29.99
+            },
+            "valuePct": 158,
+            "currencyPct": 156,
+            "goldValue": 3788,
+            "items": [
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Random Boosters",
+                "goldValue": 19
+              }
+            ]
+          },
+          {
+            "id": "sep-26-barg-03",
+            "name": "Barg 03",
+            "from": "2026-09-06",
+            "to": "2026-09-07",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 161,
+            "currencyPct": 160,
+            "goldValue": 6438,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 8000,
+                "label": "8000 Credits",
+                "goldValue": 6400
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Random Boosters",
+                "goldValue": 19
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

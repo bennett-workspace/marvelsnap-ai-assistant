@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.011",
+  "latestVersion": "2026.08.16.012",
   "schemaVersion": 1,
   "patches": [
     {
@@ -100,6 +100,15 @@
       "releasedAt": "2026-09-01T17:00:00Z",
       "source": "marvelsnapzone.com — September 2026 season (AXIS: Inversion), Ranked Meta Tier List 2026-08-31, release schedule",
       "summary": "ซีซั่นใหม่ AXIS: Inversion (1 ก.ย. – 6 ต.ค. 2026) แทน Fractured Frontier พร้อมการ์ดใหม่ 9 ใบที่จะทยอยปล่อยในซีซั่นนี้ (Superior Iron Man, Anti-Polar Magneto, Red Onslaught, Kluh, Rogue Scion of Division, Friendly Neighborhood Carnage, Scarlet Witch Queen of Chaos, Entropic Havok, The Inversion) — คราวนี้มีค่าใช้จ่าย/พลังยืนยันจากฐานข้อมูลการ์ดแล้ว; อัปเดตตารางเมตาเป็นฉบับ 31 ส.ค. 2026 (Fractured Frontier สัปดาห์ที่ 4) 9 เด็ค และย้ายเด็คชุดเก่า 13 เด็คของ 17 ส.ค. เข้าคลังเด็คแทนการลบทิ้ง; อัปเดตเลขแพตช์เกมเป็น 56.4.1 (18 ส.ค. 2026); แก้ Series ของ Spider-Man Brand New Day เป็น Series 5"
+    },
+    {
+      "version": "2026.08.16.012",
+      "fromVersion": "2026.08.16.011",
+      "url": "patches/2026.08.16.012.json",
+      "sha256": "fc59a85dfe06341456579e8b014742017fedc2ada4e05c657c0cddce2b547a34",
+      "releasedAt": "2026-09-01T18:29:27Z",
+      "source": "snap.fan/bundles",
+      "summary": "เพิ่มหน้าร้านค้า — bundle ที่ขายอยู่และที่กำลังจะเข้า 21 รายการ (ข้อมูล ณ 2026-09-01) พร้อมราคา ช่วงวันที่ ความคุ้ม และของที่ได้"
     }
   ]
 }
