@@ -1,0 +1,14 @@
+# The app verifies every patch against the SHA-256 in manifest.json, hashing
+# the bytes it downloads from raw.githubusercontent.com — which are git's
+# stored blob, always LF.
+#
+# On Windows core.autocrlf=true rewrites checked-out files to CRLF. That
+# changes their bytes, so a hash computed from the working tree does NOT match
+# what clients download. Patch 2026.08.16.009 shipped three such hashes and
+# broke updating for everyone until it was corrected.
+#
+# Pinning these files to LF keeps the working tree byte-identical to what is
+# served, so hashing either one gives the same answer.
+manifest.json text eol=lf
+patches/*.json text eol=lf
+verify-manifest.js text eol=lf
