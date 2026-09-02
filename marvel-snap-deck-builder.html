@@ -259,6 +259,45 @@ th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink
 @media(hover:none) and (pointer:coarse){
   .cg:hover{transform:none}
 }
+:root{
+  --dur-fast:120ms; --dur:220ms; --dur-slow:420ms;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes itemIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+
+.viewin{animation:viewIn var(--dur) var(--ease) both}
+.stagger>*{animation:itemIn var(--dur) var(--ease) both;animation-delay:calc(var(--i,0) * 28ms)}
+
+.card{transition:transform var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease)}
+.card:hover{transform:translateY(-2px);border-color:var(--line2)}
+.btn,.pill,.card{transition:transform var(--dur-fast) var(--ease-spring),background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}
+.btn:active,.pill:active,.card:active{transform:scale(.97)}
+
+.skel{background:linear-gradient(90deg,var(--panel) 25%,var(--panel2) 37%,var(--panel) 63%);
+  background-size:200% 100%;animation:shimmer 1.4s linear infinite;border-radius:var(--r)}
+
+.hlbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;padding:10px 12px;
+  border:1px solid var(--line2);border-radius:var(--r);background:linear-gradient(90deg,var(--panel),var(--panel2))}
+.hlchip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);font-size:.82rem;cursor:pointer}
+.hlchip:hover{border-color:var(--gold);color:var(--gold)}
+.hlic{animation:pulse 2.4s var(--ease) infinite}
+.hlx{margin-left:auto;background:none;border:0;color:var(--ink3);cursor:pointer;font-size:.9rem;padding:4px 6px}
+.hlx:hover{color:var(--red)}
+
+.vbadge{font:600 .78rem/1 var(--mono);padding:4px 8px;border-radius:999px;border:1px solid var(--line)}
+.vbadge.vhot{color:var(--grn);border-color:var(--grn)}
+.vbadge.vgood{color:var(--gold);border-color:var(--gold)}
+.vbadge.vmeh{color:var(--ink3)}
+.rewards{list-style:none;margin:8px 0 0;padding:0}
+.rewards li{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-top:1px solid var(--line);align-items:center}
+.rwlabel{display:flex;align-items:center;gap:8px;min-width:0}
+.rwthumb{width:28px;height:28px;object-fit:cover;border-radius:6px;flex:none}
+.statnum{font-variant-numeric:tabular-nums}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#stars{display:none}}
 </style>
 </head>
@@ -298,7 +337,7 @@ window.SNAPDATA={"PATCH":{"dataVersion":"2026.08.16.000","version":"55.8.2 (แ�
 var D = window.SNAPDATA;
 if(!D){document.getElementById('view').innerHTML='<div class="empty"><b>โหลดข้อมูลไม่สำเร็จ</b>ไฟล์ข้อมูลในหน้านี้เสียหาย ลองดาวน์โหลด index.html ใหม่อีกครั้ง</div>';return;}
 
-var CARDS=D.CARDS, LOCS=D.LOCATIONS, ARCH=D.ARCHETYPES, META=D.META, MATCH=D.MATCH, P=D.PATCH;
+var CARDS=D.CARDS, LOCS=D.LOCATIONS, ARCH=D.ARCHETYPES, META=D.META, MATCH=D.MATCH, P=D.PATCH, SHOP=D.SHOP||null;
 var byId={}, byName={};
 CARDS.forEach(function(c){byId[c.id]=c;byName[c.n.toLowerCase()]=c;});
 var archById={}; ARCH.forEach(function(a){archById[a.id]=a;});
@@ -484,7 +523,7 @@ async function loadStoredSnapshotIfAny(){
     if(!ptr||!ptr.version) return; // ไม่เคย apply patch เลย -> ใช้ baseline ในไฟล์ตามปกติ
     var snap=await idbGet('snapshots',ptr.version);
     if(snap&&snap.data&&snap.data.CARDS){
-      D=snap.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
+      D=snap.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH; SHOP=D.SHOP||null;
       rebuildIndices();
     }
   }catch(e){ /* ไม่มี IndexedDB หรือเปิดไม่ได้ — ใช้ข้อมูลในไฟล์ตามปกติ */ }
@@ -540,7 +579,7 @@ async function applyPendingPatches(pending){
     await idbPut('snapshots',{version:patch.version,data:working,appliedAt:new Date().toISOString()});
     await idbPut('meta',{key:'current',version:patch.version});
     await pruneSnapshotHistory(patch.version);
-    D=working; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
+    D=working; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH; SHOP=D.SHOP||null;
     rebuildIndices();
     await logPatchEvent({from:fromVersion,to:patch.version,status:'success',
       summary:patch.summary||entry.summary||'',source:entry.source||''});
@@ -563,7 +602,7 @@ async function listHistoryVersions(){
 async function rollbackToVersion(targetVersion){
   var fromVersion=currentDataVersion();
   if(targetVersion===BASELINE_MARKER){
-    D=window.SNAPDATA; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
+    D=window.SNAPDATA; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH; SHOP=D.SHOP||null;
     rebuildIndices();
     await idbDelete('meta','current');
     await logPatchEvent({from:fromVersion,to:currentDataVersion(),status:'rollback',summary:'ย้อนกลับไปข้อมูลตั้งต้นในไฟล์'});
@@ -571,7 +610,7 @@ async function rollbackToVersion(targetVersion){
   }
   var snap=await idbGet('snapshots',targetVersion);
   if(!snap) throw new Error('ไม่พบ snapshot เวอร์ชัน '+targetVersion+' ในเครื่อง (อาจถูกลบเพราะเก็บได้สูงสุด '+PATCH_HISTORY_CAP+' เวอร์ชันย้อนหลัง)');
-  D=snap.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH;
+  D=snap.data; CARDS=D.CARDS; LOCS=D.LOCATIONS; ARCH=D.ARCHETYPES; META=D.META; MATCH=D.MATCH; P=D.PATCH; SHOP=D.SHOP||null;
   rebuildIndices();
   await idbPut('meta',{key:'current',version:targetVersion});
   await logPatchEvent({from:fromVersion,to:currentDataVersion(),status:'rollback',summary:'ย้อนกลับไปเวอร์ชัน '+targetVersion});
@@ -669,6 +708,76 @@ function saveSet(){save(K.set,S);}
 /* ---------------- utils ---------------- */
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
+/* @testable:shop */
+/* Bundle status is computed at render time from the snapshot's dates, so one
+   snapshot stays correct for days. Dates are plain YYYY-MM-DD and compare
+   correctly as strings, which sidesteps timezone drift entirely. */
+function shopStatus(b, todayISO){
+  if(!b||!b.from||!b.to) return 'ended';
+  if(todayISO < b.from) return 'upcoming';
+  if(todayISO > b.to) return 'ended';
+  return 'live';
+}
+function shopBuckets(shop, todayISO){
+  var out={live:[],upcoming:[],ended:[],stale:false,daysOld:0};
+  if(!shop||!shop.bundles) return out;
+  shop.bundles.forEach(function(b){ out[shopStatus(b,todayISO)].push(b); });
+  out.live.sort(function(x,y){ return x.to<y.to?-1:x.to>y.to?1:0; });
+  out.upcoming.sort(function(x,y){ return x.from<y.from?-1:x.from>y.from?1:0; });
+  out.ended.sort(function(x,y){ return x.to<y.to?1:x.to>y.to?-1:0; });
+  if(shop.snapshotAt){
+    out.daysOld=Math.floor((Date.parse(todayISO+'T00:00:00Z')-Date.parse(shop.snapshotAt+'T00:00:00Z'))/86400000);
+    out.stale=out.daysOld>10;
+  }
+  return out;
+}
+/* @end:shop */
+/* Stagger is capped so a long list cannot queue an absurd delay: the deck
+   library renders 77 cards, and an uncapped 28ms step would leave the last
+   one waiting over two seconds while every one of them holds an animation. */
+var STAGGER_CAP=12;
+function staggerIdx(i){ return ' style="--i:'+(i<STAGGER_CAP?i:STAGGER_CAP)+'"'; }
+/* JS-driven, so the CSS prefers-reduced-motion guard cannot reach it —
+   this checks the media query itself and jumps straight to the final value. */
+function countUp(el,to){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=to;return;}
+  var t0=null,dur=600;
+  function step(ts){
+    if(t0==null)t0=ts;
+    var k=Math.min(1,(ts-t0)/dur);
+    el.textContent=Math.round(to*(1-Math.pow(1-k,3)));
+    if(k<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+/* Derived from data the patch already carries — nothing new is stored, so
+   this cannot drift out of sync with what it describes. */
+function highlightChips(){
+  var out=[];
+  if(P.season) out.push({icon:'🎬',text:'ซีซั่นใหม่ — '+P.season,go:'meta'});
+  var nCards=CARDS.filter(function(c){return c['new'];}).length;
+  if(nCards) out.push({icon:'🃏',text:'การ์ดใหม่ '+nCards+' ใบ',go:'database'});
+  var chg=CARDS.map(function(c){var h=c.hist&&c.hist[0];return (h&&!h[1])?h[0]:null;}).filter(Boolean);
+  if(chg.length&&P.ota){
+    var latest=chg.reduce(function(a,b){return b>a?b:a;});
+    var nBal=chg.filter(function(d){return d===latest;}).length;
+    out.push({icon:'⚖️',text:P.ota+' — ปรับ '+nBal+' ใบ',go:'database'});
+  }
+  if(P.upcoming&&P.upcoming.length) out.push({icon:'🔮',text:'กำลังจะมา '+P.upcoming.length+' ใบ',go:'meta'});
+  return out;
+}
+var HL_KEY='snapdb.highlight.dismissed.';
+function highlightBar(){
+  var chips=highlightChips();
+  if(!chips.length) return '';
+  if(load(HL_KEY+(P.dataVersion||'0'),false)) return '';
+  return '<div class="hlbar stagger" id="hlbar">'+
+    chips.map(function(c,i){
+      return '<button class="hlchip" data-go="'+esc(c.go)+'"'+staggerIdx(i)+'>'+
+        '<span class="hlic">'+c.icon+'</span>'+esc(c.text)+'</button>';
+    }).join('')+
+    '<button class="hlx" data-hldismiss="1" title="ซ่อนแถบนี้" aria-label="ซ่อนแถบอัปเดต">✕</button></div>';
+}
 var $=function(s){return document.querySelector(s);};
 var toastT;
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');
@@ -1205,7 +1314,7 @@ function toggleDeck(id){
 var NAV=[
  ['dashboard','🏠','แดชบอร์ด'],['collection','🃏','การ์ดของฉัน'],['builder','🧩','สร้างเด็ค'],
  ['recommend','⭐','เด็คแนะนำ'],['advisor','🤖','ผู้ช่วยแนะนำ'],['analyze','📊','วิเคราะห์เด็ค'],['locations','🌌','Locations'],
- ['matchups','🎯','แมตช์อัพ'],['meta','🔥','เมตาปัจจุบัน'],['decklib','🗃','คลังเด็ค'],['database','📚','ฐานข้อมูลการ์ด'],
+ ['matchups','🎯','แมตช์อัพ'],['meta','🔥','เมตาปัจจุบัน'],['decklib','🗃','คลังเด็ค'],['shop','🛒','ร้านค้า'],['database','📚','ฐานข้อมูลการ์ด'],
  ['series','🗂','Series'],['variants','🖼','Variants'],['artists','🎨','Variant Artists'],['settings','⚙','ตั้งค่า']
 ];
 var route='dashboard';
@@ -1243,14 +1352,14 @@ var V={};
 V.dashboard=function(){
   var sp=recommendSplit();
   var top=sp.ready.slice(0,3);
-  return '<h1 class="vt">แดชบอร์ด</h1>'+
+  return highlightBar()+'<h1 class="vt">แดชบอร์ด</h1>'+
   '<p class="vsub">เครื่องมือจัดเด็ค Marvel SNAP ที่ทำงานจากการ์ดที่คุณมีจริง ข้อมูลการ์ด Location และเมตาดึงจากแหล่งสาธารณะ ณ '+esc(P.metaDate)+'</p>'+
-  notice()+'<div class="tiles" style="margin-top:14px">'+
-    '<div class="tile"><div class="k">การ์ดที่มี</div><div class="v">'+col.size+' <small>/ '+CARDS.length+'</small></div></div>'+
-    '<div class="tile"><div class="k">เด็คที่บันทึกไว้</div><div class="v">'+decks.length+'</div></div>'+
-    '<div class="tile"><div class="k">Archetype ที่เล่นได้</div><div class="v">'+
-      sp.ready.length+' <small>/ '+ARCH.length+'</small></div></div>'+
-    '<div class="tile"><div class="k">Locations</div><div class="v">'+LOCS.length+'</div></div>'+
+  notice()+'<div class="tiles stagger" style="margin-top:14px">'+
+    '<div class="tile"'+staggerIdx(0)+'><div class="k">การ์ดที่มี</div><div class="v"><span class="statnum" data-to="'+col.size+'">0</span> <small>/ '+CARDS.length+'</small></div></div>'+
+    '<div class="tile"'+staggerIdx(1)+'><div class="k">เด็คที่บันทึกไว้</div><div class="v"><span class="statnum" data-to="'+decks.length+'">0</span></div></div>'+
+    '<div class="tile"'+staggerIdx(2)+'><div class="k">Archetype ที่เล่นได้</div><div class="v">'+
+      '<span class="statnum" data-to="'+sp.ready.length+'">0</span> <small>/ '+ARCH.length+'</small></div></div>'+
+    '<div class="tile"'+staggerIdx(3)+'><div class="k">Locations</div><div class="v"><span class="statnum" data-to="'+LOCS.length+'">0</span></div></div>'+
   '</div>'+
   '<div class="btnrow" style="margin-top:16px">'+
     '<button class="btn pri" data-go="collection">เพิ่มการ์ดที่มี</button>'+
@@ -1258,17 +1367,17 @@ V.dashboard=function(){
     '<button class="btn" data-go="builder">สร้างเด็คเอง</button>'+
     '<button class="btn" data-go="meta">ดูเมตา</button>'+
   '</div>'+
+  '<h2 class="st">เมตาสัปดาห์นี้</h2>'+
+  '<p class="tiny muted" style="margin-top:-6px">ข้อมูล Tier list นี้เป็นสแนปช็อต ณ '+esc(P.metaDate)+' อาจเก่ากว่า patch ค่าพลังการ์ดล่าสุด ('+esc(P.ota)+')</p>'+
+  '<div class="grid g3 stagger">'+
+    META.slice(0,3).map(metaMini).join('')+'</div>'+
   (col.size===0?'<div class="card" style="margin-top:18px"><h3 class="mt">เริ่มตรงนี้</h3>'+
     '<p class="small muted">ระบบยังไม่รู้ว่าคุณมีการ์ดใบไหน ไปที่ <b>การ์ดของฉัน</b> แล้วกดเลือกการ์ดที่ปลดล็อกแล้ว '+
     'หรือกด “เลือกทั้งหมด” ถ้าอยากลองดูภาพรวมก่อน จากนั้นกลับมาที่ <b>เด็คแนะนำ</b></p></div>' :
-   top.length?'<h2 class="st">เด็คที่เหมาะกับคุณที่สุด</h2><div class="grid g3">'+
-    top.map(function(r){return recCard(r,true);}).join('')+'</div>'
+   top.length?'<h2 class="st">เด็คที่เหมาะกับคุณที่สุด</h2><div class="grid g3 stagger">'+
+    top.map(function(r,i){return recCard(r,true,i);}).join('')+'</div>'
    :'<div class="card" style="margin-top:18px"><h3 class="mt">ยังไม่มีเด็คที่จัดครบ 12 ใบ</h3>'+
     '<p class="small muted">คุณยังไม่มีการ์ดพอสำหรับสายไหนแบบครบ ๆ เลย ไปที่ <b>เด็คแนะนำ</b> เพื่อดูว่าใกล้จะได้สายไหนบ้าง และควรหาการ์ดอะไรเพิ่ม</p></div>')+
-  '<h2 class="st">เมตาสัปดาห์นี้</h2>'+
-  '<p class="tiny muted" style="margin-top:-6px">ข้อมูล Tier list นี้เป็นสแนปช็อต ณ '+esc(P.metaDate)+' อาจเก่ากว่า patch ค่าพลังการ์ดล่าสุด ('+esc(P.ota)+')</p>'+
-  '<div class="grid g3">'+
-    META.slice(0,3).map(metaMini).join('')+'</div>'+
   '<div class="card" style="margin-top:20px"><h3 class="mt">แหล่งข้อมูล</h3>'+
    '<p class="small muted">Patch '+esc(P.version)+' · '+esc(P.ota)+' · ซีซั่น '+esc(P.season)+'</p>'+
    '<ul class="list small" style="margin-top:8px">'+P.sources.map(function(s){
@@ -1277,16 +1386,16 @@ V.dashboard=function(){
    'รูปภาพการ์ดโหลดจากเซิร์ฟเวอร์ต้นทาง ถ้าออฟไลน์จะแสดงชื่อการ์ดแทน</p></div>';
 };
 function statLine(d){var a=[];if(d.cube!=null)a.push(d.cube.toFixed(2)+' Cube');if(d.wr!=null)a.push(d.wr+'% WR');if(d.games!=null)a.push(d.games+' เกม');return a.length?a.join(' · '):'ยังไม่มีสถิติที่ยืนยันได้';}
-function metaMini(d){
+function metaMini(d,i){
   var col2={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
-  return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-meta="'+esc(d.id)+'">'+
+  return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit'+(i==null?'':';--i:'+(i<STAGGER_CAP?i:STAGGER_CAP))+'" data-meta="'+esc(d.id)+'">'+
     '<span class="tierbadge" style="color:'+col2+'">'+esc(d.tier)+'</span>'+
     '<h3 class="mt" style="margin:8px 0 4px">'+esc(d.name)+'</h3>'+
     '<p class="tiny mono">'+esc(statLine(d))+'</p>'+
     '<p class="small muted" style="margin-top:8px">'+esc(d.note.slice(0,110))+'…</p></button>';
 }
-function recCard(r,mini){
-  return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit" data-arch="'+esc(r.a.id)+'">'+
+function recCard(r,mini,i){
+  return '<button class="card" style="text-align:left;cursor:pointer;color:inherit;font:inherit'+(i==null?'':';--i:'+(i<STAGGER_CAP?i:STAGGER_CAP))+'" data-arch="'+esc(r.a.id)+'">'+
     '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">'+
       '<h3 class="mt" style="margin:0">'+esc(r.a.nameTh)+'</h3>'+
       '<span class="mono" style="color:var(--gold);font-size:19px">'+r.score+'%</span></div>'+
@@ -1853,23 +1962,112 @@ V.matchups=function(){
 };
 
 /* ---------- meta ---------- */
+function metaTierCard(d,i){
+  return '<div class="card"'+staggerIdx(i)+'>'+
+   '<h3 class="mt" style="margin:0 0 6px">'+esc(d.name)+'</h3>'+
+   '<p class="tiny mono">'+esc(statLine(d))+'</p></div>';
+}
+function metaTierSection(tier,list,color){
+  return '<h2 class="st"><span class="tierbadge" style="color:'+color+'">'+esc(tier)+'</span> ('+list.length+' เด็ค)</h2>'+
+   '<div class="grid g3 stagger">'+list.map(metaTierCard).join('')+'</div>';
+}
 V.meta=function(){
+  var tierColor={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'};
+  var tierOrder=['Trending','Tier 1','Tier 2','Tier 3','มือใหม่'];
+  var UNTIERED='ยังไม่จัด Tier';
+  var byTier={};
+  META.forEach(function(d){var key=d.tier||UNTIERED;(byTier[key]=byTier[key]||[]).push(d);});
+  var tiersPresent=tierOrder.filter(function(t){return byTier[t]&&byTier[t].length;});
+  /* Guard against a tier value the fixed order above doesn't know about —
+     append it rather than silently dropping those decks. */
+  Object.keys(byTier).forEach(function(t){if(tiersPresent.indexOf(t)===-1)tiersPresent.push(t);});
+  var tierSections=tiersPresent.map(function(t){
+    return metaTierSection(t,byTier[t],tierColor[t]||'var(--ink3)');
+  }).join('');
   return '<h1 class="vt">เมตาปัจจุบัน</h1>'+
   '<p class="vsub">ข้อมูลจริงจาก Marvel Snap Zone Ranked Meta Tier List วันที่ '+esc(P.metaDate)+
   ' — Cube Average และ Win Rate เป็นตัวเลขที่รายงานไว้จริง ไม่ได้สร้างขึ้นเอง '+
   '(หมายเหตุ: อาจเก่ากว่าการปรับค่าพลังการ์ดล่าสุดจาก '+esc(P.ota)+' — ดูค่าพลังปัจจุบันจริงได้ที่หน้าฐานข้อมูลการ์ด)</p>'+
-  notice()+'<div class="card" style="margin-top:14px"><p class="small mono">Patch '+esc(P.version)+'<br>'+esc(P.ota)+'<br>ซีซั่น '+esc(P.season)+'</p></div>'+(P.upcoming&&P.upcoming.length?'<h2 class="st">การ์ดที่จะมาในซีซั่นนี้ (ยังไม่ปล่อย)</h2>'+'<p class="vsub">ค่าใช้จ่าย/พลังและข้อความความสามารถดึงจากฐานข้อมูลการ์ดทางการ — ยังไม่ใส่ในฐานข้อมูลหลักจนกว่าจะเปิดให้เล่นจริง และค่าพลังอาจถูกปรับก่อนปล่อยได้</p>'+'<div class="grid g2">'+P.upcoming.map(function(u){return '<div class="card"><b>'+esc(u[0])+'</b>'+'<p class="tiny mono" style="margin:4px 0 8px">'+esc(u[1])+'</p>'+'<p class="small muted">'+esc(u[2])+'</p></div>';}).join('')+'</div>':'')+
-  '<h2 class="st">ตารางเมตา</h2><div class="card scroll"><table><thead><tr>'+
-   '<th>Tier</th><th>เด็ค</th><th>Cube Avg</th><th>Win Rate</th><th>เกม</th></tr></thead><tbody>'+
-   META.map(function(d){
-     var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
-     return '<tr><td><span class="tierbadge" style="color:'+c+'">'+esc(d.tier)+'</span></td>'+
-      '<td><b>'+esc(d.name)+'</b></td><td class="mono">'+(d.cube!=null?d.cube.toFixed(2):'—')+'</td>'+
-      '<td class="mono">'+(d.wr!=null?d.wr+'%':'—')+'</td><td class="mono">'+(d.games!=null?d.games:'—')+'</td></tr>';}).join('')+
-   '</tbody></table></div>'+
+  notice()+'<div class="card" style="margin-top:14px"><p class="small mono">Patch '+esc(P.version)+'<br>'+esc(P.ota)+'<br>ซีซั่น '+esc(P.season)+'</p></div>'+(P.upcoming&&P.upcoming.length?'<h2 class="st">การ์ดที่จะมาในซีซั่นนี้ (ยังไม่ปล่อย)</h2>'+'<p class="vsub">ค่าใช้จ่าย/พลังและข้อความความสามารถดึงจากฐานข้อมูลการ์ดทางการ — ยังไม่ใส่ในฐานข้อมูลหลักจนกว่าจะเปิดให้เล่นจริง และค่าพลังอาจถูกปรับก่อนปล่อยได้</p>'+'<div class="grid g2 stagger">'+P.upcoming.map(function(u,i){return '<div class="card"'+staggerIdx(i)+'><b>'+esc(u[0])+'</b>'+'<p class="tiny mono" style="margin:4px 0 8px">'+esc(u[1])+'</p>'+'<p class="small muted">'+esc(u[2])+'</p></div>';}).join('')+'</div>':'')+
+  '<h2 class="st">ตารางเมตา</h2>'+tierSections+
   '<div class="card" style="margin-top:16px;text-align:center">'+
    '<p class="small muted">ดูเด็คแบบเต็ม 12 ใบ พร้อมโค้ดลงเกมและตัวกรองค้นหาได้ที่หน้า <b>คลังเด็ค</b></p>'+
    '<button class="btn pri" style="margin-top:8px" data-go="decklib">🗃 ไปที่คลังเด็ค</button></div>';
+};
+
+/* ---------- shop ---------- */
+function fmtPrice(p){
+  if(!p) return '—';
+  return p.kind==='usd' ? '$'+Number(p.amount).toFixed(2) : Number(p.amount).toLocaleString()+' Gold';
+}
+function valueClass(pct){
+  if(pct==null) return '';
+  if(pct>=300) return 'vhot';
+  if(pct>=150) return 'vgood';
+  return 'vmeh';
+}
+function itemLine(it){
+  var label;
+  if(it.kind==='variant'){
+    /* Variant art is not on any CDN we can hotlink (see the v008 migration),
+       so show the base card's art and label it as a skin rather than showing
+       a broken image or implying this is the base card. */
+    var cc=byName[String(it.card||'').toLowerCase()];
+    var thumb=cc&&cc.art?'<img class="rwthumb" loading="lazy" src="'+esc(cc.art)+'" alt="">':'';
+    label=thumb+'<span>สกินการ์ด '+esc(it.card)+' <span class="tiny mono">('+esc(it.variantId)+')</span></span>';
+  }
+  else if(it.kind==='tokens')   label='Collector\'s Tokens ×'+it.qty.toLocaleString();
+  else if(it.kind==='credits')  label='Credits ×'+it.qty.toLocaleString();
+  else if(it.kind==='boosters') label='Boosters ×'+it.qty.toLocaleString();
+  else if(it.kind==='gold')     label='Gold ×'+it.qty.toLocaleString();
+  else label=esc(it.label);
+  var gv=it.goldValue==null?'<span class="muted">ไม่ตีราคา</span>':(it.goldValue.toLocaleString()+' gold');
+  return '<li><span class="rwlabel">'+label+'</span><span class="tiny mono">'+gv+'</span></li>';
+}
+function bundleCard(b,i){
+  var vc=valueClass(b.valuePct);
+  /* A percentage of an unknown total is not a real "0%" — it means the
+     source never published a total to take a percentage of. Showing the
+     badge here would assert the purchase is worth nothing. */
+  var showBadge=b.valuePct!=null && !(b.valuePct===0 && b.goldValue==null);
+  var incomplete=b.items&&b.items.length&&!b.breakdownComplete;
+  return '<div class="card"'+staggerIdx(i)+'>'+
+    '<div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
+      '<h3 class="mt" style="margin:0">'+esc(b.name)+'</h3>'+
+      (showBadge?'<span class="vbadge '+vc+'">'+b.valuePct+'%</span>':'')+
+    '</div>'+
+    '<p class="tiny mono" style="margin:6px 0">'+esc(b.from)+' → '+esc(b.to)+' · '+esc(fmtPrice(b.price))+
+      (b.goldValue!=null?' · มูลค่า ~'+b.goldValue.toLocaleString()+' gold':'')+'</p>'+
+    (b.items&&b.items.length?'<details><summary class="tiny">ดูของที่ได้ ('+b.items.length+(incomplete?' — ไม่ครบ':'')+')</summary>'+
+      (incomplete?'<p class="tiny muted">รายการนี้ไม่ครบ — ผลรวมของที่ได้ด้านล่าง ไม่ตรงกับยอดรวมด้านบนที่แหล่งข้อมูลระบุไว้</p>':'')+
+      '<ul class="rewards">'+b.items.map(itemLine).join('')+'</ul></details>':'')+
+  '</div>';
+}
+V.shop=function(){
+  if(!SHOP||!SHOP.bundles||!SHOP.bundles.length){
+    return '<h1 class="vt">ร้านค้า</h1>'+
+      '<div class="empty"><b>ยังไม่มีข้อมูลร้านค้า</b><p class="small muted">'+
+      'ข้อมูลร้านค้ามากับ patch — ไปที่หน้าตั้งค่าแล้วกดอัปเดต patch ก่อนนะครับ</p></div>';
+  }
+  var today=new Date().toISOString().slice(0,10);
+  var r=shopBuckets(SHOP,today);
+  var head='<h1 class="vt">ร้านค้า</h1>'+
+    '<p class="vsub">ข้อมูล ณ '+esc(SHOP.snapshotAt)+' จาก '+esc(SHOP.source)+
+    ' — สถานะคำนวณจากวันที่ของแต่ละ bundle เทียบกับวันนี้</p>';
+  if(r.stale) head+='<div class="card" style="border-color:var(--gold)"><p class="small" style="color:var(--gold)">'+
+    '⚠️ ข้อมูลนี้เก่า '+r.daysOld+' วันแล้ว — bundle ที่ขึ้นว่า "ขายอยู่" อาจจบไปแล้ว '+
+    'กดอัปเดต patch ที่หน้าตั้งค่าเพื่อดึงชุดใหม่</p></div>';
+  function sec(title,list,emptyMsg){
+    if(!list.length) return '<h2 class="st">'+title+'</h2><p class="small muted">'+emptyMsg+'</p>';
+    return '<h2 class="st">'+title+' ('+list.length+')</h2>'+
+      '<div class="grid g2 stagger">'+list.map(bundleCard).join('')+'</div>';
+  }
+  var ranOut = !r.live.length && !r.upcoming.length;
+  return head+
+    sec('ขายอยู่ตอนนี้',r.live, ranOut?'ข้อมูลชุดนี้หมดช่วงแล้ว — ไม่ได้แปลว่าไม่มีของขาย กดอัปเดต patch เพื่อดึงชุดใหม่':'ไม่มี bundle ที่ขายอยู่ในข้อมูลชุดนี้')+
+    sec('กำลังจะเข้า',r.upcoming,'ไม่มีข้อมูล bundle ที่กำลังจะเข้าในชุดนี้')+
+    (r.ended.length?'<details style="margin-top:16px"><summary class="small muted">จบไปแล้ว ('+r.ended.length+')</summary>'+
+      '<div class="grid g2" style="margin-top:10px">'+r.ended.map(function(b,i){return bundleCard(b,i);}).join('')+'</div></details>':'');
 };
 
 /* ---------- deck library (ref: marvelsnapzone.com/decks/) ---------- */
@@ -1906,10 +2104,10 @@ function deckLibFilterBar(){
      '<option value="name"'+(deckF.sort==='name'?' selected':'')+'>เรียงตามชื่อ</option></select>'+
   '</div>';
 }
-function deckLibCard(d){
+function deckLibCard(d,i){
   var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
   var a=archById[d.arch];
-  return '<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
+  return '<div class="card"'+staggerIdx(i||0)+'><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
    '<h3 class="mt" style="margin:0">'+esc(d.name)+'</h3>'+
    '<span class="tierbadge" style="color:'+c+'">'+esc(d.tier)+'</span></div>'+
    '<p class="tiny mono" style="margin:6px 0 4px">'+esc(statLine(d))+'</p>'+
@@ -1925,12 +2123,18 @@ function deckLibCard(d){
      d.cards.filter(function(n){var cc=byName[n.toLowerCase()];return cc&&col.has(cc.id);}).length+'/12 ใบ</p>'+
    '</div>';
 }
-function renderDeckLib(){
+function renderDeckLib(animate){
   var box=document.getElementById('decklibgrid'); if(!box) return;
   var list=filteredMeta();
+  /* The entrance stagger should play once, on first paint of this view —
+     not on every filter re-render. A search keystroke or filter change
+     calls this with no argument, so it rewrites the grid without the
+     "stagger" class instead of restarting itemIn on freshly-filtered
+     nodes on every debounced keystroke. */
+  var gridClass=animate?'grid g2 stagger':'grid g2';
   box.innerHTML=list.length?
-    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="grid g2">'+
-      list.map(deckLibCard).join('')+'</div>'
+    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="'+gridClass+'">'+
+      list.map(function(d,i){return deckLibCard(d,i);}).join('')+'</div>'
     :'<div class="empty"><b>ไม่พบเด็คที่ตรงกับตัวกรอง</b>ลองล้างคำค้นหรือเปลี่ยนตัวกรองดู</div>';
 }
 V.decklib=function(){
@@ -2339,10 +2543,16 @@ function render(){
     if(window.console) console.error(e);
   }
   v.innerHTML=html;
+  v.classList.remove('viewin');
+  void v.offsetWidth;   /* restart the animation on every route change */
+  v.classList.add('viewin');
   if(document.getElementById('cards')) renderCards(filtered(),{});
+  Array.prototype.forEach.call(v.querySelectorAll('.statnum'),function(el){
+    countUp(el,Number(el.getAttribute('data-to')||0));
+  });
   if(document.getElementById('vcards')) renderVariants(filteredVariants());
   if(document.getElementById('acards')) renderArtists(filteredArtists());
-  if(document.getElementById('decklibgrid')) renderDeckLib();
+  if(document.getElementById('decklibgrid')) renderDeckLib(true);
   bindLocal();
 }
 function bindLocal(){
@@ -2417,10 +2627,11 @@ document.addEventListener('click',function(e){
     '[data-importcol],[data-importdeck],[data-toggleimg],[data-cleardecks],[data-export],'+
     '[data-exportarch],[data-exportmeta],[data-copycode],[data-copyplain],'+
     '[data-lbimg],[data-lbclose],[data-lbopencard],[data-artist],[data-clearartist],[data-series],'+
-    '[data-checkpatch],[data-rollbackpatch],[data-synccol],[data-unsync]');
+    '[data-checkpatch],[data-rollbackpatch],[data-synccol],[data-unsync],[data-hldismiss]');
   if(!t){ if(e.target.id==='lb') closeLightbox(); return; }
   var d=t.dataset;
 
+  if(d.hldismiss!==undefined){ save(HL_KEY+(P.dataVersion||'0'),true); render(); return; }
   if(d.checkpatch!==undefined){ doPatchUpdate(); return; }
   if(d.rollbackpatch!==undefined){ doPatchRollback(d.rollbackpatch); return; }
   if(d.unsync!==undefined){ doUnsyncCollection(); return; }

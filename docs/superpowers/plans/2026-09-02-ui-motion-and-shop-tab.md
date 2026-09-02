@@ -129,7 +129,7 @@ test('slugify makes a stable id', () => {
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/`
+Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test`
 Expected: FAIL — `Cannot find module './shop-parse.js'`
 
 - [ ] **Step 3: Write the implementation**
@@ -217,8 +217,8 @@ module.exports = { parsePrice, parsePct, parseDateRange, classifyItem, slugify }
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/`
-Expected: PASS — 13 tests, 0 fail.
+Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test`
+Expected: PASS — 14 tests, 0 fail.
 
 - [ ] **Step 5: Commit**
 
@@ -296,7 +296,7 @@ function toLines(html) {
 
 const RANGE_RE = /^[A-Z][a-z]{2}\s+\d{1,2}\s*-\s*(?:[A-Z][a-z]{2}\s+)?\d{1,2}$/;
 
-function parseBundles(lines, snapshotAt) {
+function parseBundles(lines, snapshotAt, skipped) {
   const out = [];
   for (let i = 1; i < lines.length; i++) {
     if (!RANGE_RE.test(lines[i])) continue;
@@ -304,7 +304,12 @@ function parseBundles(lines, snapshotAt) {
     const rangeText = lines[i];
     // Fields follow a fixed order: price, "Bundle Value", pct, "Currency Value", pct
     const priceText = lines[i + 1];
-    if (priceText === 'Bundle Value') continue; // listing with no price published; skip quietly
+    if (priceText === 'Bundle Value') {
+      // snap.fan really does list some entries with no published price. Skip
+      // them, but count and report — a dropped bundle must never be silent.
+      skipped.push(name);
+      continue;
+    }
 
     let price, dates;
     try { dates = parseDateRange(rangeText, snapshotAt); }
@@ -361,9 +366,15 @@ function parseBundles(lines, snapshotAt) {
 (async function main() {
   const snapshotAt = new Date().toISOString().slice(0, 10);
   const html = process.argv[2] ? fs.readFileSync(process.argv[2], 'utf8') : await fetchText(SOURCE_URL);
-  const bundles = parseBundles(toLines(html), snapshotAt);
+  const skipped = [];
+  const bundles = parseBundles(toLines(html), snapshotAt, skipped);
 
   if (!bundles.length) throw new Error('no bundles parsed — page layout probably changed; refusing to emit an empty shop');
+  if (skipped.length) console.warn('skipped (no published price): ' + skipped.length + ' — ' + skipped.join(', '));
+  if (skipped.length > bundles.length) {
+    throw new Error('skipped more listings (' + skipped.length + ') than parsed (' + bundles.length +
+      ') — the price column probably moved; refusing to ship a half-populated shop');
+  }
 
   const seen = new Set();
   for (const b of bundles) {
@@ -530,7 +541,7 @@ test('a missing or empty shop yields empty buckets rather than throwing', () => 
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test scripts/lib/shop-status.test.js`
+Run: `cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant" && node --test`
 Expected: FAIL — "shop status block markers not found".
 
 - [ ] **Step 3: Add the marked block to the app**
@@ -566,7 +577,7 @@ function shopBuckets(shop, todayISO){
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `node --test scripts/lib/shop-status.test.js`
+Run: `node --test`
 Expected: PASS — 8 tests, 0 fail.
 
 - [ ] **Step 5: Sync the Desktop copy and commit**
@@ -685,9 +696,26 @@ and with the OS setting on (or via devtools emulation), reload and confirm no an
 
 - [ ] **Step 6: Measure frame rate on the deck library**
 
-This is the constraint from the spec and must be a number, not an impression. With devtools Performance open, record while navigating to คลังเด็ค, and note the FPS during the entry animation.
+This is the constraint from the spec and must be a number, not an impression. The devtools Performance panel is a GUI, so use this in-page probe instead — paste it into the browser console with the app already loaded, and it navigates to คลังเด็ค and samples frame pacing across the entry animation:
 
-Expected: sustained above 50fps. If below, reduce `STAGGER_CAP` and re-measure. Record the figure in the commit message.
+```js
+await (async () => {
+  const nav = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '🗃คลังเด็ค');
+  const frames = [];
+  let last = performance.now(), stop = false;
+  const tick = t => { frames.push(t - last); last = t; if (!stop) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+  nav.click();
+  await new Promise(r => setTimeout(r, 2000));
+  stop = true;
+  const s = frames.slice(1).sort((a, b) => a - b);
+  const q = p => s[Math.floor(s.length * p)].toFixed(1);
+  console.log('frames', s.length, '| median', q(.5) + 'ms', '| p95', q(.95) + 'ms',
+              '| >32ms (dropped)', s.filter(x => x > 32).length);
+})();
+```
+
+Expected: median frame time at or under 20ms (≈50fps) and no more than a couple of dropped frames. If it is worse, reduce `STAGGER_CAP` and re-measure. Record the printed numbers in the commit message and the report.
 
 - [ ] **Step 7: Sync and commit**
 
@@ -1062,7 +1090,7 @@ upcoming cards as a grid. Verified all 77 decks survive the regrouping."
 
 ```bash
 cd "C:\Users\natta\Desktop\AI\Marvel Snap\marvelsnap-ai-assistant"
-node --test scripts/lib/
+node --test
 node verify-manifest.js
 ```
 Expected: all tests pass; ALL CHECKS PASSED with 12 patches.

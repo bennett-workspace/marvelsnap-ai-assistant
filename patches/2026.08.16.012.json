@@ -1,0 +1,703 @@
+{
+  "version": "2026.08.16.012",
+  "fromVersion": "2026.08.16.011",
+  "schemaVersion": 1,
+  "releasedAt": "2026-09-02T10:52:11Z",
+  "source": "snap.fan/bundles snapshot 2026-09-02",
+  "summary": "เพิ่มหน้าร้านค้า — bundle ที่ขายอยู่และที่กำลังจะเข้า 21 รายการ (ข้อมูล ณ 2026-09-02) พร้อมราคา ช่วงวันที่ ความคุ้ม และของที่ได้",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/SHOP",
+      "value": {
+        "snapshotAt": "2026-09-02",
+        "source": "snap.fan/bundles",
+        "bundles": [
+          {
+            "id": "sep-26-t-t-01",
+            "name": "T T 01",
+            "from": "2026-09-01",
+            "to": "2026-09-02",
+            "price": {
+              "kind": "gold",
+              "amount": 1500
+            },
+            "valuePct": 101,
+            "currencyPct": 100,
+            "goldValue": 1513,
+            "breakdownComplete": true,
+            "items": [
+              {
+                "kind": "tokens",
+                "qty": 1200,
+                "label": "1200 Collector's Tokens",
+                "goldValue": 1500
+              },
+              {
+                "kind": "boosters",
+                "qty": 105,
+                "label": "105 Random Boosters",
+                "goldValue": 13
+              }
+            ]
+          },
+          {
+            "id": "aug-26-surtur",
+            "name": "Surtur",
+            "from": "2026-08-26",
+            "to": "2026-09-02",
+            "price": {
+              "kind": "usd",
+              "amount": 29.99
+            },
+            "valuePct": 145,
+            "currencyPct": 0,
+            "goldValue": 3488,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Envar Studio",
+                "goldValue": 700
+              },
+              {
+                "kind": "other",
+                "label": "Series 4",
+                "goldValue": 2500
+              },
+              {
+                "kind": "other",
+                "label": "155 Surtur Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "aug-26-i-w-f-s",
+            "name": "I W F S",
+            "from": "2026-08-27",
+            "to": "2026-09-03",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 376,
+            "currencyPct": 163,
+            "goldValue": 15027,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Creees",
+                "goldValue": 8200
+              },
+              {
+                "kind": "credits",
+                "qty": 5000,
+                "label": "5000 Credits",
+                "goldValue": 4000
+              },
+              {
+                "kind": "gold",
+                "qty": 2500,
+                "label": "2500 Gold",
+                "goldValue": 2500
+              },
+              {
+                "kind": "other",
+                "label": "310 Invisible Woman First Steps Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "aug-26-krag",
+            "name": "Krag",
+            "from": "2026-08-28",
+            "to": "2026-09-04",
+            "price": {
+              "kind": "usd",
+              "amount": 19.99
+            },
+            "valuePct": 687,
+            "currencyPct": 156,
+            "goldValue": 10988,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Ivan Fomin",
+                "goldValue": 8200
+              },
+              {
+                "kind": "tokens",
+                "qty": 2000,
+                "label": "2000 Collector's Tokens",
+                "goldValue": 2500
+              },
+              {
+                "kind": "other",
+                "label": "155 Kraglin Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-barg-01",
+            "name": "Barg 01",
+            "from": "2026-09-04",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 14.99
+            },
+            "valuePct": 153,
+            "currencyPct": 150,
+            "goldValue": 1838,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "gold",
+                "qty": 1800,
+                "label": "1800 Gold",
+                "goldValue": 1800
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Random Boosters",
+                "goldValue": 19
+              }
+            ]
+          },
+          {
+            "id": "sep-26-cage",
+            "name": "Cage",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 4.99
+            },
+            "valuePct": 1334,
+            "currencyPct": 157,
+            "goldValue": 5325,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "PANDART STUDIO",
+                "goldValue": 4450
+              },
+              {
+                "kind": "tokens",
+                "qty": 500,
+                "label": "500 Collector's Tokens",
+                "goldValue": 625
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-anti",
+            "name": "Webshop Anti",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 299,
+            "currencyPct": 156,
+            "goldValue": 2388,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "PANDART STUDIO",
+                "goldValue": 700
+              },
+              {
+                "kind": "tokens",
+                "qty": 1000,
+                "label": "1000 Collector's Tokens",
+                "goldValue": 1250
+              },
+              {
+                "kind": "other",
+                "label": "155 Cosmo Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-red",
+            "name": "Webshop Red",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 284,
+            "currencyPct": 160,
+            "goldValue": 2268,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Envar Studio",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 1600,
+                "label": "1600 Credits",
+                "goldValue": 1280
+              },
+              {
+                "kind": "other",
+                "label": "155 Onslaught Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-supe",
+            "name": "Webshop Supe",
+            "from": "2026-09-01",
+            "to": "2026-09-05",
+            "price": {
+              "kind": "usd",
+              "amount": 9.99
+            },
+            "valuePct": 303,
+            "currencyPct": 160,
+            "goldValue": 2418,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Fantasy",
+                "goldValue": 700
+              },
+              {
+                "kind": "credits",
+                "qty": 1600,
+                "label": "1600 Credits",
+                "goldValue": 1280
+              },
+              {
+                "kind": "other",
+                "label": "155 Sera Boosters",
+                "goldValue": 38
+              }
+            ]
+          },
+          {
+            "id": "sep-26-barg-02",
+            "name": "Barg 02",
+            "from": "2026-09-05",
+            "to": "2026-09-06",
+            "price": {
+              "kind": "usd",
+              "amount": 29.99
+            },
+            "valuePct": 158,
+            "currencyPct": 156,
+            "goldValue": 3788,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Random Boosters",
+                "goldValue": 19
+              }
+            ]
+          },
+          {
+            "id": "sep-26-barg-03",
+            "name": "Barg 03",
+            "from": "2026-09-06",
+            "to": "2026-09-07",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 161,
+            "currencyPct": 160,
+            "goldValue": 6438,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 8000,
+                "label": "8000 Credits",
+                "goldValue": 6400
+              },
+              {
+                "kind": "boosters",
+                "qty": 155,
+                "label": "155 Random Boosters",
+                "goldValue": 19
+              }
+            ]
+          },
+          {
+            "id": "sep-26-p-m-p-01-c",
+            "name": "P M P 01 C",
+            "from": "2026-09-06",
+            "to": "2026-09-07",
+            "price": {
+              "kind": "usd",
+              "amount": 19.99
+            },
+            "valuePct": 158,
+            "currencyPct": 125,
+            "goldValue": 2525,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 2500,
+                "label": "2500 Credits",
+                "goldValue": 2000
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-r-r-hul",
+            "name": "Webshop R R Hul",
+            "from": "2026-09-04",
+            "to": "2026-09-07",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 388,
+            "currencyPct": 160,
+            "goldValue": 15527,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Fractured Frontier",
+                "goldValue": 8200
+              },
+              {
+                "kind": "credits",
+                "qty": 8000,
+                "label": "8000 Credits",
+                "goldValue": 6400
+              },
+              {
+                "kind": "other",
+                "label": "310 Red Hulk Fractured Frontier Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "sep-26-b-p-01",
+            "name": "B P 01",
+            "from": "2026-09-07",
+            "to": "2026-09-08",
+            "price": {
+              "kind": "gold",
+              "amount": 300
+            },
+            "valuePct": 147,
+            "currencyPct": 133,
+            "goldValue": 440,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "credits",
+                "qty": 500,
+                "label": "500 Credits",
+                "goldValue": 400
+              },
+              {
+                "kind": "boosters",
+                "qty": 65,
+                "label": "65 Random Boosters",
+                "goldValue": 8
+              }
+            ]
+          },
+          {
+            "id": "sep-26-war",
+            "name": "War",
+            "from": "2026-09-01",
+            "to": "2026-09-08",
+            "price": {
+              "kind": "usd",
+              "amount": 99.99
+            },
+            "valuePct": 404,
+            "currencyPct": 178,
+            "goldValue": 32350,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Creative House Pocket",
+                "goldValue": 8200
+              },
+              {
+                "kind": "other",
+                "label": "Creative House Pocket",
+                "goldValue": 8200
+              },
+              {
+                "kind": "tokens",
+                "qty": 5000,
+                "label": "5000 Collector's Tokens",
+                "goldValue": 6250
+              },
+              {
+                "kind": "gold",
+                "qty": 8000,
+                "label": "8000 Gold",
+                "goldValue": 8000
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-syn-anti",
+            "name": "Webshop Syn Anti",
+            "from": "2026-09-01",
+            "to": "2026-09-08",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 584,
+            "currencyPct": 154,
+            "goldValue": 23354,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Fireball Studios",
+                "goldValue": 8200
+              },
+              {
+                "kind": "other",
+                "label": "Vincenzo Riccardi",
+                "goldValue": 8200
+              },
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "credits",
+                "qty": 3000,
+                "label": "3000 Credits",
+                "goldValue": 2400
+              },
+              {
+                "kind": "other",
+                "label": "310 Isca the Unbeaten Boosters",
+                "goldValue": 77
+              },
+              {
+                "kind": "other",
+                "label": "310 Drax, Avatar Of Life Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-syn-red",
+            "name": "Webshop Syn Red",
+            "from": "2026-09-01",
+            "to": "2026-09-08",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 396,
+            "currencyPct": 154,
+            "goldValue": 15854,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "PANDART STUDIO",
+                "goldValue": 8200
+              },
+              {
+                "kind": "other",
+                "label": "PANDART STUDIO",
+                "goldValue": 8200
+              },
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "credits",
+                "qty": 3000,
+                "label": "3000 Credits",
+                "goldValue": 2400
+              },
+              {
+                "kind": "other",
+                "label": "310 Mystique Boosters",
+                "goldValue": 77
+              },
+              {
+                "kind": "other",
+                "label": "310 Moonstone Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "sep-26-webshop-syn-supe",
+            "name": "Webshop Syn Supe",
+            "from": "2026-09-01",
+            "to": "2026-09-08",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 584,
+            "currencyPct": 154,
+            "goldValue": 23354,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Fractured Frontier",
+                "goldValue": 8200
+              },
+              {
+                "kind": "other",
+                "label": "PANDART STUDIO",
+                "goldValue": 8200
+              },
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "credits",
+                "qty": 3000,
+                "label": "3000 Credits",
+                "goldValue": 2400
+              },
+              {
+                "kind": "other",
+                "label": "310 Psylocke Fractured Frontier Boosters",
+                "goldValue": 77
+              },
+              {
+                "kind": "other",
+                "label": "310 Maverick Boosters",
+                "goldValue": 77
+              }
+            ]
+          },
+          {
+            "id": "sep-26-t-t-02",
+            "name": "T T 02",
+            "from": "2026-09-08",
+            "to": "2026-09-09",
+            "price": {
+              "kind": "gold",
+              "amount": 1500
+            },
+            "valuePct": 101,
+            "currencyPct": 100,
+            "goldValue": 1513,
+            "breakdownComplete": true,
+            "items": [
+              {
+                "kind": "tokens",
+                "qty": 1200,
+                "label": "1200 Collector's Tokens",
+                "goldValue": 1500
+              },
+              {
+                "kind": "boosters",
+                "qty": 105,
+                "label": "105 Random Boosters",
+                "goldValue": 13
+              }
+            ]
+          },
+          {
+            "id": "sep-26-moons",
+            "name": "Moons",
+            "from": "2026-09-02",
+            "to": "2026-09-09",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 375,
+            "currencyPct": 164,
+            "goldValue": 15000,
+            "breakdownComplete": false,
+            "items": [
+              {
+                "kind": "other",
+                "label": "Fantasy",
+                "goldValue": 8200
+              },
+              {
+                "kind": "tokens",
+                "qty": 3000,
+                "label": "3000 Collector's Tokens",
+                "goldValue": 3750
+              },
+              {
+                "kind": "credits",
+                "qty": 3500,
+                "label": "3500 Credits",
+                "goldValue": 2800
+              }
+            ]
+          },
+          {
+            "id": "sep-26-basti",
+            "name": "Basti",
+            "from": "2026-09-03",
+            "to": "2026-09-10",
+            "price": {
+              "kind": "usd",
+              "amount": 49.99
+            },
+            "valuePct": 156,
+            "currencyPct": 156,
+            "goldValue": 6250,
+            "breakdownComplete": true,
+            "items": [
+              {
+                "kind": "tokens",
+                "qty": 5000,
+                "label": "5000 Collector's Tokens",
+                "goldValue": 6250
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
