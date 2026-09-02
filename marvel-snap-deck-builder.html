@@ -2039,7 +2039,7 @@ function bundleCard(b,i){
     '<p class="tiny mono" style="margin:6px 0">'+esc(b.from)+' → '+esc(b.to)+' · '+esc(fmtPrice(b.price))+
       (b.goldValue!=null?' · มูลค่า ~'+b.goldValue.toLocaleString()+' gold':'')+'</p>'+
     (b.items&&b.items.length?'<details><summary class="tiny">ดูของที่ได้ ('+b.items.length+(incomplete?' — ไม่ครบ':'')+')</summary>'+
-      (incomplete?'<p class="tiny muted">รายการนี้ไม่ครบ — แหล่งข้อมูลไม่ได้ตีราคาของบางอย่าง ยอดรวมด้านบนจึงมากกว่าผลรวมด้านล่าง</p>':'')+
+      (incomplete?'<p class="tiny muted">รายการนี้ไม่ครบ — ผลรวมของที่ได้ด้านล่าง ไม่ตรงกับยอดรวมด้านบนที่แหล่งข้อมูลระบุไว้</p>':'')+
       '<ul class="rewards">'+b.items.map(itemLine).join('')+'</ul></details>':'')+
   '</div>';
 }
