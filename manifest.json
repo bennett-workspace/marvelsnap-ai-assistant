@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.012",
+  "latestVersion": "2026.08.16.013",
   "schemaVersion": 1,
   "patches": [
     {
@@ -109,6 +109,15 @@
       "releasedAt": "2026-09-01T18:56:40Z",
       "source": "snap.fan/bundles",
       "summary": "เพิ่มหน้าร้านค้า — bundle ที่ขายอยู่และที่กำลังจะเข้า 21 รายการ (ข้อมูล ณ 2026-09-01) พร้อมราคา ช่วงวันที่ ความคุ้ม และของที่ได้"
+    },
+    {
+      "version": "2026.08.16.013",
+      "fromVersion": "2026.08.16.012",
+      "url": "patches/2026.08.16.013.json",
+      "sha256": "699ec40cff8335908decc961824a2434d114612f038937b365883d0b6e9074b4",
+      "releasedAt": "2026-09-02T15:33:43Z",
+      "source": "in-game client state (ShopClientState CardShopNewCardSeenList) + marvelsnapzone.com card database",
+      "summary": "ย้ายการ์ด AXIS: Inversion ที่เปิดให้เล่นแล้ว 3 ใบเข้าฐานข้อมูลการ์ดจริง — Superior Iron Man (5/7, Season Pass), Anti-Polar Magneto (6/9) และ Red Onslaught (4/4) ยืนยันจากไฟล์เกมในเครื่องผู้เล่นเองที่บันทึกว่าสองใบหลังโผล่ในร้านการ์ดแล้ว ส่วนอีก 6 ใบยังอยู่ในลิสต์ \"กำลังจะมา\"; และล้างธง \"ใหม่\" ของ Doctor Octopus, Jane Foster, Psylocke และ Thanos (Fractured Frontier ทั้งสี่ใบ ออกมาตั้งแต่ พ.ค. 2026 ข้ามมาสองซีซั่นแล้ว) ทำให้ตัวเลข \"การ์ดใหม่\" บนแดชบอร์ด ตรงกับความเป็นจริง — การ์ด Fractured Frontier ที่เพิ่งออกปลายเดือน ส.ค. ยังนับว่าใหม่อยู่"
     }
   ]
 }

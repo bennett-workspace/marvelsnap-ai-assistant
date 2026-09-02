@@ -1,0 +1,163 @@
+{
+  "version": "2026.08.16.013",
+  "fromVersion": "2026.08.16.012",
+  "schemaVersion": 1,
+  "releasedAt": "2026-09-02T15:33:43Z",
+  "source": "in-game client state (ShopClientState CardShopNewCardSeenList) + marvelsnapzone.com card database",
+  "summary": "ย้ายการ์ด AXIS: Inversion ที่เปิดให้เล่นแล้ว 3 ใบเข้าฐานข้อมูลการ์ดจริง — Superior Iron Man (5/7, Season Pass), Anti-Polar Magneto (6/9) และ Red Onslaught (4/4) ยืนยันจากไฟล์เกมในเครื่องผู้เล่นเองที่บันทึกว่าสองใบหลังโผล่ในร้านการ์ดแล้ว ส่วนอีก 6 ใบยังอยู่ในลิสต์ \"กำลังจะมา\"; และล้างธง \"ใหม่\" ของ Doctor Octopus, Jane Foster, Psylocke และ Thanos (Fractured Frontier ทั้งสี่ใบ ออกมาตั้งแต่ พ.ค. 2026 ข้ามมาสองซีซั่นแล้ว) ทำให้ตัวเลข \"การ์ดใหม่\" บนแดชบอร์ด ตรงกับความเป็นจริง — การ์ด Fractured Frontier ที่เพิ่งออกปลายเดือน ส.ค. ยังนับว่าใหม่อยู่",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "SuperiorIronMan",
+        "n": "Superior Iron Man",
+        "c": 5,
+        "p": 7,
+        "a": "Double Cost reductions to this. Ongoing: Double Power increases to this.",
+        "aTh": "ส่วนลดค่าใช้จ่ายที่ได้รับมีผลเป็นสองเท่า ต่อเนื่อง: พลังที่ได้รับเพิ่มมีผลเป็นสองเท่า",
+        "s": "Series 5",
+        "art": "https://static.marvelsnap.pro/cards/SuperiorIronMan.webp",
+        "t": [
+          "ongoing",
+          "buff",
+          "cost"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-09-01",
+            1,
+            "5",
+            "7",
+            "Double Cost reductions to this. Ongoing: Double Power increases to this."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "AntiPolarMagneto",
+        "n": "Anti-Polar Magneto",
+        "c": 6,
+        "p": 9,
+        "a": "On Reveal: Add a 3 or 4-Cost card from your hand to each other location.",
+        "aTh": "เมื่อเปิด: ส่งการ์ดค่า 3 หรือ 4 จากมือของคุณไปลงที่เลนอื่นเลนละใบ",
+        "s": "Series 5",
+        "art": "https://static.marvelsnap.pro/cards/AntiPolarMagneto.webp",
+        "t": [
+          "onreveal",
+          "move"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-09-01",
+            1,
+            "6",
+            "9",
+            "On Reveal: Add a 3 or 4-Cost card from your hand to each other location."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "RedOnslaught",
+        "n": "Red Onslaught",
+        "c": 4,
+        "p": 4,
+        "a": "Ongoing: Has 3 random Ongoing abilities.",
+        "aTh": "ต่อเนื่อง: ได้รับความสามารถต่อเนื่องแบบสุ่ม 3 อย่าง",
+        "s": "Series 5",
+        "art": "https://static.marvelsnap.pro/cards/RedOnslaught.webp",
+        "t": [
+          "ongoing"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 1,
+        "vr": [],
+        "hist": [
+          [
+            "2026-09-01",
+            1,
+            "4",
+            "4",
+            "Ongoing: Has 3 random Ongoing abilities."
+          ]
+        ]
+      }
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/upcoming",
+      "value": [
+        [
+          "Kluh",
+          "5/10 · Series 5 · Seasonal SNAP Pack",
+          "On Reveal: EACH player randomly gives a card in their hand -1 Cost for each different Cost among their cards in play."
+        ],
+        [
+          "Rogue Scion of Division",
+          "5/5 · Series 5 · Seasonal SNAP Pack",
+          "On Reveal: Steal the text of the highest-Cost card in your opponent's hand."
+        ],
+        [
+          "Friendly Neighborhood Carnage",
+          "3/4 · Series 5 · Seasonal SNAP Pack",
+          "On Reveal: Move your other cards here to the right. +2 Power for each moved."
+        ],
+        [
+          "Scarlet Witch Queen of Chaos",
+          "3/4 · Series 5 · Seasonal SNAP Pack",
+          "Start of Turn: Add an EXTREMELY random skill to your hand. It costs 0 this turn."
+        ],
+        [
+          "Entropic Havok",
+          "3/3 · Series 4 · Limited Time Event — 16 ก.ย. 2026",
+          "Each turn, steal 1 bonus Energy from your opponent. (if they have any)"
+        ],
+        [
+          "The Inversion",
+          "3/0 · Series 4 · Limited Time Event (Skill)",
+          "On Reveal: Invert the Power of the lowest-Power card(s) here. (positive becomes negative and vice versa)"
+        ]
+      ]
+    },
+    {
+      "op": "remove",
+      "path": "/CARDS/148/new"
+    },
+    {
+      "op": "remove",
+      "path": "/CARDS/239/new"
+    },
+    {
+      "op": "remove",
+      "path": "/CARDS/250/new"
+    },
+    {
+      "op": "remove",
+      "path": "/CARDS/411/new"
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.013"
+    }
+  ]
+}
