@@ -105,7 +105,7 @@
       "version": "2026.08.16.012",
       "fromVersion": "2026.08.16.011",
       "url": "patches/2026.08.16.012.json",
-      "sha256": "42fa9e32f4ff66441a856f6bf6acfaa1c26a58bdad9a92c67d07484f7c76a247",
+      "sha256": "0476b28fbfff03da04e24e07d50c4b1a33931cacd2ae9098c6a85e49daa6d06f",
       "releasedAt": "2026-09-01T18:56:40Z",
       "source": "snap.fan/bundles",
       "summary": "เพิ่มหน้าร้านค้า — bundle ที่ขายอยู่และที่กำลังจะเข้า 21 รายการ (ข้อมูล ณ 2026-09-01) พร้อมราคา ช่วงวันที่ ความคุ้ม และของที่ได้"

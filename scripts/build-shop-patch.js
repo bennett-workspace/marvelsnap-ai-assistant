@@ -105,17 +105,34 @@ function parseBundles(lines, snapshotAt, skipped) {
       goldValue = Number(lines[tot + 1].replace(/,/g, ''));
     }
 
+    // snap.fan prints a literal 0 in the per-item Gold Value column for rows
+    // it doesn't itemise (e.g. OldSeries4/OldSeries5), while its own Total
+    // Gold Value clearly assigns them value. That 0 means "not priced," not
+    // "worth nothing" — but only for unquantified 'other' rows. Quantity
+    // kinds (tokens/credits/boosters/gold) keep a genuine 0 if one appears.
+    const items = rewardLabels.map(l => {
+      const it = classifyItem(l);
+      it.goldValue = Object.prototype.hasOwnProperty.call(goldByLabel, l) ? goldByLabel[l] : null;
+      if (it.goldValue === 0 && it.kind === 'other') it.goldValue = null;
+      return it;
+    });
+
+    // A bundle's item list can never be trusted to explain its total unless
+    // every item is priced and those prices sum to exactly that total. An
+    // unpriced item makes the breakdown incomplete regardless of what the
+    // arithmetic happens to say.
+    const allItemsPriced = items.every(it => it.goldValue != null);
+    const itemGoldSum = items.reduce((s, it) => s + (it.goldValue == null ? 0 : it.goldValue), 0);
+    const breakdownComplete = goldValue != null && allItemsPriced && itemGoldSum === goldValue;
+
     out.push({
       id: slugify(name),
       name: name.replace(/^[A-Z][a-z]{2}\s+\d{2}\s+/, ''),
       from: dates.from,
       to: dates.to,
       price, valuePct, currencyPct, goldValue,
-      items: rewardLabels.map(l => {
-        const it = classifyItem(l);
-        it.goldValue = Object.prototype.hasOwnProperty.call(goldByLabel, l) ? goldByLabel[l] : null;
-        return it;
-      })
+      breakdownComplete,
+      items
     });
   }
   return out;
@@ -165,5 +182,15 @@ function parseBundles(lines, snapshotAt, skipped) {
   fs.writeFileSync(path.join(REPO, 'patches', VERSION + '.json'), json, 'utf8');
   console.log('wrote patches/' + VERSION + '.json');
   console.log('bundles:', bundles.length);
+
+  // The check that would have caught the "0 gold means worthless" bug at
+  // build time: a bundle whose itemised rewards don't reconcile to its
+  // published total is not a fully explained bundle, and that should be
+  // loud here, not discovered later by a user doing the arithmetic.
+  const reconciled = bundles.filter(b => b.breakdownComplete).length;
+  console.log('breakdown reconciliation: ' + reconciled + '/' + bundles.length +
+    ' bundles have an itemised list that sums to the published total; ' +
+    (bundles.length - reconciled) + ' do not (partial or unpriced breakdown)');
+
   console.log('sha256:', crypto.createHash('sha256').update(json, 'utf8').digest('hex'));
 })().catch(e => { console.error('BUILD FAILED:', e.message); process.exit(1); });

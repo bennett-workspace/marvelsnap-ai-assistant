@@ -2026,14 +2026,20 @@ function itemLine(it){
 }
 function bundleCard(b,i){
   var vc=valueClass(b.valuePct);
+  /* A percentage of an unknown total is not a real "0%" — it means the
+     source never published a total to take a percentage of. Showing the
+     badge here would assert the purchase is worth nothing. */
+  var showBadge=b.valuePct!=null && !(b.valuePct===0 && b.goldValue==null);
+  var incomplete=b.items&&b.items.length&&!b.breakdownComplete;
   return '<div class="card"'+staggerIdx(i)+'>'+
     '<div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'+
       '<h3 class="mt" style="margin:0">'+esc(b.name)+'</h3>'+
-      (b.valuePct!=null?'<span class="vbadge '+vc+'">'+b.valuePct+'%</span>':'')+
+      (showBadge?'<span class="vbadge '+vc+'">'+b.valuePct+'%</span>':'')+
     '</div>'+
     '<p class="tiny mono" style="margin:6px 0">'+esc(b.from)+' → '+esc(b.to)+' · '+esc(fmtPrice(b.price))+
       (b.goldValue!=null?' · มูลค่า ~'+b.goldValue.toLocaleString()+' gold':'')+'</p>'+
-    (b.items&&b.items.length?'<details><summary class="tiny">ดูของที่ได้ ('+b.items.length+')</summary>'+
+    (b.items&&b.items.length?'<details><summary class="tiny">ดูของที่ได้ ('+b.items.length+(incomplete?' — ไม่ครบ':'')+')</summary>'+
+      (incomplete?'<p class="tiny muted">รายการนี้ไม่ครบ — แหล่งข้อมูลไม่ได้ตีราคาของบางอย่าง ยอดรวมด้านบนจึงมากกว่าผลรวมด้านล่าง</p>':'')+
       '<ul class="rewards">'+b.items.map(itemLine).join('')+'</ul></details>':'')+
   '</div>';
 }
@@ -2117,11 +2123,17 @@ function deckLibCard(d,i){
      d.cards.filter(function(n){var cc=byName[n.toLowerCase()];return cc&&col.has(cc.id);}).length+'/12 ใบ</p>'+
    '</div>';
 }
-function renderDeckLib(){
+function renderDeckLib(animate){
   var box=document.getElementById('decklibgrid'); if(!box) return;
   var list=filteredMeta();
+  /* The entrance stagger should play once, on first paint of this view —
+     not on every filter re-render. A search keystroke or filter change
+     calls this with no argument, so it rewrites the grid without the
+     "stagger" class instead of restarting itemIn on freshly-filtered
+     nodes on every debounced keystroke. */
+  var gridClass=animate?'grid g2 stagger':'grid g2';
   box.innerHTML=list.length?
-    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="grid g2 stagger">'+
+    '<p class="tiny mono" style="margin-bottom:10px">แสดง '+list.length+' เด็ค</p><div class="'+gridClass+'">'+
       list.map(function(d,i){return deckLibCard(d,i);}).join('')+'</div>'
     :'<div class="empty"><b>ไม่พบเด็คที่ตรงกับตัวกรอง</b>ลองล้างคำค้นหรือเปลี่ยนตัวกรองดู</div>';
 }
@@ -2540,7 +2552,7 @@ function render(){
   });
   if(document.getElementById('vcards')) renderVariants(filteredVariants());
   if(document.getElementById('acards')) renderArtists(filteredArtists());
-  if(document.getElementById('decklibgrid')) renderDeckLib();
+  if(document.getElementById('decklibgrid')) renderDeckLib(true);
   bindLocal();
 }
 function bindLocal(){
