@@ -1962,20 +1962,34 @@ V.matchups=function(){
 };
 
 /* ---------- meta ---------- */
+function metaTierCard(d,i){
+  return '<div class="card"'+staggerIdx(i)+'>'+
+   '<h3 class="mt" style="margin:0 0 6px">'+esc(d.name)+'</h3>'+
+   '<p class="tiny mono">'+esc(statLine(d))+'</p></div>';
+}
+function metaTierSection(tier,list,color){
+  return '<h2 class="st"><span class="tierbadge" style="color:'+color+'">'+esc(tier)+'</span> ('+list.length+' เด็ค)</h2>'+
+   '<div class="grid g3 stagger">'+list.map(metaTierCard).join('')+'</div>';
+}
 V.meta=function(){
+  var tierColor={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'};
+  var tierOrder=['Trending','Tier 1','Tier 2','Tier 3','มือใหม่'];
+  var UNTIERED='ยังไม่จัด Tier';
+  var byTier={};
+  META.forEach(function(d){var key=d.tier||UNTIERED;(byTier[key]=byTier[key]||[]).push(d);});
+  var tiersPresent=tierOrder.filter(function(t){return byTier[t]&&byTier[t].length;});
+  /* Guard against a tier value the fixed order above doesn't know about —
+     append it rather than silently dropping those decks. */
+  Object.keys(byTier).forEach(function(t){if(tiersPresent.indexOf(t)===-1)tiersPresent.push(t);});
+  var tierSections=tiersPresent.map(function(t){
+    return metaTierSection(t,byTier[t],tierColor[t]||'var(--ink3)');
+  }).join('');
   return '<h1 class="vt">เมตาปัจจุบัน</h1>'+
   '<p class="vsub">ข้อมูลจริงจาก Marvel Snap Zone Ranked Meta Tier List วันที่ '+esc(P.metaDate)+
   ' — Cube Average และ Win Rate เป็นตัวเลขที่รายงานไว้จริง ไม่ได้สร้างขึ้นเอง '+
   '(หมายเหตุ: อาจเก่ากว่าการปรับค่าพลังการ์ดล่าสุดจาก '+esc(P.ota)+' — ดูค่าพลังปัจจุบันจริงได้ที่หน้าฐานข้อมูลการ์ด)</p>'+
-  notice()+'<div class="card" style="margin-top:14px"><p class="small mono">Patch '+esc(P.version)+'<br>'+esc(P.ota)+'<br>ซีซั่น '+esc(P.season)+'</p></div>'+(P.upcoming&&P.upcoming.length?'<h2 class="st">การ์ดที่จะมาในซีซั่นนี้ (ยังไม่ปล่อย)</h2>'+'<p class="vsub">ค่าใช้จ่าย/พลังและข้อความความสามารถดึงจากฐานข้อมูลการ์ดทางการ — ยังไม่ใส่ในฐานข้อมูลหลักจนกว่าจะเปิดให้เล่นจริง และค่าพลังอาจถูกปรับก่อนปล่อยได้</p>'+'<div class="grid g2">'+P.upcoming.map(function(u){return '<div class="card"><b>'+esc(u[0])+'</b>'+'<p class="tiny mono" style="margin:4px 0 8px">'+esc(u[1])+'</p>'+'<p class="small muted">'+esc(u[2])+'</p></div>';}).join('')+'</div>':'')+
-  '<h2 class="st">ตารางเมตา</h2><div class="card scroll"><table><thead><tr>'+
-   '<th>Tier</th><th>เด็ค</th><th>Cube Avg</th><th>Win Rate</th><th>เกม</th></tr></thead><tbody>'+
-   META.map(function(d){
-     var c={Trending:'var(--trend)','Tier 1':'var(--t1)','Tier 2':'var(--t2)','Tier 3':'var(--t3)','มือใหม่':'var(--grn)'}[d.tier];
-     return '<tr><td><span class="tierbadge" style="color:'+c+'">'+esc(d.tier)+'</span></td>'+
-      '<td><b>'+esc(d.name)+'</b></td><td class="mono">'+(d.cube!=null?d.cube.toFixed(2):'—')+'</td>'+
-      '<td class="mono">'+(d.wr!=null?d.wr+'%':'—')+'</td><td class="mono">'+(d.games!=null?d.games:'—')+'</td></tr>';}).join('')+
-   '</tbody></table></div>'+
+  notice()+'<div class="card" style="margin-top:14px"><p class="small mono">Patch '+esc(P.version)+'<br>'+esc(P.ota)+'<br>ซีซั่น '+esc(P.season)+'</p></div>'+(P.upcoming&&P.upcoming.length?'<h2 class="st">การ์ดที่จะมาในซีซั่นนี้ (ยังไม่ปล่อย)</h2>'+'<p class="vsub">ค่าใช้จ่าย/พลังและข้อความความสามารถดึงจากฐานข้อมูลการ์ดทางการ — ยังไม่ใส่ในฐานข้อมูลหลักจนกว่าจะเปิดให้เล่นจริง และค่าพลังอาจถูกปรับก่อนปล่อยได้</p>'+'<div class="grid g2 stagger">'+P.upcoming.map(function(u,i){return '<div class="card"'+staggerIdx(i)+'><b>'+esc(u[0])+'</b>'+'<p class="tiny mono" style="margin:4px 0 8px">'+esc(u[1])+'</p>'+'<p class="small muted">'+esc(u[2])+'</p></div>';}).join('')+'</div>':'')+
+  '<h2 class="st">ตารางเมตา</h2>'+tierSections+
   '<div class="card" style="margin-top:16px;text-align:center">'+
    '<p class="small muted">ดูเด็คแบบเต็ม 12 ใบ พร้อมโค้ดลงเกมและตัวกรองค้นหาได้ที่หน้า <b>คลังเด็ค</b></p>'+
    '<button class="btn pri" style="margin-top:8px" data-go="decklib">🗃 ไปที่คลังเด็ค</button></div>';
