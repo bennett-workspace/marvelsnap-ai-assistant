@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.013",
+  "latestVersion": "2026.08.16.014",
   "schemaVersion": 1,
   "patches": [
     {
@@ -118,6 +118,15 @@
       "releasedAt": "2026-09-02T15:33:43Z",
       "source": "in-game client state (ShopClientState CardShopNewCardSeenList) + marvelsnapzone.com card database",
       "summary": "ย้ายการ์ด AXIS: Inversion ที่เปิดให้เล่นแล้ว 3 ใบเข้าฐานข้อมูลการ์ดจริง — Superior Iron Man (5/7, Season Pass), Anti-Polar Magneto (6/9) และ Red Onslaught (4/4) ยืนยันจากไฟล์เกมในเครื่องผู้เล่นเองที่บันทึกว่าสองใบหลังโผล่ในร้านการ์ดแล้ว ส่วนอีก 6 ใบยังอยู่ในลิสต์ \"กำลังจะมา\"; และล้างธง \"ใหม่\" ของ Doctor Octopus, Jane Foster, Psylocke และ Thanos (Fractured Frontier ทั้งสี่ใบ ออกมาตั้งแต่ พ.ค. 2026 ข้ามมาสองซีซั่นแล้ว) ทำให้ตัวเลข \"การ์ดใหม่\" บนแดชบอร์ด ตรงกับความเป็นจริง — การ์ด Fractured Frontier ที่เพิ่งออกปลายเดือน ส.ค. ยังนับว่าใหม่อยู่"
+    },
+    {
+      "version": "2026.08.16.014",
+      "fromVersion": "2026.08.16.013",
+      "url": "patches/2026.08.16.014.json",
+      "sha256": "a9801037b75e16a5b5f35af70171ffbb24e615ee981fcc8874871fe55a02bc9f",
+      "releasedAt": "2026-09-22T15:48:14Z",
+      "source": "marvelsnapzone.com OTA 2026-09-10 + AXIS: Inversion card releases (Sep 8-22, 2026) + Ranked Meta Tier List 2026-09-20",
+      "summary": "OTA Balance Update 10 ก.ย. 2026 (12 การ์ด 5 เนิร์ฟ 7 บัฟ): เนิร์ฟ Venus (3/3→3/2), Scorpion Brand New Day (6/8→6/6), Blink (5/8→5/7), Isca the Unbeaten (4/3→4/2), Gambit Horseman of Death (3/5→4/6); บัฟ Nicholas Scratch (1/2→1/3), Vulture (+3→+4 พลัง), The Collector (2/2→2/3), Spider Sense (คอส 6→5), Superior Iron Man (5/7→5/8), Mister Fantastic First Steps (+2→+3 พลัง), Majestic Wingbeat (+2→+3 พลัง) — เพิ่มการ์ด AXIS: Inversion ที่เปิดให้เล่นแล้ว 4 ใบ (Kluh, Rogue Scion of Division, Entropic Havok, Friendly Neighborhood Carnage) เหลืออีก 2 ใบในลิสต์กำลังจะมา (Scarlet Witch Queen of Chaos 29 ก.ย., The Inversion 28 ก.ย.) — อัปเดตตารางเมตาเป็นฉบับ 20 ก.ย. 2026 (15 เด็ค) และย้ายเด็คชุดเก่า 9 เด็คของ 31 ส.ค. เข้าคลังเด็คแทนการลบทิ้ง"
     }
   ]
 }
