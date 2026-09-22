@@ -49,7 +49,10 @@
 - `patches/{version}.json` — ไฟล์ patch แต่ละเวอร์ชัน เป็นชุดคำสั่ง [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) (RFC 6902) แบบ `add` / `replace` / `remove` แก้เฉพาะจุดที่เปลี่ยน ไม่ใช่แทนที่ข้อมูลทั้งหมด — ไฟล์เลยเล็กแม้ฐานข้อมูลการ์ด/เด็คจะโตขึ้นเรื่อยๆ
 - `verify-manifest.js` — ตรวจว่า manifest ตรงกับไฟล์ patch จริง **ต้องรันก่อน commit ทุกครั้งที่แตะ manifest**
 - `scripts/` — สคริปต์สร้าง patch และเทส (`node --test` ใช้ตัวรันในตัวของ Node ไม่มี dependency ให้ติดตั้ง)
+  - `scripts/patch-tools/current-state.js` — รวม baseline + patch ทั้งหมดเป็นสถานะปัจจุบันจริง ใช้ตรวจก่อนสร้าง patch ใหม่ทุกครั้ง
+  - `scripts/patch-tools/build-test-html.js` — สร้างไฟล์ทดสอบที่ชี้ระบบอัปเดตไปที่ local server แทน GitHub จริง
 - `extension/` — Chrome/Edge extension สำหรับซิงค์คอลเลกชันแบบคลิกเดียว
+- `docs/PATCH_UPDATE_PLAYBOOK.md` — คู่มือ/master prompt ทุกขั้นตอนของการออก patch ใหม่ ใช้เปิดเป็นบริบทตั้งต้นได้ทุกครั้ง
 - `docs/superpowers/` — spec และ implementation plan ของฟีเจอร์ที่ทำเป็นชุดใหญ่
 
 ### ความปลอดภัยของข้อมูล
@@ -85,6 +88,8 @@
 > เวลาตรวจว่า patch ใช้ได้จริง ให้เช็คกับ **ของที่เผยแพร่จริง** ไม่ใช่ไฟล์ในเครื่อง — `node verify-manifest.js --remote` จะดึงไฟล์จาก raw.githubusercontent มาแฮชเทียบให้ ใช้หลัง push แล้ว
 
 ฝั่งแอปจะตรวจ hash ก่อนติดตั้งทุกครั้ง และมี snapshot ย้อนหลังให้ rollback ได้เสมอถ้า patch ผิดพลาด
+
+**มี playbook แบบละเอียดทุกขั้นตอนอยู่ที่ [`docs/PATCH_UPDATE_PLAYBOOK.md`](docs/PATCH_UPDATE_PLAYBOOK.md)** — ใช้เป็น prompt ตั้งต้นได้เลยทุกครั้งที่จะสั่ง "อัปเดตแพตช์" ในเซสชันใหม่ ไม่ต้องอธิบายขั้นตอนซ้ำเอง มีทั้งวิธีเช็คว่าการ์ดปล่อยจริงหรือยัง (แหล่งข้อมูลเดียวเชื่อไม่ได้ — เคยเจอมาแล้วว่า status field ล้าหลังความจริงหลายวัน), สคริปต์ช่วยงานถาวรที่ `scripts/patch-tools/`, และรายการ gotcha ที่เจอซ้ำๆ ตลอดโปรเจกต์
 
 ## 📊 แหล่งข้อมูล
 
