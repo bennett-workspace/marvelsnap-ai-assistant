@@ -59,8 +59,9 @@ from app data, the app needs a data patch first (see
 
 ### 1. Repository Analyst → `01-repository.json`
 
-Dispatch Agent 1 (sonnet). Done when every claim in `context.json` is
-marked CONFIRMED or REFUTED with a file:line.
+Dispatch Agent 1 (sonnet). It works from the checked repo map of the
+`repository-knowledge` skill, so this stage is cheap. Done when every claim
+in `context.json` is marked CONFIRMED or REFUTED with evidence.
 
 ### 2 + 3. Collection Analyst ∥ Archetype Analyst
 
