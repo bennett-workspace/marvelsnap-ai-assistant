@@ -59,7 +59,10 @@ function findAnchors(md) {
     const fn = token.match(/^([A-Za-z_$][\w$.]*)\(\)$/);
     if (fn) { functions.add(fn[1].split('.').pop()); continue; }
     if (/[<>*%\s:]/.test(token) || token.startsWith('http')) continue;
-    if (token.includes('/') || /\.(js|json|md|html)$/.test(token)) paths.add(token);
+    const isPath = token.includes('/')
+      ? token.endsWith('/') || /\.\w+$/.test(token.split('/').pop())
+      : /\.(js|json|md|html)$/.test(token);
+    if (isPath) paths.add(token);
   }
   return { functions: [...functions], paths: [...paths] };
 }
@@ -78,6 +81,17 @@ function checkAnchors(anchors, { html, jsSources, exists }) {
   return problems;
 }
 
+// A bare file name (no slash) counts as present when any repo file has that
+// basename, so the map can say `current-state.js` without its full path.
+function makeExists(files, fsExists) {
+  return p => {
+    if (fsExists(p)) return true;
+    if (p.endsWith('/')) return files.some(f => f.startsWith(p));
+    if (!p.includes('/')) return files.some(f => f.split('/').pop() === p);
+    return files.includes(p);
+  };
+}
+
 // ---- CLI ----
 
 const fs = require('fs');
@@ -88,7 +102,7 @@ const APP = 'marvel-snap-deck-builder.html';
 
 function listFiles(root) {
   try {
-    const out = require('child_process').execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' });
+    const out = require('child_process').execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
     return out.split('\n').filter(Boolean);
   } catch {
     const files = [];
@@ -144,7 +158,8 @@ function main(argv) {
   }
   const jsSources = {};
   for (const f of actual.scripts) jsSources[f] = fs.readFileSync(path.join(root, f), 'utf8');
-  problems.push(...checkAnchors(findAnchors(md), { html, jsSources, exists: p => fs.existsSync(path.join(root, p)) }));
+  const exists = makeExists(files, p => fs.existsSync(path.join(root, p)));
+  problems.push(...checkAnchors(findAnchors(md), { html, jsSources, exists }));
 
   if (argv.includes('--json')) {
     console.log(JSON.stringify({ ok: problems.length === 0, info, problems }, null, 2));
@@ -158,4 +173,4 @@ function main(argv) {
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));
 
-module.exports = { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors };
+module.exports = { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors, makeExists };

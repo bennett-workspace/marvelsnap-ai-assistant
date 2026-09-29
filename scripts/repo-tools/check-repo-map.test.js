@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert');
-const { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors } = require('./check-repo-map.js');
+const { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors, makeExists } = require('./check-repo-map.js');
 
 const HTML = [
   '<script>',
@@ -100,4 +100,19 @@ test('checkAnchors reports a missing function and path', () => {
   assert.ok(problems.every(p => p.section === 'anchors'));
   assert.match(problems[0].message, /gone\(\)/);
   assert.match(problems[1].message, /nope\.js/);
+});
+
+test('findAnchors skips slash-separated field lists but keeps directories', () => {
+  const md = '`core/flex/tech` `early/mid/late/turns` `scripts/` `.claude/skills/x/`';
+  assert.deepStrictEqual(findAnchors(md).paths, ['scripts/', '.claude/skills/x/']);
+});
+
+test('makeExists resolves repo paths and bare file names by basename', () => {
+  const exists = makeExists(['scripts/patch-tools/current-state.js', 'manifest.json'], p => p === 'manifest.json');
+  assert.strictEqual(exists('manifest.json'), true);
+  assert.strictEqual(exists('current-state.js'), true);
+  assert.strictEqual(exists('scripts/patch-tools/current-state.js'), true);
+  assert.strictEqual(exists('scripts/'), true);
+  assert.strictEqual(exists('collection.json'), false);
+  assert.strictEqual(exists('scripts/nope.js'), false);
 });
