@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2026.08.16.014",
+  "latestVersion": "2026.08.16.015",
   "schemaVersion": 1,
   "patches": [
     {
@@ -127,6 +127,15 @@
       "releasedAt": "2026-09-22T15:48:14Z",
       "source": "marvelsnapzone.com OTA 2026-09-10 + AXIS: Inversion card releases (Sep 8-22, 2026) + Ranked Meta Tier List 2026-09-20",
       "summary": "OTA Balance Update 10 ก.ย. 2026 (12 การ์ด 5 เนิร์ฟ 7 บัฟ): เนิร์ฟ Venus (3/3→3/2), Scorpion Brand New Day (6/8→6/6), Blink (5/8→5/7), Isca the Unbeaten (4/3→4/2), Gambit Horseman of Death (3/5→4/6); บัฟ Nicholas Scratch (1/2→1/3), Vulture (+3→+4 พลัง), The Collector (2/2→2/3), Spider Sense (คอส 6→5), Superior Iron Man (5/7→5/8), Mister Fantastic First Steps (+2→+3 พลัง), Majestic Wingbeat (+2→+3 พลัง) — เพิ่มการ์ด AXIS: Inversion ที่เปิดให้เล่นแล้ว 4 ใบ (Kluh, Rogue Scion of Division, Entropic Havok, Friendly Neighborhood Carnage) เหลืออีก 2 ใบในลิสต์กำลังจะมา (Scarlet Witch Queen of Chaos 29 ก.ย., The Inversion 28 ก.ย.) — อัปเดตตารางเมตาเป็นฉบับ 20 ก.ย. 2026 (15 เด็ค) และย้ายเด็คชุดเก่า 9 เด็คของ 31 ส.ค. เข้าคลังเด็คแทนการลบทิ้ง"
+    },
+    {
+      "version": "2026.08.16.015",
+      "fromVersion": "2026.08.16.014",
+      "url": "patches/2026.08.16.015.json",
+      "sha256": "bd85a075ad7565c40c4cd9e37261e69ac0dbd1d153e316ecd8e1629b696a70ef",
+      "releasedAt": "2026-09-29T18:53:24Z",
+      "source": "marvelsnapzone.com card page (Released, 28 Sep 2026) + Draft: Sanctum Scoring event pass (free track tier 7) + owner's game client",
+      "summary": "เพิ่มการ์ด The Inversion (3/0 · Series 4 · สกิล) ที่ออกแล้วผ่าน Event Pass ของอีเวนต์ Draft: Sanctum Scoring (ขั้น 7 ฝั่งฟรี) ตั้งแต่ 28 ก.ย. 2026 และเอาออกจากรายการการ์ดที่กำลังจะมา — Scarlet Witch Queen of Chaos ยังคงอยู่ในรายการรอ เพราะยังไม่มีหลักฐานชัดว่าเปิดให้เล่นแล้ว"
     }
   ]
 }

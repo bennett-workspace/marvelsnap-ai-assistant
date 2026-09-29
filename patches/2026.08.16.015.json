@@ -1,0 +1,58 @@
+{
+  "version": "2026.08.16.015",
+  "fromVersion": "2026.08.16.014",
+  "schemaVersion": 1,
+  "releasedAt": "2026-09-29T18:53:24Z",
+  "source": "marvelsnapzone.com card page (Released, 28 Sep 2026) + Draft: Sanctum Scoring event pass (free track tier 7) + owner's game client",
+  "summary": "เพิ่มการ์ด The Inversion (3/0 · Series 4 · สกิล) ที่ออกแล้วผ่าน Event Pass ของอีเวนต์ Draft: Sanctum Scoring (ขั้น 7 ฝั่งฟรี) ตั้งแต่ 28 ก.ย. 2026 และเอาออกจากรายการการ์ดที่กำลังจะมา — Scarlet Witch Queen of Chaos ยังคงอยู่ในรายการรอ เพราะยังไม่มีหลักฐานชัดว่าเปิดให้เล่นแล้ว",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/CARDS/-",
+      "value": {
+        "id": "TheInversion",
+        "n": "The Inversion",
+        "c": 3,
+        "p": 0,
+        "a": "On Reveal: Invert the Power of the lowest-Power card(s) here. (positive becomes negative and vice versa)",
+        "aTh": "เมื่อเปิด: สลับพลังของการ์ดที่มีพลังต่ำสุดในเลนนี้ (บวกกลายเป็นลบ ลบกลายเป็นบวก)",
+        "s": "Series 4",
+        "art": "https://static.marvelsnap.pro/cards/TheInversion.webp",
+        "t": [
+          "onreveal",
+          "afflict"
+        ],
+        "noab": false,
+        "new": true,
+        "arch": [],
+        "meta": 0,
+        "vr": [],
+        "hist": [
+          [
+            "2026-09-28",
+            1,
+            "3",
+            "0",
+            "On Reveal: Invert the Power of the lowest-Power card(s) here. (positive becomes negative and vice versa)"
+          ]
+        ]
+      }
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/upcoming",
+      "value": [
+        [
+          "Scarlet Witch Queen of Chaos",
+          "3/4 · Series 5 · Seasonal SNAP Pack — 29 ก.ย. 2026",
+          "Start of Turn: Add an EXTREMELY random skill to your hand. It costs 0 this turn."
+        ]
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/PATCH/dataVersion",
+      "value": "2026.08.16.015"
+    }
+  ]
+}
