@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert');
-const { extractFacts, parseFactsBlock, diffFacts } = require('./check-repo-map.js');
+const { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors } = require('./check-repo-map.js');
 
 const HTML = [
   '<script>',
@@ -67,4 +67,37 @@ test('diffFacts reports a changed storage key', () => {
 test('diffFacts returns [] for equal facts', () => {
   const f = { routes: ['a'], snapdataKeys: ['CARDS'], storageKeys: { col: 'x' }, scripts: ['s.js'] };
   assert.deepStrictEqual(diffFacts(f, JSON.parse(JSON.stringify(f))), []);
+});
+
+test('findAnchors finds functions and paths', () => {
+  const md = 'Uses `buildDeck()` and `V.recommend()`; run `scripts/deck-tools/validate-decks.js`.';
+  assert.deepStrictEqual(findAnchors(md), {
+    functions: ['buildDeck', 'recommend'],
+    paths: ['scripts/deck-tools/validate-decks.js'],
+  });
+});
+
+test('findAnchors ignores placeholders and globs', () => {
+  const md = '`V.<route>` `patches/*.json` `<runDir>/cards.json` `%LocalAppData%Low/x.json` `https://a/b.js`';
+  assert.deepStrictEqual(findAnchors(md), { functions: [], paths: [] });
+});
+
+test('checkAnchors accepts both definition styles', () => {
+  const html = 'function foo(){}\nvar bar=function(){};';
+  const problems = checkAnchors({ functions: ['foo', 'bar'], paths: [] }, { html, jsSources: {}, exists: () => true });
+  assert.deepStrictEqual(problems, []);
+});
+
+test('checkAnchors finds a function defined in a script file', () => {
+  const problems = checkAnchors({ functions: ['loadCurrent'], paths: [] },
+    { html: '', jsSources: { 'scripts/x.js': 'function loadCurrent() {}' }, exists: () => true });
+  assert.deepStrictEqual(problems, []);
+});
+
+test('checkAnchors reports a missing function and path', () => {
+  const problems = checkAnchors({ functions: ['gone'], paths: ['nope.js'] }, { html: '', jsSources: {}, exists: () => false });
+  assert.strictEqual(problems.length, 2);
+  assert.ok(problems.every(p => p.section === 'anchors'));
+  assert.match(problems[0].message, /gone\(\)/);
+  assert.match(problems[1].message, /nope\.js/);
 });
