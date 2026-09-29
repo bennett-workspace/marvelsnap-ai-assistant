@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert');
-const { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors, makeExists } = require('./check-repo-map.js');
+const { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors, makeExists, presentFiles, main } = require('./check-repo-map.js');
 
 const HTML = [
   '<script>',
@@ -115,4 +115,26 @@ test('makeExists resolves repo paths and bare file names by basename', () => {
   assert.strictEqual(exists('scripts/'), true);
   assert.strictEqual(exists('collection.json'), false);
   assert.strictEqual(exists('scripts/nope.js'), false);
+});
+
+test('presentFiles drops tracked files that are gone from disk', () => {
+  const onDisk = new Set(['scripts/a.js']);
+  assert.deepStrictEqual(presentFiles(['scripts/a.js', 'scripts/deleted.js'], p => onDisk.has(p)), ['scripts/a.js']);
+});
+
+test('main returns 2 with a message when the repo cannot be read', () => {
+  const os = require('node:os'), fs = require('node:fs'), path = require('node:path');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'repomap-'));
+  const saved = process.env.REPO_ROOT, errors = [];
+  const origError = console.error;
+  process.env.REPO_ROOT = dir;
+  console.error = m => errors.push(String(m));
+  try {
+    assert.strictEqual(main([]), 2);
+  } finally {
+    console.error = origError;
+    if (saved === undefined) delete process.env.REPO_ROOT; else process.env.REPO_ROOT = saved;
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+  assert.match(errors.join('\n'), /cannot check repo map/);
 });

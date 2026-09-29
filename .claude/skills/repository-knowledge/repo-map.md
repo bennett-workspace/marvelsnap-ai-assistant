@@ -131,7 +131,7 @@ other skills need to know.
 ## Collection
 
 - **In-memory state:** a `col` Set of card ids, loaded with `load(K.col)`
-  and persisted with `save()`.
+  and persisted with `saveCol()`, which wraps `save()`.
 - **localStorage keys** (the `K` object; values are in the Facts block):
   - `col`: owned ids
   - `decks`: saved decks
@@ -147,9 +147,14 @@ other skills need to know.
        entirely rather than merging.
      - The sync is triggered either by the file picker
        (`syncCollectionFromFile()`) or by the extension.
-     - For the extension, the page posts `marvelsnap-request-sync`. The
-       extension answers with a `postMessage` whose `source` is
-       `marvelsnap-sync-ext`, and the page's `message` listener applies it.
+     - For the extension, `extension/content.js` sends the game file
+       **automatically on every page load**, and again whenever the page
+       posts `marvelsnap-request-sync`. It arrives as a `postMessage` whose
+       `source` is `marvelsnap-sync-ext`. The page's `message` listener
+       applies it silently.
+     - So with the extension installed, simply opening the app replaces
+       `col` with whichever account the game last wrote. Check this first
+       when a collection "changes by itself".
 - **The game file:**
   `%LocalAppData%Low/Second Dinner/SNAP/Standalone/States/nvprod/CollectionState.json`.
   - It starts with a UTF-8 BOM, which must be stripped before `JSON.parse`.

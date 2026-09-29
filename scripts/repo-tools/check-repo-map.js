@@ -92,6 +92,12 @@ function makeExists(files, fsExists) {
   };
 }
 
+// git ls-files reads the index, so a file deleted but not yet staged is
+// still listed; keep only files that are really on disk.
+function presentFiles(files, fsExists) {
+  return files.filter(fsExists);
+}
+
 // ---- CLI ----
 
 const fs = require('fs');
@@ -126,11 +132,11 @@ function loadState(root, html) {
   return { D, versions };
 }
 
-function main(argv) {
+function run(argv) {
   const root = process.env.REPO_ROOT || path.resolve(__dirname, '..', '..');
   const mapPath = path.join(root, MAP);
   const html = fs.readFileSync(path.join(root, APP), 'utf8');
-  const files = listFiles(root);
+  const files = presentFiles(listFiles(root), p => fs.existsSync(path.join(root, p)));
   const { D, versions } = loadState(root, html);
   const actual = extractFacts({ html, files, current: D });
 
@@ -171,6 +177,17 @@ function main(argv) {
   return problems.length === 0 ? 0 : 1;
 }
 
+// Unreadable input (missing HTML, bad patch JSON) is exit 2, never a stack
+// trace, so callers can tell "cannot check" from "map is stale" (exit 1).
+function main(argv) {
+  try {
+    return run(argv);
+  } catch (e) {
+    console.error(`cannot check repo map: ${e.message}`);
+    return 2;
+  }
+}
+
 if (require.main === module) process.exitCode = main(process.argv.slice(2));
 
-module.exports = { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors, makeExists };
+module.exports = { extractFacts, parseFactsBlock, diffFacts, findAnchors, checkAnchors, makeExists, presentFiles, main };
