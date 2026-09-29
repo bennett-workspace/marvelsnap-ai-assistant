@@ -54,13 +54,9 @@ deck-comparison.
 Expect this to span several sessions. Follow the brief's §29 phase order and
 agree scope per phase with the user.
 
-## 2. Finish the paused deck-builder run
+## 2. Deck-builder run — done 2026-09-29
 
-Paused 2026-09-26 after stage 3 because the weekly quota hit 94%.
-Saved outputs: `C:\Users\natta\Desktop\AI\Marvel Snap\deckbuild-runs\2026-09-26\`
-(outside the public repo — holds the user's collection). Stages 1–3 done;
-4 (synergy), 5 (builder), 6 (validator + up to 3 revisions), 7 (report) remain.
-Resume steps are in the deck-builder skill's "Resuming a paused run".
-
-If job 1 splits that skill first, resume the run through the new skills
-instead.
+Finished for the account now logged in on PC (282 owned). Outputs are in
+`C:\Users\natta\Desktop\AI\Marvel Snap\deckbuild-runs\2026-09-29\`. The
+game reports `TheInversion` as owned, but the app data has no card with that
+id. The next data patch should add it.

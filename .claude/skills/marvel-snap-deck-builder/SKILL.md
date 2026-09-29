@@ -30,6 +30,13 @@ collection). To resume: copy that folder to a fresh run dir, run step 0
 again, and compare the new `collection.json` owned count with the saved
 one. Same count → skip every stage whose output file exists. Changed count
 → rerun from step 2; step 1 stays valid unless the app HTML changed.
+Agent 3 judges cards on merit, so when only ownership changed, re-stamp
+the `owned` flags in `03-archetypes.json` from `collection.json` with a
+script instead of re-running it.
+
+A drop in owned count or collection score means the game is logged into a
+different account (cards are never lost). Ask the user which account to
+build for before continuing.
 
 Check plan usage before each stage; warn the user before any window
 passes 95% used.
