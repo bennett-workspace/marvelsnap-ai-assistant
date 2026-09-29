@@ -22,11 +22,11 @@ phase 1:
 3. Write a plan, then build it.
 4. Update ECOSYSTEM.md at the end.
 
-## Data patch owed
+## Data patch to watch
 
-The game reports `TheInversion` as owned, but the app data has no card with
-that id, and `PATCH.upcoming` still lists it. The card has probably been
-released, so the next data patch should confirm the release and add it.
+v015 (2026-09-29) added The Inversion. Scarlet Witch Queen of Chaos was
+still upcoming at that point: its listed date was 29 Sep, but no source
+confirmed it was live. Re-check it on the next patch update.
 
 ## Last deck run
 
