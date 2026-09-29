@@ -1,17 +1,18 @@
 # Rules every agent follows
 
+Read [`docs/skills/CONVENTIONS.md`](../../../docs/skills/CONVENTIONS.md)
+first. It holds the shared rules: facts from files, UNKNOWN, game rules and
+the envelope. This file adds only what the deck pipeline needs.
+
 You are one agent in a pipeline. The orchestrator owns the objective; do
 your role and write your output file. You never dispatch other agents.
 
 ## Facts come from files
 
-- `cards.json` is the only source for a card's cost, power, ability text,
-  series, and ownership (`owned: true|false`). Stats are current and
-  post-OTA. Many cards postdate your training — read the ability text; your
-  memory of a card is a hypothesis, the file is the fact.
-- Use card names **exactly** as spelled in `cards.json`.
-- When a fact you need is absent, write `UNKNOWN` and say what is missing.
-  If it decides whether a deck works, stop that deck and report it.
+`cards.json` is the only source for a card's cost, power, ability text,
+series, and ownership (`owned: true|false`). Stats are current and
+post-OTA. If a fact you need is absent and it decides whether a deck
+works, stop that deck and report it.
 
 ## Collection
 
@@ -29,36 +30,9 @@ specific cards in hand on curve is a hope, not a plan.
 a meta list the user owns, or nearly owns, as strong evidence an archetype
 works now; still explain *why* it works.
 
-## Game rules you may rely on
+## Output
 
-- Deck = exactly 12 cards, one copy each.
-- 6 turns (some locations change this); energy = turn number unless a card
-  or location says otherwise.
-- Win 2 of 3 locations by total Power; a tied location goes to neither. If
-  locations do not decide it, higher total Power across all locations wins.
-- Cards are played face down, then revealed. The player winning more
-  locations reveals first (tie → higher total Power; still tied → random).
-  "On Reveal" fires when the card is revealed.
-- 4 cards per location per side.
-
-Anything beyond these and the card text is a mechanic you must mark UNKNOWN
-rather than assume.
-
-## Output envelope
-
-Write JSON to the file the orchestrator names:
-
-```json
-{
-  "agent": "<your role>",
-  "status": "complete | partial | failed",
-  "confidence": "high | medium | low",
-  "findings": [],
-  "recommendations": [],
-  "issues": [],
-  "handoff": {}
-}
-```
-
-`handoff` carries what the next agent needs; your brief defines its shape.
-Finish with a one-paragraph plain-text summary as your final message.
+Write the envelope from CONVENTIONS.md §7 to the file the orchestrator
+names, using `"agent": "<your role>"`. Your brief defines the `handoff`
+shape. Finish with a one-paragraph plain-text summary as your final
+message.
