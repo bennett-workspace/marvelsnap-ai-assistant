@@ -52,4 +52,50 @@ function loadAt(v) {
   return D;
 }
 
-module.exports = { BASELINE_VERSION, readPatches, listVersions, resolveVersion, loadBaseline, loadAt };
+// Patch ops address arrays by index, and a remove shifts every later index,
+// so an op's entity must be read from the state *before* the op applies.
+const ARRAY_ROOTS = { CARDS: 'card', LOCATIONS: 'location', META: 'meta', ARCHETYPES: 'archetype' };
+
+function entityKeyFor(D, op) {
+  const segs = op.path.split('/').slice(1).map(s => s.replace(/~1/g, '/').replace(/~0/g, '~'));
+  const [root, second] = segs;
+  const rest = n => (segs.length > n ? segs.slice(n).join('/') : null);
+
+  if (ARRAY_ROOTS[root]) {
+    if (segs.length === 1) return { key: root.toLowerCase(), field: null }; // whole collection replaced
+    const whole = segs.length === 2;
+    let id;
+    if (second === '-' || (op.op === 'add' && whole)) id = op.value && op.value.id;
+    else id = (D[root] && D[root][Number(second)] || {}).id || (whole && op.value && op.value.id);
+    if (!id) return { key: 'unresolved', field: op.path };
+    return { key: `${ARRAY_ROOTS[root]}:${id}`, field: rest(2) };
+  }
+  if (root === 'PATCH' || root === 'MATCH') {
+    const prefix = root.toLowerCase();
+    return second === undefined ? { key: prefix, field: null } : { key: `${prefix}:${second}`, field: rest(2) };
+  }
+  return { key: root.toLowerCase(), field: rest(1) };
+}
+
+function buildProvenance(baseline, patches) {
+  const D = structuredClone(baseline);
+  const prov = new Map();
+  for (const p of patches) {
+    for (const op of p.operations) {
+      const { key, field } = entityKeyFor(D, op);
+      if (!prov.has(key)) prov.set(key, []);
+      prov.get(key).push({ version: p.version, op: op.op, field, source: p.source, releasedAt: p.releasedAt });
+      applyOps(D, [op]);
+    }
+  }
+  return prov;
+}
+
+function provenance() {
+  return buildProvenance(loadBaseline(), readPatches());
+}
+
+module.exports = {
+  BASELINE_VERSION, readPatches, listVersions, resolveVersion, loadBaseline, loadAt,
+  entityKeyFor, buildProvenance, provenance,
+};
