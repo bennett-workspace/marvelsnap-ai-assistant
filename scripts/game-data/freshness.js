@@ -7,7 +7,7 @@ const path = require('path');
 
 const MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
 const MONTH_RE = [...MONTHS].sort((a, b) => b.length - a.length).map(m => m.replace(/\./g, '\\.')).join('|');
-const DATE_RE = new RegExp(`(\\d{1,2})\\s*(${MONTH_RE})\\s*(\\d{4})`, 'g');
+const DATE_RE = new RegExp(`(?<!\\d)(\\d{1,2})\\s*(${MONTH_RE})\\s*(\\d{4})(?!\\d)`, 'g');
 
 const META_MAX_DAYS = 14;
 const COLLECTION_MAX_DAYS = 3;
@@ -22,6 +22,8 @@ function parseThaiDate(s) {
   const [, d, mon, y] = matches[matches.length - 1];
   const year = Number(y) >= 2400 ? Number(y) - 543 : Number(y);
   const month = MONTHS.indexOf(mon) + 1;
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  if (Number(d) < 1 || Number(d) > daysInMonth) return null; // impossible day: report, don't guess
   return `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
 }
 
@@ -56,10 +58,11 @@ function freshness(D, { now, collectionFile, latestPatch } = {}) {
     }
   }
 
-  if (latestPatch && latestPatch.releasedAt) {
-    const age = Math.floor((utcDay(now) - utcDay(new Date(latestPatch.releasedAt))) / DAY);
+  const released = latestPatch && latestPatch.releasedAt ? new Date(latestPatch.releasedAt) : null;
+  if (released && !Number.isNaN(released.getTime())) {
+    const age = Math.floor((utcDay(now) - utcDay(released)) / DAY);
     rows.push({ item: 'latestPatch', status: 'fresh', detail: `${latestPatch.version} released ${latestPatch.releasedAt}, ${age} days ago` });
-  } else rows.push({ item: 'latestPatch', status: 'unknown', detail: 'no patch information given' });
+  } else rows.push({ item: 'latestPatch', status: 'unknown', detail: `no usable patch date: ${latestPatch ? latestPatch.releasedAt : 'none given'}` });
 
   return rows;
 }

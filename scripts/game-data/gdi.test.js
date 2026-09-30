@@ -62,3 +62,15 @@ test('main unknown version exits 2', () => {
   assert.strictEqual(code, 2);
   assert.match(text, /unknown version: 999/);
 });
+
+test('--json errors are JSON: ambiguous, absent, not present, unknown version', () => {
+  const amb = run(['card', 'red', 'hul', '--json']);
+  assert.strictEqual(amb.code, 1);
+  assert.deepStrictEqual(JSON.parse(amb.text), { error: 'ambiguous', query: 'red hul', candidates: ['Red Hulk', 'Red Hulk Fractured Frontier'] });
+  assert.strictEqual(JSON.parse(run(['card', 'zzz', '--json']).text).error, 'not found');
+  const np = JSON.parse(run(['at', '014', 'card', 'TheInversion', '--json']).text);
+  assert.deepStrictEqual(np, { error: 'not present', query: 'TheInversion', version: '2026.08.16.014', candidates: [] });
+  const uv = run(['at', '999', 'card', 'x', '--json']);
+  assert.strictEqual(uv.code, 2);
+  assert.deepStrictEqual(JSON.parse(uv.text), { error: 'unknown version: 999' });
+});

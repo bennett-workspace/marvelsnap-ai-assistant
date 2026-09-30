@@ -286,6 +286,8 @@ the block wholesale when the check reports a STALE fact.
     "scripts/game-data/diff.test.js",
     "scripts/game-data/freshness.js",
     "scripts/game-data/freshness.test.js",
+    "scripts/game-data/gdi.js",
+    "scripts/game-data/gdi.test.js",
     "scripts/game-data/history.js",
     "scripts/game-data/history.test.js",
     "scripts/lib/shop-parse.js",

@@ -47,8 +47,10 @@ function lookup(D, query, out, json, prov, version) {
     else cardLines(r.card, prov).forEach(l => out(l));
     return 0;
   }
-  if (r.candidates.length) out(`ambiguous "${query}": ${r.candidates.join(', ')}`);
-  else out(version ? `"${query}" not present at ${version}` : `no card matches "${query}"`);
+  const error = r.candidates.length ? 'ambiguous' : version ? 'not present' : 'not found';
+  if (json) out(JSON.stringify({ error, query, ...(version ? { version } : {}), candidates: r.candidates }));
+  else if (error === 'ambiguous') out(`ambiguous "${query}": ${r.candidates.join(', ')}`);
+  else out(error === 'not present' ? `"${query}" not present at ${version}` : `no card matches "${query}"`);
   return 1;
 }
 
@@ -88,7 +90,7 @@ function main(argv, out = console.log) {
       }
     }
   } catch (e) {
-    if (/^unknown version/.test(e.message)) { out(e.message); return 2; }
+    if (/^unknown version/.test(e.message)) { out(json ? JSON.stringify({ error: e.message }) : e.message); return 2; }
     throw e;
   }
   out(USAGE);

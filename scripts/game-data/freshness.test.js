@@ -45,3 +45,19 @@ test('freshness counts a future upcoming date as fresh', () => {
   assert.strictEqual(s['upcoming:A'], 'fresh');
   assert.strictEqual(s.meta, 'fresh');
 });
+
+test('parseThaiDate rejects impossible days instead of guessing', () => {
+  assert.strictEqual(parseThaiDate('31 ก.พ. 2026'), null);
+  assert.strictEqual(parseThaiDate('0 ต.ค. 2026'), null);
+  assert.strictEqual(parseThaiDate('29 ก.พ. 2028'), '2028-02-29');
+});
+
+test('parseThaiDate needs whole numbers, not digits cut from longer ones', () => {
+  assert.strictEqual(parseThaiDate('123 ก.ย. 2026'), null);
+  assert.strictEqual(parseThaiDate('20 ก.ย. 12026'), null);
+});
+
+test('freshness marks a bad latestPatch date unknown', () => {
+  const rows = freshness({ PATCH: { metaDate: 'n/a', upcoming: [] } }, { now: NOW, collectionFile: null, latestPatch: { version: 'v', releasedAt: 'garbage' } });
+  assert.strictEqual(rows.find(r => r.item === 'latestPatch').status, 'unknown');
+});
