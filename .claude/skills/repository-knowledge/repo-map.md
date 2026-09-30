@@ -204,9 +204,16 @@ other skills need to know.
 | `scripts/deck-tools/validate-decks.js` | Hard rules and deck codes for generated decks |
 | `scripts/deck-tools/render-report.js` | Thai HTML deck guide from `<runDir>/07-report.json` |
 | `scripts/repo-tools/check-repo-map.js` | This map's checker (tests: `scripts/repo-tools/check-repo-map.test.js`) |
+| `scripts/game-data/gdi.js` | Game data CLI: versions, card lookup (current or `at <version>`) with provenance, diff between versions, freshness |
+| `scripts/game-data/history.js`, `scripts/game-data/diff.js`, `scripts/game-data/freshness.js` | The functions behind it: `loadAt()`, `provenance()`, `diffStates()`, `freshness()` (tests next to each) |
 
-Skills: `.claude/skills/marvel-snap-deck-builder/`, which is a 7-agent deck
-pipeline, and `.claude/skills/repository-knowledge/`. Shared rules for all
+Skills:
+- `.claude/skills/marvel-snap-deck-builder/`: a 7-agent deck pipeline
+- `.claude/skills/repository-knowledge/`
+- `.claude/skills/game-data-intelligence/`: the way every skill gets game
+  data
+
+Shared rules for all
 skills are in `docs/skills/CONVENTIONS.md`, and the skill plan is in
 `docs/skills/ECOSYSTEM.md`.
 
@@ -275,6 +282,12 @@ the block wholesale when the check reports a STALE fact.
     "scripts/deck-tools/export-inputs.js",
     "scripts/deck-tools/render-report.js",
     "scripts/deck-tools/validate-decks.js",
+    "scripts/game-data/diff.js",
+    "scripts/game-data/diff.test.js",
+    "scripts/game-data/freshness.js",
+    "scripts/game-data/freshness.test.js",
+    "scripts/game-data/history.js",
+    "scripts/game-data/history.test.js",
     "scripts/lib/shop-parse.js",
     "scripts/lib/shop-parse.test.js",
     "scripts/lib/shop-status.test.js",

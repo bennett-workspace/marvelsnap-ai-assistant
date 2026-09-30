@@ -15,8 +15,13 @@ window passes 95% used.
 - the shared conventions and the ecosystem map
 - deck-builder Agent 1 now reads the repo map
 
-**Next is phase 2:** `game-data-intelligence`. Follow the same path as
-phase 1:
+**Phase 2 is done** (2026-10-01):
+- the `game-data-intelligence` skill
+- `scripts/game-data/gdi.js`, which covers history at any version,
+  provenance, diff and freshness
+
+**Next is phase 3:** `game-data-sync`, which wraps the patch playbook. Use
+the same path as before:
 1. Agree the scope with the user.
 2. Write a spec under `docs/superpowers/specs/`.
 3. Write a plan, then build it.

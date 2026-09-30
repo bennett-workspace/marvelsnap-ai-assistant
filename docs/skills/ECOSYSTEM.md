@@ -21,7 +21,7 @@ The phases follow brief §29.
 | skill | brief § | phase | verdict | builds on | depends on | status |
 |---|---|---|---|---|---|---|
 | `repository-knowledge` | S01 | 1 | EXTEND | deck-builder Agent 1; `repo-map.md`, `check-repo-map.js` | — | done |
-| `game-data-intelligence` | S02 | 2 | EXTEND | `current-state.js` (`loadCurrent`), SNAPDATA, card `hist` | repository-knowledge | planned |
+| `game-data-intelligence` | S02 | 2 | EXTEND | `current-state.js` (`loadCurrent`), SNAPDATA, card `hist`; `scripts/game-data/` | repository-knowledge | done |
 | `game-data-sync` | S03 | 3 | REUSE | `PATCH_UPDATE_PLAYBOOK.md`, `verify-manifest.js`, `build-test-html.js`, `build-shop-patch.js` | game-data-intelligence, data-integrity | planned |
 | `game-update-intelligence` | S04 | 4 | EXTEND | patch diffs (old vs new `loadCurrent`), `PATCH.upcoming` | game-data-intelligence | planned |
 | `card-database-intelligence` | S05 | 4 | EXTEND | `CARDS[]` incl. `hist`, `arch`, `vr` | game-data-intelligence | planned |
